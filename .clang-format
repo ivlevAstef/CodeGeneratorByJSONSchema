@@ -1,0 +1,22 @@
+BasedOnStyle: Chromium
+AlignTrailingComments: true
+AllowAllParametersOfDeclarationOnNextLine: false
+AllowShortFunctionsOnASingleLine: true
+AllowShortIfStatementsOnASingleLine: false
+AllowShortLoopsOnASingleLine: false
+BinPackParameters : false
+BreakBeforeBraces: Attach
+ConstructorInitializerAllOnOneLineOrOnePerLine: true
+ColumnLimit: 0
+IndentCaseLabels: false
+IndentWidth: 2
+MaxEmptyLinesToKeep : 2
+BreakBeforeTernaryOperators : true
+PointerBindsToType : true
+ObjCSpaceAfterProperty: true
+ObjCSpaceBeforeProtocolList: true
+SpaceBeforeAssignmentOperators: true
+SpaceBeforeParens: ControlStatements
+SpacesInCStyleCastParentheses: false
+TabWidth: 2
+UseTab: Never
