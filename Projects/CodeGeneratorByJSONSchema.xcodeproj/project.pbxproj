@@ -6,20 +6,43 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		848952F81C47BE1E000B1B8F /* JSCParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848952F21C47BE1E000B1B8F /* JSCParser.cpp */; };
+		848952F91C47BE1E000B1B8F /* JSCStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848952F41C47BE1E000B1B8F /* JSCStream.cpp */; };
+		848952FA1C47BE1E000B1B8F /* JSCTokens.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848952F61C47BE1E000B1B8F /* JSCTokens.cpp */; };
+		848953061C47BE5C000B1B8F /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848953051C47BE5C000B1B8F /* main.cpp */; };
+		848953091C47C15F000B1B8F /* test-schema.json in CopyFiles */ = {isa = PBXBuildFile; fileRef = 848952F01C47BE0B000B1B8F /* test-schema.json */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXCopyFilesBuildPhase section */
-		84B76CA91C46275500878510 /* CopyFiles */ = {
+		848953081C47C153000B1B8F /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
+			dstPath = "";
+			dstSubfolderSpec = 7;
 			files = (
+				848953091C47C15F000B1B8F /* test-schema.json in CopyFiles */,
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		849C7CE61C462AD700D6083A /* Sources */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Sources; path = ../Sources; sourceTree = "<group>"; };
+		848952F01C47BE0B000B1B8F /* test-schema.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "test-schema.json"; sourceTree = "<group>"; };
+		848952F21C47BE1E000B1B8F /* JSCParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSCParser.cpp; sourceTree = "<group>"; };
+		848952F31C47BE1E000B1B8F /* JSCParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCParser.h; sourceTree = "<group>"; };
+		848952F41C47BE1E000B1B8F /* JSCStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSCStream.cpp; sourceTree = "<group>"; };
+		848952F51C47BE1E000B1B8F /* JSCStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCStream.h; sourceTree = "<group>"; };
+		848952F61C47BE1E000B1B8F /* JSCTokens.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSCTokens.cpp; sourceTree = "<group>"; };
+		848952F71C47BE1E000B1B8F /* JSCTokens.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCTokens.h; sourceTree = "<group>"; };
+		848952FC1C47BE33000B1B8F /* IJSCLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IJSCLanguage.h; sourceTree = "<group>"; };
+		848952FD1C47BE33000B1B8F /* JSCLanguageObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCLanguageObject.h; sourceTree = "<group>"; };
+		848952FE1C47BE33000B1B8F /* JSCOutput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCOutput.h; sourceTree = "<group>"; };
+		848953011C47BE54000B1B8F /* JSCArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCArray.h; sourceTree = "<group>"; };
+		848953021C47BE54000B1B8F /* JSCEnum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCEnum.h; sourceTree = "<group>"; };
+		848953031C47BE54000B1B8F /* JSCObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCObject.h; sourceTree = "<group>"; };
+		848953041C47BE54000B1B8F /* JSCProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCProperty.h; sourceTree = "<group>"; };
+		848953051C47BE5C000B1B8F /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		84B76CAB1C46275500878510 /* CodeGeneratorByJSONSchema */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CodeGeneratorByJSONSchema; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -34,10 +57,56 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		848952EF1C47BDFF000B1B8F /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				848952F01C47BE0B000B1B8F /* test-schema.json */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		848952F11C47BE13000B1B8F /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				848953001C47BE47000B1B8F /* Properties */,
+				848952FB1C47BE22000B1B8F /* LanguageGenerator */,
+				848952F21C47BE1E000B1B8F /* JSCParser.cpp */,
+				848952F31C47BE1E000B1B8F /* JSCParser.h */,
+				848952F41C47BE1E000B1B8F /* JSCStream.cpp */,
+				848952F51C47BE1E000B1B8F /* JSCStream.h */,
+				848952F61C47BE1E000B1B8F /* JSCTokens.cpp */,
+				848952F71C47BE1E000B1B8F /* JSCTokens.h */,
+				848953051C47BE5C000B1B8F /* main.cpp */,
+			);
+			name = Sources;
+			sourceTree = "<group>";
+		};
+		848952FB1C47BE22000B1B8F /* LanguageGenerator */ = {
+			isa = PBXGroup;
+			children = (
+				848952FC1C47BE33000B1B8F /* IJSCLanguage.h */,
+				848952FD1C47BE33000B1B8F /* JSCLanguageObject.h */,
+				848952FE1C47BE33000B1B8F /* JSCOutput.h */,
+			);
+			name = LanguageGenerator;
+			sourceTree = "<group>";
+		};
+		848953001C47BE47000B1B8F /* Properties */ = {
+			isa = PBXGroup;
+			children = (
+				848953011C47BE54000B1B8F /* JSCArray.h */,
+				848953021C47BE54000B1B8F /* JSCEnum.h */,
+				848953031C47BE54000B1B8F /* JSCObject.h */,
+				848953041C47BE54000B1B8F /* JSCProperty.h */,
+			);
+			name = Properties;
+			sourceTree = "<group>";
+		};
 		84B76CA21C46275500878510 = {
 			isa = PBXGroup;
 			children = (
-				849C7CE61C462AD700D6083A /* Sources */,
+				848952F11C47BE13000B1B8F /* Sources */,
+				848952EF1C47BDFF000B1B8F /* Resources */,
 				84B76CAC1C46275500878510 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -59,7 +128,7 @@
 			buildPhases = (
 				84B76CA71C46275500878510 /* Sources */,
 				84B76CA81C46275500878510 /* Frameworks */,
-				84B76CA91C46275500878510 /* CopyFiles */,
+				848953081C47C153000B1B8F /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -106,6 +175,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				848952F81C47BE1E000B1B8F /* JSCParser.cpp in Sources */,
+				848952FA1C47BE1E000B1B8F /* JSCTokens.cpp in Sources */,
+				848953061C47BE5C000B1B8F /* main.cpp in Sources */,
+				848952F91C47BE1E000B1B8F /* JSCStream.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

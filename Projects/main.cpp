@@ -11,7 +11,7 @@
 #include "JSCTokens.h"
 
 int main(int argc, const char* argv[]) {
-  JSCStream stream("Resources/test-schema.json");
+  JSCStream stream("test-schema.json");
   JSCTokens tokens(stream);
 
   JSCParser parser(tokens);

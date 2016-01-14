@@ -10,6 +10,7 @@
 #ifndef JSON_SCHEMA_CODE_TOKENS_H__
 #define JSON_SCHEMA_CODE_TOKENS_H__
 
+#include <vector>
 #include "JSCStream.h"
 
 typedef std::string JSCToken;
@@ -31,6 +32,12 @@ class JSCTokens {
   bool isCharacter(const char& symbol) const;
   bool isQuote(const char& symbol) const;
   bool isCharacterQuote(const char& lastSymbol, const char& symbol) const;
+
+  bool isLineComment(const char& symbol, const char& nextSymbol) const;
+  size_t endLineIndex(const size_t fromIndex, const JSCStream& stream) const;
+
+  bool isMultyLineCommentBegin(const char& symbol, const char& nextSymbol) const;
+  size_t multyLineCommentEndIndex(const size_t fromIndex, const JSCStream& stream) const;
 
   void addToken(JSCToken& buffer, bool canEmpty = false);
 
