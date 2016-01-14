@@ -12,8 +12,12 @@
 
 #include <memory>
 #include <string>
+#include <vector>
 
 enum JSCPropertyType {
+  JSCProperty_Unknown,
+  JSCProperty_Null,
+
   JSCProperty_Boolean,
   JSCProperty_Integer,
   JSCProperty_Number,
@@ -22,25 +26,27 @@ enum JSCPropertyType {
 
   JSCProperty_Object,
   JSCProperty_Array,
+
+  JSCProperty_Ref,
 };
 
 class JSCProperty {
  public:
+  typedef std::vector<std::string> Path;
+
+ public:
   JSCProperty(JSCPropertyType type);
 
-  void setName(std::string name);
-  void setPath(std::string path);
+  void setPath(const Path& path);
   void setOptional(bool optional);
 
-  const std::string& name() const;
-  const std::string& path() const;
+  const Path& path() const;
 
   JSCPropertyType type() const;
   bool optional() const;
 
  private:
-  std::string m_name;
-  std::string m_path;
+  Path m_path;
   JSCPropertyType m_type;
   bool m_optional;
 };

@@ -6,11 +6,7 @@ JSCProperty::JSCProperty(JSCPropertyType type) {
   m_optional = false;
 }
 
-void JSCProperty::setName(std::string name) {
-  m_name = name;
-}
-
-void JSCProperty::setPath(std::string path) {
+void JSCProperty::setPath(const Path& path) {
   m_path = path;
 }
 
@@ -18,11 +14,7 @@ void JSCProperty::setOptional(bool optional) {
   m_optional = optional;
 }
 
-const std::string& JSCProperty::name() const {
-  return m_name;
-}
-
-const std::string& JSCProperty::path() const {
+const JSCProperty::Path& JSCProperty::path() const {
   return m_path;
 }
 

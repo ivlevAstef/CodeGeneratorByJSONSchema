@@ -16,6 +16,8 @@
 		8489532D1C47C915000B1B8F /* JSCObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848953231C47C915000B1B8F /* JSCObject.cpp */; };
 		8489532E1C47C915000B1B8F /* JSCProperty.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848953251C47C915000B1B8F /* JSCProperty.cpp */; };
 		848953311C47C94C000B1B8F /* test-schema.json in CopyFiles */ = {isa = PBXBuildFile; fileRef = 848953301C47C91E000B1B8F /* test-schema.json */; };
+		848953341C47D62B000B1B8F /* JSCUnknown.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848953321C47D62B000B1B8F /* JSCUnknown.cpp */; };
+		848953371C47DD7D000B1B8F /* JSCRef.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848953351C47DD7D000B1B8F /* JSCRef.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -51,6 +53,10 @@
 		848953251C47C915000B1B8F /* JSCProperty.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSCProperty.cpp; sourceTree = "<group>"; };
 		848953261C47C915000B1B8F /* JSCProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCProperty.h; sourceTree = "<group>"; };
 		848953301C47C91E000B1B8F /* test-schema.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "test-schema.json"; sourceTree = "<group>"; };
+		848953321C47D62B000B1B8F /* JSCUnknown.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSCUnknown.cpp; sourceTree = "<group>"; };
+		848953331C47D62B000B1B8F /* JSCUnknown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCUnknown.h; sourceTree = "<group>"; };
+		848953351C47DD7D000B1B8F /* JSCRef.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSCRef.cpp; sourceTree = "<group>"; };
+		848953361C47DD7D000B1B8F /* JSCRef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCRef.h; sourceTree = "<group>"; };
 		84B76CAB1C46275500878510 /* CodeGeneratorByJSONSchema */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CodeGeneratorByJSONSchema; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -102,6 +108,10 @@
 				848953241C47C915000B1B8F /* JSCObject.h */,
 				848953251C47C915000B1B8F /* JSCProperty.cpp */,
 				848953261C47C915000B1B8F /* JSCProperty.h */,
+				848953321C47D62B000B1B8F /* JSCUnknown.cpp */,
+				848953331C47D62B000B1B8F /* JSCUnknown.h */,
+				848953351C47DD7D000B1B8F /* JSCRef.cpp */,
+				848953361C47DD7D000B1B8F /* JSCRef.h */,
 			);
 			path = Properties;
 			sourceTree = "<group>";
@@ -189,11 +199,13 @@
 			files = (
 				848953281C47C915000B1B8F /* JSCStream.cpp in Sources */,
 				848953271C47C915000B1B8F /* JSCParser.cpp in Sources */,
+				848953371C47DD7D000B1B8F /* JSCRef.cpp in Sources */,
 				8489532A1C47C915000B1B8F /* main.cpp in Sources */,
 				848953291C47C915000B1B8F /* JSCTokens.cpp in Sources */,
 				8489532B1C47C915000B1B8F /* JSCArray.cpp in Sources */,
 				8489532E1C47C915000B1B8F /* JSCProperty.cpp in Sources */,
 				8489532D1C47C915000B1B8F /* JSCObject.cpp in Sources */,
+				848953341C47D62B000B1B8F /* JSCUnknown.cpp in Sources */,
 				8489532C1C47C915000B1B8F /* JSCEnum.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

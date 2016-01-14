@@ -15,14 +15,12 @@
 
 class JSCArray : public JSCProperty {
  public:
-  JSCArray();
+  JSCArray(JSCPropertyPointer propertyType);
 
-  bool addPropertyType(const JSCPropertyPointer property);
-
-  const std::vector<JSCPropertyPointer>& propertyTypes() const;
+  const JSCPropertyPointer& propertyType() const;
 
  private:
-  std::vector<JSCPropertyPointer> m_propertyTypes;
+  JSCPropertyPointer m_propertyType;
 };
 
 #endif /* JSON_SCHEMA_CODE_ARRAY_H__ */
