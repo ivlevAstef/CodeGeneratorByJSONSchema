@@ -7,11 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		848952F81C47BE1E000B1B8F /* JSCParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848952F21C47BE1E000B1B8F /* JSCParser.cpp */; };
-		848952F91C47BE1E000B1B8F /* JSCStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848952F41C47BE1E000B1B8F /* JSCStream.cpp */; };
-		848952FA1C47BE1E000B1B8F /* JSCTokens.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848952F61C47BE1E000B1B8F /* JSCTokens.cpp */; };
-		848953061C47BE5C000B1B8F /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848953051C47BE5C000B1B8F /* main.cpp */; };
-		848953091C47C15F000B1B8F /* test-schema.json in CopyFiles */ = {isa = PBXBuildFile; fileRef = 848952F01C47BE0B000B1B8F /* test-schema.json */; };
+		848953271C47C915000B1B8F /* JSCParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848953131C47C915000B1B8F /* JSCParser.cpp */; };
+		848953281C47C915000B1B8F /* JSCStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848953151C47C915000B1B8F /* JSCStream.cpp */; };
+		848953291C47C915000B1B8F /* JSCTokens.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848953171C47C915000B1B8F /* JSCTokens.cpp */; };
+		8489532A1C47C915000B1B8F /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8489531D1C47C915000B1B8F /* main.cpp */; };
+		8489532B1C47C915000B1B8F /* JSCArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8489531F1C47C915000B1B8F /* JSCArray.cpp */; };
+		8489532C1C47C915000B1B8F /* JSCEnum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848953211C47C915000B1B8F /* JSCEnum.cpp */; };
+		8489532D1C47C915000B1B8F /* JSCObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848953231C47C915000B1B8F /* JSCObject.cpp */; };
+		8489532E1C47C915000B1B8F /* JSCProperty.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848953251C47C915000B1B8F /* JSCProperty.cpp */; };
+		848953311C47C94C000B1B8F /* test-schema.json in CopyFiles */ = {isa = PBXBuildFile; fileRef = 848953301C47C91E000B1B8F /* test-schema.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -21,28 +25,32 @@
 			dstPath = "";
 			dstSubfolderSpec = 7;
 			files = (
-				848953091C47C15F000B1B8F /* test-schema.json in CopyFiles */,
+				848953311C47C94C000B1B8F /* test-schema.json in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		848952F01C47BE0B000B1B8F /* test-schema.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "test-schema.json"; sourceTree = "<group>"; };
-		848952F21C47BE1E000B1B8F /* JSCParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSCParser.cpp; sourceTree = "<group>"; };
-		848952F31C47BE1E000B1B8F /* JSCParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCParser.h; sourceTree = "<group>"; };
-		848952F41C47BE1E000B1B8F /* JSCStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSCStream.cpp; sourceTree = "<group>"; };
-		848952F51C47BE1E000B1B8F /* JSCStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCStream.h; sourceTree = "<group>"; };
-		848952F61C47BE1E000B1B8F /* JSCTokens.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSCTokens.cpp; sourceTree = "<group>"; };
-		848952F71C47BE1E000B1B8F /* JSCTokens.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCTokens.h; sourceTree = "<group>"; };
-		848952FC1C47BE33000B1B8F /* IJSCLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IJSCLanguage.h; sourceTree = "<group>"; };
-		848952FD1C47BE33000B1B8F /* JSCLanguageObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCLanguageObject.h; sourceTree = "<group>"; };
-		848952FE1C47BE33000B1B8F /* JSCOutput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCOutput.h; sourceTree = "<group>"; };
-		848953011C47BE54000B1B8F /* JSCArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCArray.h; sourceTree = "<group>"; };
-		848953021C47BE54000B1B8F /* JSCEnum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCEnum.h; sourceTree = "<group>"; };
-		848953031C47BE54000B1B8F /* JSCObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCObject.h; sourceTree = "<group>"; };
-		848953041C47BE54000B1B8F /* JSCProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCProperty.h; sourceTree = "<group>"; };
-		848953051C47BE5C000B1B8F /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		848953131C47C915000B1B8F /* JSCParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSCParser.cpp; sourceTree = "<group>"; };
+		848953141C47C915000B1B8F /* JSCParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCParser.h; sourceTree = "<group>"; };
+		848953151C47C915000B1B8F /* JSCStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSCStream.cpp; sourceTree = "<group>"; };
+		848953161C47C915000B1B8F /* JSCStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCStream.h; sourceTree = "<group>"; };
+		848953171C47C915000B1B8F /* JSCTokens.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSCTokens.cpp; sourceTree = "<group>"; };
+		848953181C47C915000B1B8F /* JSCTokens.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCTokens.h; sourceTree = "<group>"; };
+		8489531A1C47C915000B1B8F /* IJSCLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IJSCLanguage.h; sourceTree = "<group>"; };
+		8489531B1C47C915000B1B8F /* JSCLanguageObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCLanguageObject.h; sourceTree = "<group>"; };
+		8489531C1C47C915000B1B8F /* JSCOutput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCOutput.h; sourceTree = "<group>"; };
+		8489531D1C47C915000B1B8F /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		8489531F1C47C915000B1B8F /* JSCArray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSCArray.cpp; sourceTree = "<group>"; };
+		848953201C47C915000B1B8F /* JSCArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCArray.h; sourceTree = "<group>"; };
+		848953211C47C915000B1B8F /* JSCEnum.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSCEnum.cpp; sourceTree = "<group>"; };
+		848953221C47C915000B1B8F /* JSCEnum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCEnum.h; sourceTree = "<group>"; };
+		848953231C47C915000B1B8F /* JSCObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSCObject.cpp; sourceTree = "<group>"; };
+		848953241C47C915000B1B8F /* JSCObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCObject.h; sourceTree = "<group>"; };
+		848953251C47C915000B1B8F /* JSCProperty.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSCProperty.cpp; sourceTree = "<group>"; };
+		848953261C47C915000B1B8F /* JSCProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCProperty.h; sourceTree = "<group>"; };
+		848953301C47C91E000B1B8F /* test-schema.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "test-schema.json"; sourceTree = "<group>"; };
 		84B76CAB1C46275500878510 /* CodeGeneratorByJSONSchema */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CodeGeneratorByJSONSchema; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -57,56 +65,60 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		848952EF1C47BDFF000B1B8F /* Resources */ = {
+		848953121C47C915000B1B8F /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				848952F01C47BE0B000B1B8F /* test-schema.json */,
+				848953191C47C915000B1B8F /* LanguageGenerator */,
+				8489531E1C47C915000B1B8F /* Properties */,
+				848953131C47C915000B1B8F /* JSCParser.cpp */,
+				848953141C47C915000B1B8F /* JSCParser.h */,
+				848953151C47C915000B1B8F /* JSCStream.cpp */,
+				848953161C47C915000B1B8F /* JSCStream.h */,
+				848953171C47C915000B1B8F /* JSCTokens.cpp */,
+				848953181C47C915000B1B8F /* JSCTokens.h */,
+				8489531D1C47C915000B1B8F /* main.cpp */,
 			);
-			name = Resources;
+			path = Sources;
 			sourceTree = "<group>";
 		};
-		848952F11C47BE13000B1B8F /* Sources */ = {
+		848953191C47C915000B1B8F /* LanguageGenerator */ = {
 			isa = PBXGroup;
 			children = (
-				848953001C47BE47000B1B8F /* Properties */,
-				848952FB1C47BE22000B1B8F /* LanguageGenerator */,
-				848952F21C47BE1E000B1B8F /* JSCParser.cpp */,
-				848952F31C47BE1E000B1B8F /* JSCParser.h */,
-				848952F41C47BE1E000B1B8F /* JSCStream.cpp */,
-				848952F51C47BE1E000B1B8F /* JSCStream.h */,
-				848952F61C47BE1E000B1B8F /* JSCTokens.cpp */,
-				848952F71C47BE1E000B1B8F /* JSCTokens.h */,
-				848953051C47BE5C000B1B8F /* main.cpp */,
+				8489531A1C47C915000B1B8F /* IJSCLanguage.h */,
+				8489531B1C47C915000B1B8F /* JSCLanguageObject.h */,
+				8489531C1C47C915000B1B8F /* JSCOutput.h */,
 			);
-			name = Sources;
+			path = LanguageGenerator;
 			sourceTree = "<group>";
 		};
-		848952FB1C47BE22000B1B8F /* LanguageGenerator */ = {
+		8489531E1C47C915000B1B8F /* Properties */ = {
 			isa = PBXGroup;
 			children = (
-				848952FC1C47BE33000B1B8F /* IJSCLanguage.h */,
-				848952FD1C47BE33000B1B8F /* JSCLanguageObject.h */,
-				848952FE1C47BE33000B1B8F /* JSCOutput.h */,
+				8489531F1C47C915000B1B8F /* JSCArray.cpp */,
+				848953201C47C915000B1B8F /* JSCArray.h */,
+				848953211C47C915000B1B8F /* JSCEnum.cpp */,
+				848953221C47C915000B1B8F /* JSCEnum.h */,
+				848953231C47C915000B1B8F /* JSCObject.cpp */,
+				848953241C47C915000B1B8F /* JSCObject.h */,
+				848953251C47C915000B1B8F /* JSCProperty.cpp */,
+				848953261C47C915000B1B8F /* JSCProperty.h */,
 			);
-			name = LanguageGenerator;
+			path = Properties;
 			sourceTree = "<group>";
 		};
-		848953001C47BE47000B1B8F /* Properties */ = {
+		8489532F1C47C91E000B1B8F /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				848953011C47BE54000B1B8F /* JSCArray.h */,
-				848953021C47BE54000B1B8F /* JSCEnum.h */,
-				848953031C47BE54000B1B8F /* JSCObject.h */,
-				848953041C47BE54000B1B8F /* JSCProperty.h */,
+				848953301C47C91E000B1B8F /* test-schema.json */,
 			);
-			name = Properties;
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		84B76CA21C46275500878510 = {
 			isa = PBXGroup;
 			children = (
-				848952F11C47BE13000B1B8F /* Sources */,
-				848952EF1C47BDFF000B1B8F /* Resources */,
+				8489532F1C47C91E000B1B8F /* Resources */,
+				848953121C47C915000B1B8F /* Sources */,
 				84B76CAC1C46275500878510 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -175,10 +187,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				848952F81C47BE1E000B1B8F /* JSCParser.cpp in Sources */,
-				848952FA1C47BE1E000B1B8F /* JSCTokens.cpp in Sources */,
-				848953061C47BE5C000B1B8F /* main.cpp in Sources */,
-				848952F91C47BE1E000B1B8F /* JSCStream.cpp in Sources */,
+				848953281C47C915000B1B8F /* JSCStream.cpp in Sources */,
+				848953271C47C915000B1B8F /* JSCParser.cpp in Sources */,
+				8489532A1C47C915000B1B8F /* main.cpp in Sources */,
+				848953291C47C915000B1B8F /* JSCTokens.cpp in Sources */,
+				8489532B1C47C915000B1B8F /* JSCArray.cpp in Sources */,
+				8489532E1C47C915000B1B8F /* JSCProperty.cpp in Sources */,
+				8489532D1C47C915000B1B8F /* JSCObject.cpp in Sources */,
+				8489532C1C47C915000B1B8F /* JSCEnum.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

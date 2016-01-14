@@ -12,12 +12,14 @@ size_t JSCStream::length() const {
 }
 
 const char& JSCStream::operator[](size_t index) const {
+  static const char invalid = '\0';
+
   if (index < m_fileData.length()) {
     return m_fileData[index];
   }
 
   //TODO: add error
-  return '\0';
+  return invalid;
 }
 
 void JSCStream::readFile(const char* filePath) {

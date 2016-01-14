@@ -10,6 +10,7 @@
 #ifndef JSON_SCHEMA_CODE_ARRAY_H__
 #define JSON_SCHEMA_CODE_ARRAY_H__
 
+#include <vector>
 #include "JSCProperty.h"
 
 class JSCArray : public JSCProperty {

@@ -22,8 +22,8 @@ const JSCToken& JSCTokens::operator[](size_t index) const {
 
 bool JSCTokens::isSpace(const char& symbol) const {
   static const char tab = 9;
-  static const char enter = 10;
-  static const char caret = 11;
+  static const char enter = '\n';
+  static const char caret = '\r';
   static const char space = 32;
 
   return tab == symbol || enter == symbol || caret == symbol || space == symbol;
@@ -41,6 +41,14 @@ bool JSCTokens::isQuote(const char& symbol) const {
 
 bool JSCTokens::isCharacterQuote(const char& lastSymbol, const char& symbol) const {
   return '"' == symbol && '\\' == lastSymbol;
+}
+
+bool JSCTokens::isLineComment(const char& symbol, const char& nextSymbol) const {
+  return '/' == symbol && '/' == nextSymbol;
+}
+
+bool JSCTokens::isMultyLineCommentBegin(const char& symbol, const char& nextSymbol) const {
+  return '/' == symbol && '*' == nextSymbol;
 }
 
 void JSCTokens::addToken(JSCToken& buffer, bool canEmpty) {
@@ -74,6 +82,16 @@ void JSCTokens::createTokens(const JSCStream& stream) {
       continue;
     }
 
+    if (isLineComment(symbol, stream[i + 1])) {
+      i = endLineIndex(i, stream);
+      continue;
+    }
+
+    if (isMultyLineCommentBegin(symbol, stream[i + 1])) {
+      i = multyLineCommentEndIndex(i, stream);
+      continue;
+    }
+
     if (isSpace(symbol)) {
       addToken(buffer);
       continue;
@@ -81,10 +99,29 @@ void JSCTokens::createTokens(const JSCStream& stream) {
 
     if (isCharacter(symbol)) {
       addToken(buffer);
-      addToken(std::string(symbol));
+      std::string symbolStr = std::string(1, symbol);
+      addToken(symbolStr);
       continue;
     }
 
     buffer += symbol;
   }
+}
+
+size_t JSCTokens::endLineIndex(const size_t fromIndex, const JSCStream& stream) const {
+  for (size_t i = fromIndex + 2; i < stream.length(); i++) {
+    if ('\n' == stream[i]) {
+      return i;
+    }
+  }
+  return stream.length();
+}
+
+size_t JSCTokens::multyLineCommentEndIndex(const size_t fromIndex, const JSCStream& stream) const {
+  for (size_t i = fromIndex + 2; i < stream.length(); i++) {
+    if ('*' == stream[i] && '/' == stream[i + 1]) {
+      return i + 1;
+    }
+  }
+  return stream.length();
 }

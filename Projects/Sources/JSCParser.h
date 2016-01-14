@@ -22,6 +22,9 @@ class JSCParser {
   const std::vector<JSCPropertyPointer> allObjects() const;
 
  private:
+  void parse(const JSCTokens& tokens);
+
+ private:
   JSCPropertyPointer m_root;
 };
 

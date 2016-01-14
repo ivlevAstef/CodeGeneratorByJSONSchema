@@ -10,6 +10,7 @@
 #ifndef JSON_SCHEMA_CODE_OBJECT_H__
 #define JSON_SCHEMA_CODE_OBJECT_H__
 
+#include <vector>
 #include "JSCProperty.h"
 
 class JSCObject : public JSCProperty {

@@ -10,6 +10,7 @@
 #ifndef JSON_SCHEMA_CODE_OBJECT_H__
 #define JSON_SCHEMA_CODE_OBJECT_H__
 
+#include <vector>
 #include "JSCProperty.h"
 
 class JSCObject : public JSCProperty {
@@ -18,10 +19,10 @@ class JSCObject : public JSCProperty {
 
   bool addProperty(const JSCPropertyPointer property);
 
-  const std::vector<sJSCPropertyPointer>& properties() const;
+  const std::vector<JSCPropertyPointer>& properties() const;
 
  private:
-  std::vector<sJSCPropertyPointer> m_properties;
+  std::vector<JSCPropertyPointer> m_properties;
 };
 
 #endif /* JSON_SCHEMA_CODE_OBJECT_H__ */

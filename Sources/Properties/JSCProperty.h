@@ -10,24 +10,26 @@
 #ifndef JSON_SCHEMA_CODE_PROPERTY_H__
 #define JSON_SCHEMA_CODE_PROPERTY_H__
 
+#include <memory>
+#include <string>
+
+enum JSCPropertyType {
+  JSCProperty_Boolean,
+  JSCProperty_Integer,
+  JSCProperty_Number,
+  JSCProperty_String,
+  JSCProperty_Enum,
+
+  JSCProperty_Object,
+  JSCProperty_Array,
+};
+
 class JSCProperty {
- public:
-  enum JSCPropertyType {
-    JSCProperty_Boolean,
-    JSCProperty_Integer,
-    JSCProperty_Number,
-    JSCProperty_String,
-    JSCProperty_Enum,
-
-    JSCProperty_Object,
-    JSCProperty_Array,
-  };
-
  public:
   JSCProperty(JSCPropertyType type);
 
   void setName(std::string name);
-  void setPath(std::string name);
+  void setPath(std::string path);
   void setOptional(bool optional);
 
   const std::string& name() const;
@@ -43,6 +45,6 @@ class JSCProperty {
   bool m_optional;
 };
 
-typedef std::auto_ptr<JSCProperty> JSCPropertyPointer;
+typedef std::shared_ptr<JSCProperty> JSCPropertyPointer;
 
 #endif /* JSON_SCHEMA_CODE_PROPERTY_H__ */

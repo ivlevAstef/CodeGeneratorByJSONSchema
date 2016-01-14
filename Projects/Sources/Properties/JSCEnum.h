@@ -10,6 +10,7 @@
 #ifndef JSON_SCHEMA_CODE_ENUM_H__
 #define JSON_SCHEMA_CODE_ENUM_H__
 
+#include <vector>
 #include "JSCProperty.h"
 
 class JSCEnum : public JSCProperty {
