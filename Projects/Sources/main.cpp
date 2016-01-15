@@ -19,5 +19,7 @@ int main(int argc, const char* argv[]) {
 
   JSCParser parser(tokens);
 
+  parser.debugPrint(parser.root());
+
   return 0;
 }

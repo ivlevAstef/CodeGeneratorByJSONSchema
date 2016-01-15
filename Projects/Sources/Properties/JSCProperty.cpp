@@ -1,6 +1,36 @@
 
 #include "JSCProperty.h"
 
+std::string JSCProperty::propertyTypeToString(JSCPropertyType type) {
+  switch (type) {
+  case JSCProperty_Any:
+    return "any";
+  case JSCProperty_Array:
+    return "array";
+  case JSCProperty_Boolean:
+    return "boolean";
+  case JSCProperty_Enum:
+    return "enum";
+  case JSCProperty_Integer:
+    return "integer";
+  case JSCProperty_MultyType:
+    return "multy type";
+  case JSCProperty_Null:
+    return "null";
+  case JSCProperty_Number:
+    return "number";
+  case JSCProperty_Object:
+    return "object";
+  case JSCProperty_Ref:
+    return "ref";
+  case JSCProperty_String:
+    return "string";
+  case JSCProperty_Unknown:
+    return "unknown";
+  }
+  return "";
+}
+
 JSCProperty::JSCProperty(JSCPropertyType type) {
   m_type = type;
   m_optional = false;
@@ -34,14 +64,12 @@ const JSCProperty::Path& JSCProperty::path() const {
   return m_path;
 }
 
-const std::string& JSCProperty::name() const {
-  static std::string sEmpty = "";
-
+const std::string JSCProperty::pathName() const {
   if (m_path.size() > 0) {
     return m_path[m_path.size() - 1];
   }
 
-  return sEmpty;
+  return "";
 }
 
 JSCPropertyType JSCProperty::type() const {

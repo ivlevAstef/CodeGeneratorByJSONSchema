@@ -17,8 +17,39 @@ const JSCPropertyPointer JSCParser::root() const {
   return m_root;
 }
 
-const std::vector<JSCPropertyPointer> JSCParser::allObjects() const {
-  return std::vector<JSCPropertyPointer>();
+std::vector<const std::shared_ptr<const JSCObject>> JSCParser::objects() const {
+  std::vector<const std::shared_ptr<const JSCObject>> result;
+  for (const auto& object : m_objects) {
+    result.push_back(object);
+  }
+
+  return result;
+}
+
+std::vector<const std::shared_ptr<const JSCEnum>> JSCParser::enums() const {
+  std::vector<const std::shared_ptr<const JSCEnum>> result;
+  for (const auto& enumProperty : m_enums) {
+    result.push_back(enumProperty);
+  }
+
+  return result;
+}
+JSCPropertyPointer JSCParser::propertyByPath(const Path& path) const {
+  SIAAssertMsg(path.size() > 0 && "#" == path[0], "Not supported ref on other file");
+  Path correctPath = path;
+  correctPath[0] = "";
+
+  correctPath.erase(std::remove_if(correctPath.begin(), correctPath.end(), [](std::string subpath) {
+                      return "properties" == subpath || "0" == subpath;
+                    }),
+                    correctPath.end());
+
+  JSCPropertyPointer property = propertyByPath(m_root, correctPath, 0);
+
+  if (nullptr == property.get()) {
+    SIAWarning("can't find property by path");
+  }
+  return property;
 }
 
 void JSCParser::parse(const JSCTokens& tokens) {
@@ -26,6 +57,16 @@ void JSCParser::parse(const JSCTokens& tokens) {
   std::vector<std::string> path;
 
   m_root = parse(tokens, path, tokenIndex);
+
+  SIAAssert(JSCProperty_Unknown == m_root->type());
+  const auto& properties = ((JSCUnknown*)m_root.get())->properties();
+  SIAAssert(1 == properties.size());
+  m_root = properties[0];
+
+  fillPropertyArrays(m_root);
+
+  setupRefProperties();
+  setupRootNames();
 }
 
 static std::string nameByTokensBuffer(std::vector<JSCToken>& tokensBuffer) {
@@ -60,10 +101,10 @@ JSCPropertyPointer JSCParser::parse(const JSCTokens& tokens, const Path& path, s
       tokenIndex++;
       JSCPropertyPointer child = parse(tokens, newPath, tokenIndex);
       children.push_back(child);
+    } else {
+      depthTokens.push_back(tokens[tokenIndex]);
+      tokenIndex++;
     }
-
-    depthTokens.push_back(tokens[tokenIndex]);
-    tokenIndex++;
   } while (tokenIndex < tokens.length() && !isEndBrace(tokens[tokenIndex]));
   tokenIndex++;
 
@@ -166,7 +207,7 @@ JSCPropertyPointer JSCParser::createObjectProperty(const std::vector<JSCToken>& 
   JSCUnknown* objProperties = nullptr;
 
   for (const JSCPropertyPointer& child : children) {
-    if ("properties" == child->name() && JSCProperty_Unknown == child->type()) {
+    if ("properties" == child->pathName() && JSCProperty_Unknown == child->type()) {
       SIAAssertMsg(nullptr == objProperties, "Double find properties in object.");
       objProperties = (JSCUnknown*)child.get();
     }
@@ -184,7 +225,7 @@ JSCPropertyPointer JSCParser::createObjectProperty(const std::vector<JSCToken>& 
   ///removed optional for required names
   for (const JSCToken& requiredName : required) {
     for (const JSCPropertyPointer& property : properties) {
-      if (property->name() == requiredName) {
+      if (property->pathName() == requiredName) {
         property->setOptional(false);
       }
     }
@@ -197,7 +238,7 @@ JSCPropertyPointer JSCParser::createArrayProperty(const std::vector<JSCToken>& t
   JSCPropertyPointer itemType(nullptr);
 
   for (const JSCPropertyPointer& child : children) {
-    if ("item" == child->name() || "items" == child->name()) {
+    if ("item" == child->pathName() || "items" == child->pathName()) {
       SIAAssertMsg(nullptr == itemType.get(), "Double find items in array.");
       itemType = child;
     }
@@ -304,4 +345,130 @@ JSCToken JSCParser::getPropertyByName(const std::string name, const std::vector<
     }
   }
   return "";
+}
+
+JSCPropertyPointer JSCParser::propertyByPath(JSCPropertyPointer property, const Path& path, size_t index) const {
+  if (index >= path.size()) {
+    return JSCPropertyPointer(nullptr);
+  }
+
+  const std::string root = path[index];
+
+  if (root != property->pathName()) {
+    return JSCPropertyPointer(nullptr);
+  }
+
+  if (index + 1 == path.size()) {
+    return property;
+  }
+
+  std::vector<JSCPropertyPointer> objects;
+  if (JSCProperty_Object == property->type()) {
+    for (const JSCPropertyPointer& child : ((JSCObject*)property.get())->properties()) {
+      objects.push_back(propertyByPath(child, path, index + 1));
+    }
+  } else if (JSCProperty_Array == property->type()) {
+    objects.push_back(propertyByPath(((JSCArray*)property.get())->propertyType(), path, index + 1));
+  } else if (JSCProperty_Unknown == property->type()) {
+    for (const JSCPropertyPointer& child : ((JSCUnknown*)property.get())->properties()) {
+      objects.push_back(propertyByPath(child, path, index + 1));
+    }
+  }
+
+  objects.erase(std::remove_if(objects.begin(), objects.end(), [](JSCPropertyPointer obj) {
+                  return nullptr == obj.get();
+                }),
+                objects.end());
+
+  if (objects.empty()) {
+    return JSCPropertyPointer(nullptr);
+  }
+  SIAAssert(1 == objects.size());
+
+  return objects[0];
+}
+
+void JSCParser::fillPropertyArrays(JSCPropertyPointer property) {
+  SIAAssert(nullptr != property);
+
+  if (JSCProperty_Object == property->type()) {
+    m_objects.push_back(std::static_pointer_cast<JSCObject>(property));
+  } else if (JSCProperty_Enum == property->type()) {
+    m_enums.push_back(std::static_pointer_cast<JSCEnum>(property));
+  } else if (JSCProperty_Ref == property->type()) {
+    m_references.push_back(std::static_pointer_cast<JSCRef>(property));
+  }
+
+  if (JSCProperty_Object == property->type()) {
+    for (JSCPropertyPointer child : ((JSCObject*)property.get())->properties()) {
+      fillPropertyArrays(child);
+    }
+  } else if (JSCProperty_Array == property->type()) {
+    fillPropertyArrays(((JSCArray*)property.get())->propertyType());
+  } else if (JSCProperty_Unknown == property->type()) {
+    for (JSCPropertyPointer child : ((JSCUnknown*)property.get())->properties()) {
+      fillPropertyArrays(child);
+    }
+  }
+}
+
+void JSCParser::setupRefProperties() {
+  for (const auto& reference : m_references) {
+    JSCPropertyPointer newProperty = reference;
+
+    do {
+      Path path = ((JSCRef*)newProperty.get())->separatedRefPath();
+      newProperty = propertyByPath(path);
+    } while (nullptr != newProperty.get() && JSCProperty_Ref == newProperty->type());
+
+    reference->setRefProperty(newProperty);
+  }
+}
+
+void JSCParser::setupRootNames() {
+  static const size_t rootPathSize = 3;  // "" "properties" "ClassName"
+
+  for (const auto& object : m_objects) {
+    if (rootPathSize == object->path().size()) {
+      object->setRootName(object->pathName());
+    } else {
+      for (const auto& reference : m_references) {
+        if (reference->refProperty() == object && rootPathSize == reference->path().size()) {
+          object->setRootName(reference->pathName());
+          break;
+        }
+      }
+    }
+  }
+}
+
+void JSCParser::debugPrint(JSCPropertyPointer property) {
+  if (nullptr == property.get()) {
+    return;
+  }
+
+  if (JSCProperty_Object == property->type()) {
+    SIADebug("Object {name:%s, rootname:%s}", property->pathName().c_str(), ((JSCObject*)property.get())->rootName().c_str());
+  } else if (JSCProperty_Ref == property->type()) {
+    JSCPropertyPointer refProperty = ((JSCRef*)property.get())->refProperty();
+    if (nullptr == refProperty.get()) {
+      SIADebug("Ref {name:%s, null}", property->pathName().c_str());
+    } else {
+      SIADebug("Ref {name:%s, type:%s name:%s}", property->pathName().c_str(), JSCProperty::propertyTypeToString(refProperty->type()).c_str(), refProperty->pathName().c_str());
+    }
+  } else {
+    SIADebug("%s {name:%s}", JSCProperty::propertyTypeToString(property->type()).c_str(), property->pathName().c_str());
+  }
+
+  if (JSCProperty_Object == property->type()) {
+    for (JSCPropertyPointer child : ((JSCObject*)property.get())->properties()) {
+      debugPrint(child);
+    }
+  } else if (JSCProperty_Array == property->type()) {
+    debugPrint(((JSCArray*)property.get())->propertyType());
+  } else if (JSCProperty_Unknown == property->type()) {
+    for (JSCPropertyPointer child : ((JSCUnknown*)property.get())->properties()) {
+      debugPrint(child);
+    }
+  }
 }

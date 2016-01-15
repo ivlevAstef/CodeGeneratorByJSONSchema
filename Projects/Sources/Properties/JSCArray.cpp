@@ -5,6 +5,6 @@ JSCArray::JSCArray(JSCPropertyPointer propertyType) : JSCProperty(JSCProperty_Ar
   m_propertyType = propertyType;
 }
 
-const JSCPropertyPointer& JSCArray::propertyType() const {
+JSCPropertyPointer JSCArray::propertyType() const {
   return m_propertyType;
 }

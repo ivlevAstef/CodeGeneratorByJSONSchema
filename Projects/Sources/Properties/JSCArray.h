@@ -17,7 +17,7 @@ class JSCArray : public JSCProperty {
  public:
   JSCArray(JSCPropertyPointer propertyType);
 
-  const JSCPropertyPointer& propertyType() const;
+  JSCPropertyPointer propertyType() const;
 
  private:
   JSCPropertyPointer m_propertyType;
