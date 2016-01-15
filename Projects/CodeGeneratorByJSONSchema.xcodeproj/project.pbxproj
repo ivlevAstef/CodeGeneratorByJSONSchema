@@ -7,19 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		848953271C47C915000B1B8F /* JSCParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848953131C47C915000B1B8F /* JSCParser.cpp */; };
-		848953281C47C915000B1B8F /* JSCStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848953151C47C915000B1B8F /* JSCStream.cpp */; };
-		848953291C47C915000B1B8F /* JSCTokens.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848953171C47C915000B1B8F /* JSCTokens.cpp */; };
-		8489532A1C47C915000B1B8F /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8489531D1C47C915000B1B8F /* main.cpp */; };
-		8489532B1C47C915000B1B8F /* JSCArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8489531F1C47C915000B1B8F /* JSCArray.cpp */; };
-		8489532C1C47C915000B1B8F /* JSCEnum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848953211C47C915000B1B8F /* JSCEnum.cpp */; };
-		8489532D1C47C915000B1B8F /* JSCObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848953231C47C915000B1B8F /* JSCObject.cpp */; };
-		8489532E1C47C915000B1B8F /* JSCProperty.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848953251C47C915000B1B8F /* JSCProperty.cpp */; };
-		848953311C47C94C000B1B8F /* test-schema.json in CopyFiles */ = {isa = PBXBuildFile; fileRef = 848953301C47C91E000B1B8F /* test-schema.json */; };
-		848953341C47D62B000B1B8F /* JSCUnknown.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848953321C47D62B000B1B8F /* JSCUnknown.cpp */; };
-		848953371C47DD7D000B1B8F /* JSCRef.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848953351C47DD7D000B1B8F /* JSCRef.cpp */; };
-		8489533D1C48F250000B1B8F /* JSCMultyType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8489533B1C48F250000B1B8F /* JSCMultyType.cpp */; };
-		848953531C48F4E7000B1B8F /* SIALogger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848953511C48F4E7000B1B8F /* SIALogger.cpp */; };
+		848953A01C49334A000B1B8F /* JSCParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848953811C49334A000B1B8F /* JSCParser.cpp */; };
+		848953A11C49334A000B1B8F /* JSCStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848953831C49334A000B1B8F /* JSCStream.cpp */; };
+		848953A21C49334A000B1B8F /* JSCTokens.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848953851C49334A000B1B8F /* JSCTokens.cpp */; };
+		848953A31C49334A000B1B8F /* SIALogger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8489538C1C49334A000B1B8F /* SIALogger.cpp */; };
+		848953A41C49334A000B1B8F /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8489538E1C49334A000B1B8F /* main.cpp */; };
+		848953A51C49334A000B1B8F /* JSCArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848953921C49334A000B1B8F /* JSCArray.cpp */; };
+		848953A61C49334A000B1B8F /* JSCEnum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848953941C49334A000B1B8F /* JSCEnum.cpp */; };
+		848953A71C49334A000B1B8F /* JSCMultyType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848953961C49334A000B1B8F /* JSCMultyType.cpp */; };
+		848953A81C49334A000B1B8F /* JSCObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848953981C49334A000B1B8F /* JSCObject.cpp */; };
+		848953A91C49334A000B1B8F /* JSCProperty.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8489539A1C49334A000B1B8F /* JSCProperty.cpp */; };
+		848953AA1C49334A000B1B8F /* JSCRef.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8489539C1C49334A000B1B8F /* JSCRef.cpp */; };
+		848953AB1C49334A000B1B8F /* JSCUnknown.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8489539E1C49334A000B1B8F /* JSCUnknown.cpp */; };
+		848953AE1C493361000B1B8F /* test-schema.json in CopyFiles */ = {isa = PBXBuildFile; fileRef = 848953AD1C493358000B1B8F /* test-schema.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -29,40 +29,40 @@
 			dstPath = "";
 			dstSubfolderSpec = 7;
 			files = (
-				848953311C47C94C000B1B8F /* test-schema.json in CopyFiles */,
+				848953AE1C493361000B1B8F /* test-schema.json in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		848953131C47C915000B1B8F /* JSCParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSCParser.cpp; sourceTree = "<group>"; };
-		848953141C47C915000B1B8F /* JSCParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCParser.h; sourceTree = "<group>"; };
-		848953151C47C915000B1B8F /* JSCStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSCStream.cpp; sourceTree = "<group>"; };
-		848953161C47C915000B1B8F /* JSCStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCStream.h; sourceTree = "<group>"; };
-		848953171C47C915000B1B8F /* JSCTokens.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSCTokens.cpp; sourceTree = "<group>"; };
-		848953181C47C915000B1B8F /* JSCTokens.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCTokens.h; sourceTree = "<group>"; };
-		8489531A1C47C915000B1B8F /* IJSCLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IJSCLanguage.h; sourceTree = "<group>"; };
-		8489531B1C47C915000B1B8F /* JSCLanguageObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCLanguageObject.h; sourceTree = "<group>"; };
-		8489531C1C47C915000B1B8F /* JSCOutput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCOutput.h; sourceTree = "<group>"; };
-		8489531D1C47C915000B1B8F /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		8489531F1C47C915000B1B8F /* JSCArray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSCArray.cpp; sourceTree = "<group>"; };
-		848953201C47C915000B1B8F /* JSCArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCArray.h; sourceTree = "<group>"; };
-		848953211C47C915000B1B8F /* JSCEnum.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSCEnum.cpp; sourceTree = "<group>"; };
-		848953221C47C915000B1B8F /* JSCEnum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCEnum.h; sourceTree = "<group>"; };
-		848953231C47C915000B1B8F /* JSCObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSCObject.cpp; sourceTree = "<group>"; };
-		848953241C47C915000B1B8F /* JSCObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCObject.h; sourceTree = "<group>"; };
-		848953251C47C915000B1B8F /* JSCProperty.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSCProperty.cpp; sourceTree = "<group>"; };
-		848953261C47C915000B1B8F /* JSCProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCProperty.h; sourceTree = "<group>"; };
-		848953301C47C91E000B1B8F /* test-schema.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "test-schema.json"; sourceTree = "<group>"; };
-		848953321C47D62B000B1B8F /* JSCUnknown.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSCUnknown.cpp; sourceTree = "<group>"; };
-		848953331C47D62B000B1B8F /* JSCUnknown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCUnknown.h; sourceTree = "<group>"; };
-		848953351C47DD7D000B1B8F /* JSCRef.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSCRef.cpp; sourceTree = "<group>"; };
-		848953361C47DD7D000B1B8F /* JSCRef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCRef.h; sourceTree = "<group>"; };
-		8489533B1C48F250000B1B8F /* JSCMultyType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSCMultyType.cpp; sourceTree = "<group>"; };
-		8489533C1C48F250000B1B8F /* JSCMultyType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCMultyType.h; sourceTree = "<group>"; };
-		848953511C48F4E7000B1B8F /* SIALogger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SIALogger.cpp; sourceTree = "<group>"; };
-		848953521C48F4E7000B1B8F /* SIALogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SIALogger.h; sourceTree = "<group>"; };
+		848953811C49334A000B1B8F /* JSCParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSCParser.cpp; sourceTree = "<group>"; };
+		848953821C49334A000B1B8F /* JSCParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCParser.h; sourceTree = "<group>"; };
+		848953831C49334A000B1B8F /* JSCStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSCStream.cpp; sourceTree = "<group>"; };
+		848953841C49334A000B1B8F /* JSCStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCStream.h; sourceTree = "<group>"; };
+		848953851C49334A000B1B8F /* JSCTokens.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSCTokens.cpp; sourceTree = "<group>"; };
+		848953861C49334A000B1B8F /* JSCTokens.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCTokens.h; sourceTree = "<group>"; };
+		848953881C49334A000B1B8F /* IJSCLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IJSCLanguage.h; sourceTree = "<group>"; };
+		848953891C49334A000B1B8F /* JSCLanguageObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCLanguageObject.h; sourceTree = "<group>"; };
+		8489538A1C49334A000B1B8F /* JSCOutput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCOutput.h; sourceTree = "<group>"; };
+		8489538C1C49334A000B1B8F /* SIALogger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SIALogger.cpp; sourceTree = "<group>"; };
+		8489538D1C49334A000B1B8F /* SIALogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SIALogger.h; sourceTree = "<group>"; };
+		8489538E1C49334A000B1B8F /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		848953921C49334A000B1B8F /* JSCArray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSCArray.cpp; sourceTree = "<group>"; };
+		848953931C49334A000B1B8F /* JSCArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCArray.h; sourceTree = "<group>"; };
+		848953941C49334A000B1B8F /* JSCEnum.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSCEnum.cpp; sourceTree = "<group>"; };
+		848953951C49334A000B1B8F /* JSCEnum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCEnum.h; sourceTree = "<group>"; };
+		848953961C49334A000B1B8F /* JSCMultyType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSCMultyType.cpp; sourceTree = "<group>"; };
+		848953971C49334A000B1B8F /* JSCMultyType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCMultyType.h; sourceTree = "<group>"; };
+		848953981C49334A000B1B8F /* JSCObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSCObject.cpp; sourceTree = "<group>"; };
+		848953991C49334A000B1B8F /* JSCObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCObject.h; sourceTree = "<group>"; };
+		8489539A1C49334A000B1B8F /* JSCProperty.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSCProperty.cpp; sourceTree = "<group>"; };
+		8489539B1C49334A000B1B8F /* JSCProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCProperty.h; sourceTree = "<group>"; };
+		8489539C1C49334A000B1B8F /* JSCRef.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSCRef.cpp; sourceTree = "<group>"; };
+		8489539D1C49334A000B1B8F /* JSCRef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCRef.h; sourceTree = "<group>"; };
+		8489539E1C49334A000B1B8F /* JSCUnknown.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSCUnknown.cpp; sourceTree = "<group>"; };
+		8489539F1C49334A000B1B8F /* JSCUnknown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCUnknown.h; sourceTree = "<group>"; };
+		848953AD1C493358000B1B8F /* test-schema.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "test-schema.json"; sourceTree = "<group>"; };
 		84B76CAB1C46275500878510 /* CodeGeneratorByJSONSchema */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CodeGeneratorByJSONSchema; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -77,76 +77,94 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		848953121C47C915000B1B8F /* Sources */ = {
+		848953801C49334A000B1B8F /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				848953501C48F4E7000B1B8F /* Logger */,
-				848953191C47C915000B1B8F /* LanguageGenerator */,
-				8489531E1C47C915000B1B8F /* Properties */,
-				848953131C47C915000B1B8F /* JSCParser.cpp */,
-				848953141C47C915000B1B8F /* JSCParser.h */,
-				848953151C47C915000B1B8F /* JSCStream.cpp */,
-				848953161C47C915000B1B8F /* JSCStream.h */,
-				848953171C47C915000B1B8F /* JSCTokens.cpp */,
-				848953181C47C915000B1B8F /* JSCTokens.h */,
-				8489531D1C47C915000B1B8F /* main.cpp */,
+				848953811C49334A000B1B8F /* JSCParser.cpp */,
+				848953821C49334A000B1B8F /* JSCParser.h */,
+				848953831C49334A000B1B8F /* JSCStream.cpp */,
+				848953841C49334A000B1B8F /* JSCStream.h */,
+				848953851C49334A000B1B8F /* JSCTokens.cpp */,
+				848953861C49334A000B1B8F /* JSCTokens.h */,
+				848953871C49334A000B1B8F /* LanguageGenerator */,
+				8489538B1C49334A000B1B8F /* Logger */,
+				8489538E1C49334A000B1B8F /* main.cpp */,
+				8489538F1C49334A000B1B8F /* MSTLogger */,
+				848953911C49334A000B1B8F /* Properties */,
 			);
-			path = Sources;
+			name = Sources;
+			path = ../Sources;
 			sourceTree = "<group>";
 		};
-		848953191C47C915000B1B8F /* LanguageGenerator */ = {
+		848953871C49334A000B1B8F /* LanguageGenerator */ = {
 			isa = PBXGroup;
 			children = (
-				8489531A1C47C915000B1B8F /* IJSCLanguage.h */,
-				8489531B1C47C915000B1B8F /* JSCLanguageObject.h */,
-				8489531C1C47C915000B1B8F /* JSCOutput.h */,
+				848953881C49334A000B1B8F /* IJSCLanguage.h */,
+				848953891C49334A000B1B8F /* JSCLanguageObject.h */,
+				8489538A1C49334A000B1B8F /* JSCOutput.h */,
 			);
 			path = LanguageGenerator;
 			sourceTree = "<group>";
 		};
-		8489531E1C47C915000B1B8F /* Properties */ = {
+		8489538B1C49334A000B1B8F /* Logger */ = {
 			isa = PBXGroup;
 			children = (
-				8489531F1C47C915000B1B8F /* JSCArray.cpp */,
-				848953201C47C915000B1B8F /* JSCArray.h */,
-				848953211C47C915000B1B8F /* JSCEnum.cpp */,
-				848953221C47C915000B1B8F /* JSCEnum.h */,
-				848953231C47C915000B1B8F /* JSCObject.cpp */,
-				848953241C47C915000B1B8F /* JSCObject.h */,
-				848953251C47C915000B1B8F /* JSCProperty.cpp */,
-				848953261C47C915000B1B8F /* JSCProperty.h */,
-				848953321C47D62B000B1B8F /* JSCUnknown.cpp */,
-				848953331C47D62B000B1B8F /* JSCUnknown.h */,
-				848953351C47DD7D000B1B8F /* JSCRef.cpp */,
-				848953361C47DD7D000B1B8F /* JSCRef.h */,
-				8489533B1C48F250000B1B8F /* JSCMultyType.cpp */,
-				8489533C1C48F250000B1B8F /* JSCMultyType.h */,
+				8489538C1C49334A000B1B8F /* SIALogger.cpp */,
+				8489538D1C49334A000B1B8F /* SIALogger.h */,
+			);
+			path = Logger;
+			sourceTree = "<group>";
+		};
+		8489538F1C49334A000B1B8F /* MSTLogger */ = {
+			isa = PBXGroup;
+			children = (
+				848953901C49334A000B1B8F /* LogOutput */,
+			);
+			path = MSTLogger;
+			sourceTree = "<group>";
+		};
+		848953901C49334A000B1B8F /* LogOutput */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = LogOutput;
+			sourceTree = "<group>";
+		};
+		848953911C49334A000B1B8F /* Properties */ = {
+			isa = PBXGroup;
+			children = (
+				848953921C49334A000B1B8F /* JSCArray.cpp */,
+				848953931C49334A000B1B8F /* JSCArray.h */,
+				848953941C49334A000B1B8F /* JSCEnum.cpp */,
+				848953951C49334A000B1B8F /* JSCEnum.h */,
+				848953961C49334A000B1B8F /* JSCMultyType.cpp */,
+				848953971C49334A000B1B8F /* JSCMultyType.h */,
+				848953981C49334A000B1B8F /* JSCObject.cpp */,
+				848953991C49334A000B1B8F /* JSCObject.h */,
+				8489539A1C49334A000B1B8F /* JSCProperty.cpp */,
+				8489539B1C49334A000B1B8F /* JSCProperty.h */,
+				8489539C1C49334A000B1B8F /* JSCRef.cpp */,
+				8489539D1C49334A000B1B8F /* JSCRef.h */,
+				8489539E1C49334A000B1B8F /* JSCUnknown.cpp */,
+				8489539F1C49334A000B1B8F /* JSCUnknown.h */,
 			);
 			path = Properties;
 			sourceTree = "<group>";
 		};
-		8489532F1C47C91E000B1B8F /* Resources */ = {
+		848953AC1C493358000B1B8F /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				848953301C47C91E000B1B8F /* test-schema.json */,
+				848953AD1C493358000B1B8F /* test-schema.json */,
 			);
-			path = Resources;
-			sourceTree = "<group>";
-		};
-		848953501C48F4E7000B1B8F /* Logger */ = {
-			isa = PBXGroup;
-			children = (
-				848953511C48F4E7000B1B8F /* SIALogger.cpp */,
-				848953521C48F4E7000B1B8F /* SIALogger.h */,
-			);
-			path = Logger;
+			name = Resources;
+			path = ../Resources;
 			sourceTree = "<group>";
 		};
 		84B76CA21C46275500878510 = {
 			isa = PBXGroup;
 			children = (
-				8489532F1C47C91E000B1B8F /* Resources */,
-				848953121C47C915000B1B8F /* Sources */,
+				848953AC1C493358000B1B8F /* Resources */,
+				848953801C49334A000B1B8F /* Sources */,
 				84B76CAC1C46275500878510 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -215,18 +233,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				848953281C47C915000B1B8F /* JSCStream.cpp in Sources */,
-				848953271C47C915000B1B8F /* JSCParser.cpp in Sources */,
-				848953371C47DD7D000B1B8F /* JSCRef.cpp in Sources */,
-				848953531C48F4E7000B1B8F /* SIALogger.cpp in Sources */,
-				8489532A1C47C915000B1B8F /* main.cpp in Sources */,
-				848953291C47C915000B1B8F /* JSCTokens.cpp in Sources */,
-				8489532B1C47C915000B1B8F /* JSCArray.cpp in Sources */,
-				8489532E1C47C915000B1B8F /* JSCProperty.cpp in Sources */,
-				8489532D1C47C915000B1B8F /* JSCObject.cpp in Sources */,
-				848953341C47D62B000B1B8F /* JSCUnknown.cpp in Sources */,
-				8489533D1C48F250000B1B8F /* JSCMultyType.cpp in Sources */,
-				8489532C1C47C915000B1B8F /* JSCEnum.cpp in Sources */,
+				848953A11C49334A000B1B8F /* JSCStream.cpp in Sources */,
+				848953AA1C49334A000B1B8F /* JSCRef.cpp in Sources */,
+				848953A61C49334A000B1B8F /* JSCEnum.cpp in Sources */,
+				848953A01C49334A000B1B8F /* JSCParser.cpp in Sources */,
+				848953A21C49334A000B1B8F /* JSCTokens.cpp in Sources */,
+				848953A81C49334A000B1B8F /* JSCObject.cpp in Sources */,
+				848953A91C49334A000B1B8F /* JSCProperty.cpp in Sources */,
+				848953AB1C49334A000B1B8F /* JSCUnknown.cpp in Sources */,
+				848953A41C49334A000B1B8F /* main.cpp in Sources */,
+				848953A51C49334A000B1B8F /* JSCArray.cpp in Sources */,
+				848953A71C49334A000B1B8F /* JSCMultyType.cpp in Sources */,
+				848953A31C49334A000B1B8F /* SIALogger.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

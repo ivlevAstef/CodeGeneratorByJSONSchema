@@ -15,14 +15,16 @@
 
 class JSCObject : public JSCProperty {
  public:
-  JSCObject();
+  JSCObject(const std::vector<JSCPropertyPointer>& properties);
 
-  bool addProperty(const JSCPropertyPointer property);
+  void setRootName(const std::string& name);
 
   const std::vector<JSCPropertyPointer>& properties() const;
+  const std::string& rootName() const;
 
  private:
   std::vector<JSCPropertyPointer> m_properties;
+  std::string m_rootName;
 };
 
 #endif /* JSON_SCHEMA_CODE_OBJECT_H__ */

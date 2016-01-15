@@ -9,12 +9,17 @@
 #include "JSCParser.h"
 #include "JSCStream.h"
 #include "JSCTokens.h"
+#include "SIALogger.h"
 
 int main(int argc, const char* argv[]) {
+  SIA::Logger::Initialization();
+
   JSCStream stream("test-schema.json");
   JSCTokens tokens(stream);
 
   JSCParser parser(tokens);
+
+  parser.debugPrint(parser.root());
 
   return 0;
 }

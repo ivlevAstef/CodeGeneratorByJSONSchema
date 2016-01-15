@@ -15,7 +15,7 @@
 
 class JSCEnum : public JSCProperty {
  public:
-  JSCEnum(std::vector<std::string> identifiers);
+  JSCEnum(const std::vector<std::string>& identifiers);
 
   const std::vector<std::string>& identifiers() const;
 

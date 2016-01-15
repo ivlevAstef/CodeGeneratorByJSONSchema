@@ -1,16 +1,50 @@
 
 #include "JSCProperty.h"
 
+std::string JSCProperty::propertyTypeToString(JSCPropertyType type) {
+  switch (type) {
+  case JSCProperty_Any:
+    return "any";
+  case JSCProperty_Array:
+    return "array";
+  case JSCProperty_Boolean:
+    return "boolean";
+  case JSCProperty_Enum:
+    return "enum";
+  case JSCProperty_Integer:
+    return "integer";
+  case JSCProperty_MultyType:
+    return "multy type";
+  case JSCProperty_Null:
+    return "null";
+  case JSCProperty_Number:
+    return "number";
+  case JSCProperty_Object:
+    return "object";
+  case JSCProperty_Ref:
+    return "ref";
+  case JSCProperty_String:
+    return "string";
+  case JSCProperty_Unknown:
+    return "unknown";
+  }
+  return "";
+}
+
 JSCProperty::JSCProperty(JSCPropertyType type) {
   m_type = type;
   m_optional = false;
 }
 
-void JSCProperty::setName(std::string name) {
-  m_name = name;
+void JSCProperty::setTitle(const std::string& title) {
+  m_title = title;
 }
 
-void JSCProperty::setPath(std::string path) {
+void JSCProperty::setDescription(const std::string& description) {
+  m_description = description;
+}
+
+void JSCProperty::setPath(const Path& path) {
   m_path = path;
 }
 
@@ -18,12 +52,24 @@ void JSCProperty::setOptional(bool optional) {
   m_optional = optional;
 }
 
-const std::string& JSCProperty::name() const {
-  return m_name;
+const std::string& JSCProperty::title() const {
+  return m_title;
 }
 
-const std::string& JSCProperty::path() const {
+const std::string& JSCProperty::description() const {
+  return m_description;
+}
+
+const JSCProperty::Path& JSCProperty::path() const {
   return m_path;
+}
+
+const std::string JSCProperty::pathName() const {
+  if (m_path.size() > 0) {
+    return m_path[m_path.size() - 1];
+  }
+
+  return "";
 }
 
 JSCPropertyType JSCProperty::type() const {

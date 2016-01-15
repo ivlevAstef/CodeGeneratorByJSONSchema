@@ -1,14 +1,18 @@
 
 #include "JSCObject.h"
 
-JSCObject::JSCObject() : JSCProperty(JSCProperty_Object) {
+JSCObject::JSCObject(const std::vector<JSCPropertyPointer>& properties) : JSCProperty(JSCProperty_Object) {
+  m_properties = properties;
 }
 
-bool JSCObject::addProperty(const JSCPropertyPointer property) {
-  m_properties.push_back(property);
-  return true;
+void JSCObject::setRootName(const std::string& name) {
+  m_rootName = name;
 }
 
 const std::vector<JSCPropertyPointer>& JSCObject::properties() const {
   return m_properties;
+}
+
+const std::string& JSCObject::rootName() const {
+  return m_rootName;
 }

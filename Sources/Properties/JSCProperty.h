@@ -12,8 +12,12 @@
 
 #include <memory>
 #include <string>
+#include <vector>
 
 enum JSCPropertyType {
+  JSCProperty_Unknown,
+  JSCProperty_Null,
+
   JSCProperty_Boolean,
   JSCProperty_Integer,
   JSCProperty_Number,
@@ -22,27 +26,43 @@ enum JSCPropertyType {
 
   JSCProperty_Object,
   JSCProperty_Array,
+  JSCProperty_Any,
+  JSCProperty_MultyType,
+
+  JSCProperty_Ref,
 };
 
 class JSCProperty {
  public:
+  typedef std::vector<std::string> Path;
+
+  static std::string propertyTypeToString(JSCPropertyType type);
+
+ public:
   JSCProperty(JSCPropertyType type);
 
-  void setName(std::string name);
-  void setPath(std::string path);
+  void setTitle(const std::string& title);
+  void setDescription(const std::string& description);
+
+  void setPath(const Path& path);
   void setOptional(bool optional);
 
-  const std::string& name() const;
-  const std::string& path() const;
+  const std::string& title() const;
+  const std::string& description() const;
+
+  const Path& path() const;
+  const std::string pathName() const;
 
   JSCPropertyType type() const;
   bool optional() const;
 
  private:
-  std::string m_name;
-  std::string m_path;
+  Path m_path;
   JSCPropertyType m_type;
   bool m_optional;
+
+  std::string m_title;
+  std::string m_description;
 };
 
 typedef std::shared_ptr<JSCProperty> JSCPropertyPointer;

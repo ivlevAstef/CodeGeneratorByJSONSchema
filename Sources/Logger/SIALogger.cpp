@@ -1,20 +1,20 @@
 //
 //File: SIALogger.cpp
-//Description: 
+//Description:
 //Author: Ivlev Alexander. Stef
 //Created: 21:21 16/7/2015
 //Copyright (c) SIA 2015. All Right Reserved.
 //
 
-#include "../SIALogger.h"
+#include "SIALogger.h"
 
-#include <iomanip>
 #include <ctime>
+#include <iomanip>
 
-#include <iostream>
-#include <sstream>
 #include <stdarg.h>  // For va_start, etc.
-#include <memory>    // For std::unique_ptr
+#include <iostream>
+#include <memory>  // For std::unique_ptr
+#include <sstream>
 
 #if defined(_WIN32)
 #include <Windows.h>
@@ -22,17 +22,17 @@
 
 #define ABS(a) ((a) < 0 ? -(a) : (a))
 
-#pragma warning( push )
-#pragma warning( disable : 4996 )
+#pragma warning(push)
+#pragma warning(disable : 4996)
 
 using namespace SIA;
 
 static std::string fileName(std::string filePath) {
   std::size_t found = filePath.find_last_of("/\\");
   if (found == std::string::npos) {
-     return filePath;
+    return filePath;
   }
-  return filePath.substr(found+1);
+  return filePath.substr(found + 1);
 }
 
 Logger* Logger::single = nullptr;
@@ -44,7 +44,7 @@ void Logger::Initialization() {
 
 Logger::Logger() {
   m_startApplicationTime = std::chrono::high_resolution_clock::now();
-    
+
   auto now = std::chrono::system_clock::now();
   std::time_t now_c = std::chrono::system_clock::to_time_t(now);
   std::cout << "Application Start at " << std::put_time(std::localtime(&now_c), "%F %T") << "." << std::endl;
@@ -94,7 +94,7 @@ void Logger::logToStream(const char* logLevel, const char* file, int line, const
   logBuffer[logIndex++] = '\n';
   logBuffer[logIndex] = 0;
 
-  ///print
+///print
 #if defined(_WIN32)
   OutputDebugStringA(logBuffer);
 #else
@@ -103,4 +103,4 @@ void Logger::logToStream(const char* logLevel, const char* file, int line, const
 }
 
 
-#pragma warning( pop )
+#pragma warning(pop)
