@@ -7,8 +7,8 @@
 //
 
 #pragma once
-#ifndef JSON_SCHEMA_CODE_OBJECT_H__
-#define JSON_SCHEMA_CODE_OBJECT_H__
+#ifndef JSON_SCHEMA_CODE_REF_H__
+#define JSON_SCHEMA_CODE_REF_H__
 
 #include "JSCProperty.h"
 
@@ -22,4 +22,4 @@ class JSCRef : public JSCProperty {
   std::string m_refPath;
 };
 
-#endif /* JSON_SCHEMA_CODE_OBJECT_H__ */
+#endif /* JSON_SCHEMA_CODE_REF_H__ */

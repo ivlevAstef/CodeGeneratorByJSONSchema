@@ -18,6 +18,8 @@
 		848953311C47C94C000B1B8F /* test-schema.json in CopyFiles */ = {isa = PBXBuildFile; fileRef = 848953301C47C91E000B1B8F /* test-schema.json */; };
 		848953341C47D62B000B1B8F /* JSCUnknown.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848953321C47D62B000B1B8F /* JSCUnknown.cpp */; };
 		848953371C47DD7D000B1B8F /* JSCRef.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848953351C47DD7D000B1B8F /* JSCRef.cpp */; };
+		8489533D1C48F250000B1B8F /* JSCMultyType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8489533B1C48F250000B1B8F /* JSCMultyType.cpp */; };
+		848953531C48F4E7000B1B8F /* SIALogger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848953511C48F4E7000B1B8F /* SIALogger.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -57,6 +59,10 @@
 		848953331C47D62B000B1B8F /* JSCUnknown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCUnknown.h; sourceTree = "<group>"; };
 		848953351C47DD7D000B1B8F /* JSCRef.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSCRef.cpp; sourceTree = "<group>"; };
 		848953361C47DD7D000B1B8F /* JSCRef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCRef.h; sourceTree = "<group>"; };
+		8489533B1C48F250000B1B8F /* JSCMultyType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSCMultyType.cpp; sourceTree = "<group>"; };
+		8489533C1C48F250000B1B8F /* JSCMultyType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCMultyType.h; sourceTree = "<group>"; };
+		848953511C48F4E7000B1B8F /* SIALogger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SIALogger.cpp; sourceTree = "<group>"; };
+		848953521C48F4E7000B1B8F /* SIALogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SIALogger.h; sourceTree = "<group>"; };
 		84B76CAB1C46275500878510 /* CodeGeneratorByJSONSchema */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CodeGeneratorByJSONSchema; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -74,6 +80,7 @@
 		848953121C47C915000B1B8F /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				848953501C48F4E7000B1B8F /* Logger */,
 				848953191C47C915000B1B8F /* LanguageGenerator */,
 				8489531E1C47C915000B1B8F /* Properties */,
 				848953131C47C915000B1B8F /* JSCParser.cpp */,
@@ -112,6 +119,8 @@
 				848953331C47D62B000B1B8F /* JSCUnknown.h */,
 				848953351C47DD7D000B1B8F /* JSCRef.cpp */,
 				848953361C47DD7D000B1B8F /* JSCRef.h */,
+				8489533B1C48F250000B1B8F /* JSCMultyType.cpp */,
+				8489533C1C48F250000B1B8F /* JSCMultyType.h */,
 			);
 			path = Properties;
 			sourceTree = "<group>";
@@ -122,6 +131,15 @@
 				848953301C47C91E000B1B8F /* test-schema.json */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		848953501C48F4E7000B1B8F /* Logger */ = {
+			isa = PBXGroup;
+			children = (
+				848953511C48F4E7000B1B8F /* SIALogger.cpp */,
+				848953521C48F4E7000B1B8F /* SIALogger.h */,
+			);
+			path = Logger;
 			sourceTree = "<group>";
 		};
 		84B76CA21C46275500878510 = {
@@ -200,12 +218,14 @@
 				848953281C47C915000B1B8F /* JSCStream.cpp in Sources */,
 				848953271C47C915000B1B8F /* JSCParser.cpp in Sources */,
 				848953371C47DD7D000B1B8F /* JSCRef.cpp in Sources */,
+				848953531C48F4E7000B1B8F /* SIALogger.cpp in Sources */,
 				8489532A1C47C915000B1B8F /* main.cpp in Sources */,
 				848953291C47C915000B1B8F /* JSCTokens.cpp in Sources */,
 				8489532B1C47C915000B1B8F /* JSCArray.cpp in Sources */,
 				8489532E1C47C915000B1B8F /* JSCProperty.cpp in Sources */,
 				8489532D1C47C915000B1B8F /* JSCObject.cpp in Sources */,
 				848953341C47D62B000B1B8F /* JSCUnknown.cpp in Sources */,
+				8489533D1C48F250000B1B8F /* JSCMultyType.cpp in Sources */,
 				8489532C1C47C915000B1B8F /* JSCEnum.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

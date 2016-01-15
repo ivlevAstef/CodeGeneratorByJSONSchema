@@ -26,6 +26,8 @@ enum JSCPropertyType {
 
   JSCProperty_Object,
   JSCProperty_Array,
+  JSCProperty_Any,
+  JSCProperty_MultyType,
 
   JSCProperty_Ref,
 };
@@ -37,10 +39,17 @@ class JSCProperty {
  public:
   JSCProperty(JSCPropertyType type);
 
+  void setTitle(const std::string& title);
+  void setDescription(const std::string& description);
+
   void setPath(const Path& path);
   void setOptional(bool optional);
 
+  const std::string& title() const;
+  const std::string& description() const;
+
   const Path& path() const;
+  const std::string& name() const;
 
   JSCPropertyType type() const;
   bool optional() const;
@@ -49,6 +58,9 @@ class JSCProperty {
   Path m_path;
   JSCPropertyType m_type;
   bool m_optional;
+
+  std::string m_title;
+  std::string m_description;
 };
 
 typedef std::shared_ptr<JSCProperty> JSCPropertyPointer;
