@@ -17,8 +17,8 @@ const JSCPropertyPointer JSCParser::root() const {
   return m_root;
 }
 
-std::vector<const std::shared_ptr<const JSCObject>> JSCParser::objects() const {
-  std::vector<const std::shared_ptr<const JSCObject>> result;
+std::vector<const JSCObjectPointer> JSCParser::objects() const {
+  std::vector<const JSCObjectPointer> result;
   for (const auto& object : m_objects) {
     result.push_back(object);
   }
@@ -26,8 +26,8 @@ std::vector<const std::shared_ptr<const JSCObject>> JSCParser::objects() const {
   return result;
 }
 
-std::vector<const std::shared_ptr<const JSCEnum>> JSCParser::enums() const {
-  std::vector<const std::shared_ptr<const JSCEnum>> result;
+std::vector<const JSCEnumPointer> JSCParser::enums() const {
+  std::vector<const JSCEnumPointer> result;
   for (const auto& enumProperty : m_enums) {
     result.push_back(enumProperty);
   }

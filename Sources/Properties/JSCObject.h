@@ -27,4 +27,6 @@ class JSCObject : public JSCProperty {
   std::string m_rootName;
 };
 
+typedef std::shared_ptr<JSCObject> JSCObjectPointer;
+
 #endif /* JSON_SCHEMA_CODE_OBJECT_H__ */

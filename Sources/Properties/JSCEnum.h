@@ -24,4 +24,6 @@ class JSCEnum : public JSCProperty {
   std::vector<std::string> m_identifiers;
 };
 
+typedef std::shared_ptr<JSCEnum> JSCEnumPointer;
+
 #endif /* JSON_SCHEMA_CODE_ENUM_H__ */

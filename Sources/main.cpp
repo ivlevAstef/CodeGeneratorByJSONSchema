@@ -11,6 +11,8 @@
 #include "JSCTokens.h"
 #include "SIALogger.h"
 
+#include "JSCObjcJSONModelLanguage.h"
+
 int main(int argc, const char* argv[]) {
   SIA::Logger::Initialization();
 
@@ -37,6 +39,22 @@ int main(int argc, const char* argv[]) {
     for (auto& identifier : obj->identifiers()) {
       SIADebug("    %s", identifier.c_str());
     }
+  }
+
+  JSCObjcJSONModelLanguage language;
+  language.setIgnoreList(IJSCLanguage::IgnoreList{""});
+  language.setRenameMap(IJSCLanguage::RenameMap{{"id", "objId"}});
+
+  for (auto& obj : parser.enums()) {
+    language.add(obj);
+  }
+
+  for (auto& obj : parser.objects()) {
+    language.add(obj);
+  }
+
+  for (const auto& out : language.outputs()) {
+    out.save();
   }
 
   return 0;

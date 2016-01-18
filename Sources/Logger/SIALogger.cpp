@@ -52,7 +52,7 @@ Logger::Logger() {
 
 
 void Logger::logToStream(const char* logLevel, const char* file, int line, const char* module, const char* message, ...) {
-  static const size_t maxLogBufferSize = 2048;
+  static const size_t maxLogBufferSize = 4096;
 
   char logBuffer[maxLogBufferSize] = {0};
   size_t logIndex = 0;

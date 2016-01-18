@@ -28,8 +28,8 @@ class JSCParser {
   JSCParser(const JSCTokens& tokens);
 
   const JSCPropertyPointer root() const;
-  std::vector<const std::shared_ptr<const JSCObject>> objects() const;
-  std::vector<const std::shared_ptr<const JSCEnum>> enums() const;
+  std::vector<const JSCObjectPointer> objects() const;
+  std::vector<const JSCEnumPointer> enums() const;
 
   JSCPropertyPointer propertyByPath(const Path& path) const;
 
