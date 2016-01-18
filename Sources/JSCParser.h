@@ -11,11 +11,11 @@
 #define JSON_SCHEMA_CODE_PARSER_H__
 
 #include <set>
+#include "JSCEnum.h"
+#include "JSCObject.h"
 #include "JSCProperty.h"
 #include "JSCTokens.h"
 
-class JSCObject;
-class JSCEnum;
 class JSCRef;
 
 class JSCParser {

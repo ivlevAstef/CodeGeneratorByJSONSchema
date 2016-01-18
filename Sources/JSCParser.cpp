@@ -319,7 +319,9 @@ std::vector<JSCToken> JSCParser::findAndParseSimpleOrArray(const std::string fou
       if ("[" == tokens[i]) {
         do {
           i++;
-          result.push_back(tokens[i]);
+          if ("]" != tokens[i]) {
+            result.push_back(tokens[i]);
+          }
           if (i + 1 < tokens.size() && "," == tokens[i + 1]) {
             i++;
           }

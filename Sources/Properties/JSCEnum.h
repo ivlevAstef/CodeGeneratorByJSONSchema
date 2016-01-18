@@ -18,6 +18,7 @@ class JSCEnum : public JSCProperty {
   JSCEnum(const std::vector<std::string>& identifiers);
 
   const std::vector<std::string>& identifiers() const;
+  std::string enumName() const;
 
  private:
   std::vector<std::string> m_identifiers;
