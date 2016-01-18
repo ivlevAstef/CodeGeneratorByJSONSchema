@@ -11,91 +11,20 @@
 #include "JSCRef.h"
 #include "SIALogger.h"
 
-void JSCObjcJSONModelLanguage::setPrefix(std::string prefix) {
-  m_prefix = prefix;
-}
-
-void JSCObjcJSONModelLanguage::setIgnoreList(const IgnoreList& ignoreList) {
-  m_ignoreList = ignoreList;
-}
-
-void JSCObjcJSONModelLanguage::setRenameMap(const RenameMap& renameMap) {
-  m_renameMap = renameMap;
-}
-
-void JSCObjcJSONModelLanguage::add(const JSCEnumPointer& enumObj) {
-  if (isIgnore(enumObj)) {
-    SIADebug("Ignore enum with name: %s", enumObj->enumName().c_str());
-    return;
-  }
-
-  for (const auto& out : generateOutput(enumObj)) {
-    addOutput(out);
-  }
-}
-
-void JSCObjcJSONModelLanguage::add(const JSCObjectPointer& object) {
-  if (isIgnore(object)) {
-    SIADebug("Ignore class with name: %s", object->rootName().c_str());
-    return;
-  }
-
-  for (const auto& out : generateOutput(object)) {
-    addOutput(out);
-  }
-}
-
-bool JSCObjcJSONModelLanguage::isIgnore(const JSCEnumPointer& enumObj) const {
-  return m_ignoreList.count(enumObj->enumName()) > 0;
-}
-bool JSCObjcJSONModelLanguage::isIgnore(const JSCObjectPointer& object) const {
-  return m_ignoreList.count(object->rootName()) > 0;
-}
-
 std::string JSCObjcJSONModelLanguage::className(const JSCObjectPointer& object) const {
-  return m_prefix + toCamelCase(object->rootName(), true);
+  return m_prefix + toCamelCase(renamed(object->rootName()), true);
 }
 
 std::string JSCObjcJSONModelLanguage::enumName(const JSCEnumPointer& enumObj) const {
   if (enumObj->path().size() > 3) {
-    return m_prefix + toCamelCase(enumObj->path()[2], true) + toCamelCase(enumObj->pathName(), true);
+    return m_prefix + toCamelCase(renamed(enumObj->path()[2]), true) + toCamelCase(renamed(enumObj->pathName()), true);
   }
 
-  return m_prefix + toCamelCase(enumObj->pathName(), true);
+  return m_prefix + toCamelCase(renamed(enumObj->pathName()), true);
 }
 
 std::string JSCObjcJSONModelLanguage::propertyName(const JSCPropertyPointer& property) const {
-  std::string name = toCamelCase(property->pathName());
-  if (m_renameMap.count(name) > 0) {
-    return m_renameMap.at(name);
-  }
-  return name;
-}
-
-std::string JSCObjcJSONModelLanguage::toCamelCase(std::string str, bool firstUpper) const {
-  if (firstUpper && !str.empty()) {
-    str[0] = toupper(str[0]);
-  } else {
-    str[0] = tolower(str[0]);
-  }
-
-  auto findIndex = std::string::npos;
-  while (std::string::npos != (findIndex = str.find('_'))) {
-    if (findIndex + 1 < str.size()) {
-      str[findIndex + 1] = toupper(str[findIndex + 1]);
-      str.replace(findIndex, 1, "");
-    }
-  }
-
-  return str;
-}
-
-void JSCObjcJSONModelLanguage::addOutput(const JSCOutput& output) {
-  m_outputs.push_back(output);
-}
-
-const std::vector<JSCOutput>& JSCObjcJSONModelLanguage::outputs() const {
-  return m_outputs;
+  return toCamelCase(renamed(property->pathName()));
 }
 
 std::vector<JSCOutput> JSCObjcJSONModelLanguage::generateOutput(const JSCEnumPointer& enumObj) const {
@@ -106,7 +35,7 @@ std::vector<JSCOutput> JSCObjcJSONModelLanguage::generateOutput(const JSCEnumPoi
 
   text += "typedef NS_ENUM(NSUInteger, " + name + ") {\n";
   for (auto& identifier : enumObj->identifiers()) {
-    text += "  " + name + "_" + toCamelCase(identifier, true) + ",\n";
+    text += m_tab + name + "_" + toCamelCase(identifier, true) + ",\n";
   }
   text += "};\n\n";
 
@@ -127,7 +56,7 @@ JSCOutput JSCObjcJSONModelLanguage::generateOutputHeader(const JSCObjectPointer&
 
   text += "@interface " + name + " : JSONModel\n";
   text += "\n";
-  for (const auto& property : object->properties()) {
+  for (const auto& property : propertiesForObjWithoutIgnore(object)) {
     text += "@property (" + propertyModificatorString(property) + ", nonatomic) " + propertyTypeString(property) + " " + propertyName(property) + ";\n";
   }
   text += "\n";
@@ -148,23 +77,24 @@ JSCOutput JSCObjcJSONModelLanguage::generateOutputSource(const JSCObjectPointer&
 
   ///Key mapper
   text += "+ (JSONKeyMapper*)keyMapper {\n";
-  text += "  return [[JSONKeyMapper alloc] initWithDictionary:@{\n";
-  for (const auto& property : object->properties()) {
-    text += "    @\"" + property->pathName() + "\" : @\"" + propertyName(property) + "\",\n";
+  text += m_tab + "return [[JSONKeyMapper alloc] initWithDictionary:@{\n";
+  for (const auto& property : propertiesForObjWithoutIgnore(object)) {
+    text += m_tab + m_tab + "@\"" + property->pathName() + "\" : @\"" + propertyName(property) + "\",\n";
   }
 
-  text += "  }];\n";
+  text += m_tab + "}];\n";
   text += "}\n\n";
 
   ///Optional
-  text += "+(BOOL)propertyIsOptional:(NSString*)propertyName {\n";
-  for (const auto& property : object->properties()) {
+  text += "+ (BOOL)propertyIsOptional:(NSString*)propertyName {\n";
+  for (const auto& property : propertiesForObjWithoutIgnore(object)) {
     if (property->optional()) {
-      text += "  if ([propertyName isEqualToString: @\"" + propertyName(property) + "\"]) return YES;\n";
+      text += m_tab + "if ([propertyName isEqualToString: @\"" + propertyName(property) + "\"]) return YES;\n";
     }
   }
 
-  text += "  return NO;\n";
+  text += "\n";
+  text += m_tab + "return NO;\n";
   text += "}\n\n";
 
   text += "@end\n\n";
@@ -175,7 +105,7 @@ JSCOutput JSCObjcJSONModelLanguage::generateOutputSource(const JSCObjectPointer&
 std::string JSCObjcJSONModelLanguage::generateImport(const JSCObjectPointer& object) const {
   std::string result = "#import \"JSONModel.h\"\n";
 
-  for (const auto& property : object->properties()) {
+  for (const auto& property : propertiesForObjWithoutIgnore(object)) {
     std::string importFileName = generateImportFileName(property);
     if (!importFileName.empty()) {
       result += "#import \"" + importFileName + "\"\n";
@@ -197,19 +127,6 @@ std::string JSCObjcJSONModelLanguage::generateImportFileName(const JSCPropertyPo
     return generateImportFileName(std::static_pointer_cast<JSCRef>(property)->refProperty());
   }
   return "";
-}
-
-std::string JSCObjcJSONModelLanguage::generateLicenceHeader(std::string fileName) const {
-  std::string result;
-  result += "//\n";
-  result += "//  " + fileName + "\n";
-  result += "//  PROJECT_NAME\n";
-  result += "//\n";
-  result += "//  Created by Alexander.Ivlev on 1/18/16.\n";
-  result += "//  Copyright © 2016 themsteam. All rights reserved.\n";
-  result += "//\n\n";
-
-  return result;
 }
 
 std::string JSCObjcJSONModelLanguage::propertyTypeString(const JSCPropertyPointer& property) const {

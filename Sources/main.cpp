@@ -6,6 +6,7 @@
 //  Copyright © 2016 themsteam. All rights reserved.
 //
 
+#include "Config.h"
 #include "JSCParser.h"
 #include "JSCStream.h"
 #include "JSCTokens.h"
@@ -14,6 +15,7 @@
 #include "JSCObjcJSONModelLanguage.h"
 
 int main(int argc, const char* argv[]) {
+  Config::Load("config.ini");
   SIA::Logger::Initialization();
 
   JSCStream stream("test-schema.json");
@@ -21,6 +23,7 @@ int main(int argc, const char* argv[]) {
 
   JSCParser parser(tokens);
 
+  /*
   parser.debugPrint(parser.root());
 
   SIADebug("All classes:");
@@ -40,10 +43,15 @@ int main(int argc, const char* argv[]) {
       SIADebug("    %s", identifier.c_str());
     }
   }
+  */
 
   JSCObjcJSONModelLanguage language;
-  language.setIgnoreList(IJSCLanguage::IgnoreList{""});
-  language.setRenameMap(IJSCLanguage::RenameMap{{"id", "objId"}});
+
+  language.setIgnoreList(Config::ignoreList());
+  language.setRenameMap(Config::renameMap());
+  language.setLicenceHeader(Config::licenceHeader());
+  language.setPrefix(Config::prefix());
+  language.setTab(Config::tab());
 
   for (auto& obj : parser.enums()) {
     language.add(obj);

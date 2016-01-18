@@ -22,6 +22,8 @@
 		848953AE1C493361000B1B8F /* test-schema.json in CopyFiles */ = {isa = PBXBuildFile; fileRef = 848953AD1C493358000B1B8F /* test-schema.json */; };
 		848953B61C4CE9B9000B1B8F /* JSCObjcJSONModelLanguage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848953B41C4CE9B9000B1B8F /* JSCObjcJSONModelLanguage.cpp */; };
 		848953B81C4CF214000B1B8F /* JSCOutput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848953B71C4CF214000B1B8F /* JSCOutput.cpp */; };
+		848953BC1C4D079B000B1B8F /* Config.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848953BA1C4D079B000B1B8F /* Config.cpp */; };
+		848953C01C4D0AA2000B1B8F /* JSCLanguageBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848953BE1C4D0AA2000B1B8F /* JSCLanguageBase.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -44,7 +46,6 @@
 		848953841C49334A000B1B8F /* JSCStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCStream.h; sourceTree = "<group>"; };
 		848953851C49334A000B1B8F /* JSCTokens.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSCTokens.cpp; sourceTree = "<group>"; };
 		848953861C49334A000B1B8F /* JSCTokens.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCTokens.h; sourceTree = "<group>"; };
-		848953881C49334A000B1B8F /* IJSCLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IJSCLanguage.h; sourceTree = "<group>"; };
 		8489538A1C49334A000B1B8F /* JSCOutput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCOutput.h; sourceTree = "<group>"; };
 		8489538C1C49334A000B1B8F /* SIALogger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SIALogger.cpp; sourceTree = "<group>"; };
 		8489538D1C49334A000B1B8F /* SIALogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SIALogger.h; sourceTree = "<group>"; };
@@ -67,6 +68,11 @@
 		848953B41C4CE9B9000B1B8F /* JSCObjcJSONModelLanguage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = JSCObjcJSONModelLanguage.cpp; path = ObjcJSONModel/JSCObjcJSONModelLanguage.cpp; sourceTree = "<group>"; };
 		848953B51C4CE9B9000B1B8F /* JSCObjcJSONModelLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSCObjcJSONModelLanguage.h; path = ObjcJSONModel/JSCObjcJSONModelLanguage.h; sourceTree = "<group>"; };
 		848953B71C4CF214000B1B8F /* JSCOutput.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSCOutput.cpp; sourceTree = "<group>"; };
+		848953BA1C4D079B000B1B8F /* Config.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Config.cpp; path = Config/Config.cpp; sourceTree = "<group>"; };
+		848953BB1C4D079B000B1B8F /* Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Config.h; path = Config/Config.h; sourceTree = "<group>"; };
+		848953BD1C4D0A44000B1B8F /* JSCTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JSCTypes.h; sourceTree = "<group>"; };
+		848953BE1C4D0AA2000B1B8F /* JSCLanguageBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSCLanguageBase.cpp; sourceTree = "<group>"; };
+		848953BF1C4D0AA2000B1B8F /* JSCLanguageBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCLanguageBase.h; sourceTree = "<group>"; };
 		84B76CAB1C46275500878510 /* CodeGeneratorByJSONSchema */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CodeGeneratorByJSONSchema; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -84,6 +90,8 @@
 		848953801C49334A000B1B8F /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				848953BD1C4D0A44000B1B8F /* JSCTypes.h */,
+				848953B91C4D0784000B1B8F /* Config */,
 				848953811C49334A000B1B8F /* JSCParser.cpp */,
 				848953821C49334A000B1B8F /* JSCParser.h */,
 				848953831C49334A000B1B8F /* JSCStream.cpp */,
@@ -104,7 +112,8 @@
 			isa = PBXGroup;
 			children = (
 				848953B31C4CE985000B1B8F /* ObjcJSONModel */,
-				848953881C49334A000B1B8F /* IJSCLanguage.h */,
+				848953BF1C4D0AA2000B1B8F /* JSCLanguageBase.h */,
+				848953BE1C4D0AA2000B1B8F /* JSCLanguageBase.cpp */,
 				8489538A1C49334A000B1B8F /* JSCOutput.h */,
 				848953B71C4CF214000B1B8F /* JSCOutput.cpp */,
 			);
@@ -168,10 +177,19 @@
 		848953B31C4CE985000B1B8F /* ObjcJSONModel */ = {
 			isa = PBXGroup;
 			children = (
-				848953B41C4CE9B9000B1B8F /* JSCObjcJSONModelLanguage.cpp */,
 				848953B51C4CE9B9000B1B8F /* JSCObjcJSONModelLanguage.h */,
+				848953B41C4CE9B9000B1B8F /* JSCObjcJSONModelLanguage.cpp */,
 			);
 			name = ObjcJSONModel;
+			sourceTree = "<group>";
+		};
+		848953B91C4D0784000B1B8F /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				848953BA1C4D079B000B1B8F /* Config.cpp */,
+				848953BB1C4D079B000B1B8F /* Config.h */,
+			);
+			name = Config;
 			sourceTree = "<group>";
 		};
 		84B76CA21C46275500878510 = {
@@ -250,6 +268,8 @@
 				848953B61C4CE9B9000B1B8F /* JSCObjcJSONModelLanguage.cpp in Sources */,
 				848953A11C49334A000B1B8F /* JSCStream.cpp in Sources */,
 				848953AA1C49334A000B1B8F /* JSCRef.cpp in Sources */,
+				848953C01C4D0AA2000B1B8F /* JSCLanguageBase.cpp in Sources */,
+				848953BC1C4D079B000B1B8F /* Config.cpp in Sources */,
 				848953A61C49334A000B1B8F /* JSCEnum.cpp in Sources */,
 				848953A01C49334A000B1B8F /* JSCParser.cpp in Sources */,
 				848953A21C49334A000B1B8F /* JSCTokens.cpp in Sources */,
