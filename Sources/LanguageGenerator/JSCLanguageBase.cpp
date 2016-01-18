@@ -66,6 +66,34 @@ void JSCLanguageBase::add(const JSCObjectPointer& object) {
   }
 }
 
+void JSCLanguageBase::add(const AdditionalClass& additionalClass) {
+  std::vector<JSCPropertyPointer> properties;
+
+  for (const auto& propertyPair : additionalClass.properties) {
+    JSCPropertyType type = JSCProperty::propertyStringToType(std::get<0>(propertyPair));
+    if (JSCProperty_Unknown == type) {
+      SIAWarning("unsupported property type: %s", std::get<0>(propertyPair).c_str());
+      continue;
+    }
+
+    JSCPropertyPointer property(new JSCProperty(type));
+    property->setPath({std::get<1>(propertyPair)});
+    property->setOptional({std::get<2>(propertyPair)});
+    properties.push_back(property);
+  }
+
+  JSCObjectPointer newClass(new JSCObject(properties));
+  newClass->setRootName(additionalClass.className);
+  newClass->setPath({additionalClass.name});
+  newClass->setOptional(additionalClass.optional);
+
+  m_additionalClasses.push_back(newClass);
+
+  for (const auto& out : generateOutput(newClass)) {
+    m_outputs.push_back(out);
+  }
+}
+
 bool JSCLanguageBase::isIgnoreEnum(const JSCEnumPointer& enumObj) const {
   return m_ignoreList.count(enumObj->enumName()) > 0;
 }
@@ -88,15 +116,66 @@ bool JSCLanguageBase::isIgnore(const JSCPropertyPointer& property) const {
   return ignore;
 }
 
-std::vector<JSCPropertyPointer> JSCLanguageBase::propertiesForObjWithoutIgnore(const JSCObjectPointer& object) const {
+static bool equalProperty(const JSCPropertyPointer& prop1, const JSCPropertyPointer& prop2) {
+  return prop1->type() == prop2->type() && prop1->pathName() == prop2->pathName();
+}
+
+static bool containsPropertyInClasses(const JSCPropertyPointer& checkProperty, const std::vector<JSCObjectPointer>& classes) {
+  for (const auto& object : classes) {
+    for (const auto& property : object->properties()) {
+      if (equalProperty(checkProperty, property)) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+static bool containsClassInClass(const JSCObjectPointer& container, const JSCObjectPointer& object) {
+  for (const auto& checkProperty : container->properties()) {
+    bool found = false;
+    for (const auto& property : object->properties()) {
+      found |= equalProperty(checkProperty, property);
+    }
+    if (!found) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+std::vector<JSCPropertyPointer> JSCLanguageBase::propertiesForObj(const JSCObjectPointer& object) const {
   SIAAssert(nullptr != object.get());
 
   std::vector<JSCPropertyPointer> result;
   result.reserve(object->properties().size());
 
+  std::vector<JSCObjectPointer> additionalClasses = findAdditionalClasses(object);
+
   for (const auto& property : object->properties()) {
-    if (!isIgnore(property)) {
+    if (!isIgnore(property) && !containsPropertyInClasses(property, additionalClasses)) {
       result.push_back(property);
+    }
+  }
+
+  for (const auto& additionalClass : additionalClasses) {
+    result.push_back(additionalClass);
+  }
+
+  return result;
+}
+
+std::vector<JSCObjectPointer> JSCLanguageBase::findAdditionalClasses(const JSCObjectPointer& object) const {
+  std::vector<JSCObjectPointer> result;
+
+  for (const auto& additionalClass : m_additionalClasses) {
+    if (additionalClass->rootName() == object->rootName()) {
+      continue;
+    }
+
+    if (containsClassInClass(additionalClass, object)) {
+      result.push_back(additionalClass);
     }
   }
   return result;

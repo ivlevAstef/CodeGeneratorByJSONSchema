@@ -37,6 +37,7 @@ class JSCProperty {
   typedef std::vector<std::string> Path;
 
   static std::string propertyTypeToString(JSCPropertyType type);
+  static JSCPropertyType propertyStringToType(const std::string& str);
 
  public:
   JSCProperty(JSCPropertyType type);

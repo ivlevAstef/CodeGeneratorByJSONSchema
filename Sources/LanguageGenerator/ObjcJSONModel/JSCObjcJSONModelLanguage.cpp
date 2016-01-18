@@ -56,7 +56,7 @@ JSCOutput JSCObjcJSONModelLanguage::generateOutputHeader(const JSCObjectPointer&
 
   text += "@interface " + name + " : JSONModel\n";
   text += "\n";
-  for (const auto& property : propertiesForObjWithoutIgnore(object)) {
+  for (const auto& property : propertiesForObj(object)) {
     text += "@property (" + propertyModificatorString(property) + ", nonatomic) " + propertyTypeString(property) + " " + propertyName(property) + ";\n";
   }
   text += "\n";
@@ -78,7 +78,7 @@ JSCOutput JSCObjcJSONModelLanguage::generateOutputSource(const JSCObjectPointer&
   ///Key mapper
   text += "+ (JSONKeyMapper*)keyMapper {\n";
   text += m_tab + "return [[JSONKeyMapper alloc] initWithDictionary:@{\n";
-  for (const auto& property : propertiesForObjWithoutIgnore(object)) {
+  for (const auto& property : propertiesForObj(object)) {
     text += m_tab + m_tab + "@\"" + property->pathName() + "\" : @\"" + propertyName(property) + "\",\n";
   }
 
@@ -87,7 +87,7 @@ JSCOutput JSCObjcJSONModelLanguage::generateOutputSource(const JSCObjectPointer&
 
   ///Optional
   text += "+ (BOOL)propertyIsOptional:(NSString*)propertyName {\n";
-  for (const auto& property : propertiesForObjWithoutIgnore(object)) {
+  for (const auto& property : propertiesForObj(object)) {
     if (property->optional()) {
       text += m_tab + "if ([propertyName isEqualToString: @\"" + propertyName(property) + "\"]) return YES;\n";
     }
@@ -105,7 +105,7 @@ JSCOutput JSCObjcJSONModelLanguage::generateOutputSource(const JSCObjectPointer&
 std::string JSCObjcJSONModelLanguage::generateImport(const JSCObjectPointer& object) const {
   std::string result = "#import \"JSONModel.h\"\n";
 
-  for (const auto& property : propertiesForObjWithoutIgnore(object)) {
+  for (const auto& property : propertiesForObj(object)) {
     std::string importFileName = generateImportFileName(property);
     if (!importFileName.empty()) {
       result += "#import \"" + importFileName + "\"\n";

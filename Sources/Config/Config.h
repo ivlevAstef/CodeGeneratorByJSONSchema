@@ -29,6 +29,9 @@ class Config {
   static const IgnoreList& ignoreList() { return config.m_ignoreList; }
   static const RenameMap& renameMap() { return config.m_renameMap; }
 
+  static const std::vector<AdditionalClass>& additionalClasses() { return config.m_additionalClasses; }
+
+ private:
  private:
   std::string m_tab;
   std::string m_prefix;
@@ -36,6 +39,8 @@ class Config {
 
   IgnoreList m_ignoreList;
   RenameMap m_renameMap;
+
+  std::vector<AdditionalClass> m_additionalClasses;
 };
 
 

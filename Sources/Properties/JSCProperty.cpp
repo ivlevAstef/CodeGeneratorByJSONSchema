@@ -31,6 +31,22 @@ std::string JSCProperty::propertyTypeToString(JSCPropertyType type) {
   return "";
 }
 
+JSCPropertyType JSCProperty::propertyStringToType(const std::string& str) {
+  if ("any" == str) {
+    return JSCProperty_Any;
+  } else if ("bool" == str) {
+    return JSCProperty_Boolean;
+  } else if ("integer" == str) {
+    return JSCProperty_Integer;
+  } else if ("number" == str) {
+    return JSCProperty_Number;
+  } else if ("string" == str) {
+    return JSCProperty_String;
+  }
+
+  return JSCProperty_Unknown;
+}
+
 JSCProperty::JSCProperty(JSCPropertyType type) {
   m_type = type;
   m_optional = false;

@@ -24,6 +24,7 @@ class JSCLanguageBase {
   void setIgnoreList(const IgnoreList& ignoreList);
   void setRenameMap(const RenameMap& renameMap);
 
+  void add(const AdditionalClass& additionalClass);
   void add(const JSCEnumPointer& enumObj);
   void add(const JSCObjectPointer& object);
 
@@ -42,7 +43,9 @@ class JSCLanguageBase {
   std::string toCamelCase(std::string str, bool firstUpper = false) const;
   std::string renamed(const std::string& str) const;
 
-  std::vector<JSCPropertyPointer> propertiesForObjWithoutIgnore(const JSCObjectPointer& object) const;
+  std::vector<JSCPropertyPointer> propertiesForObj(const JSCObjectPointer& object) const;
+
+  std::vector<JSCObjectPointer> findAdditionalClasses(const JSCObjectPointer& object) const;
 
  protected:
   std::string m_prefix;
@@ -52,6 +55,8 @@ class JSCLanguageBase {
   IgnoreList m_ignoreList;
   RenameMap m_renameMap;
   std::vector<JSCOutput> m_outputs;
+
+  std::vector<JSCObjectPointer> m_additionalClasses;
 };
 
 #endif /* JSON_SCHEMA_CODE_LANGUAGE_BASE_H__ */

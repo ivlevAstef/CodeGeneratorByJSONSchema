@@ -15,7 +15,7 @@
 #include "JSCObjcJSONModelLanguage.h"
 
 int main(int argc, const char* argv[]) {
-  Config::Load("config.ini");
+  //Config::Load("config.ini");
   SIA::Logger::Initialization();
 
   JSCStream stream("test-schema.json");
@@ -55,6 +55,10 @@ int main(int argc, const char* argv[]) {
 
   for (auto& obj : parser.enums()) {
     language.add(obj);
+  }
+
+  for (const auto& additionalClass : Config::additionalClasses()) {
+    language.add(additionalClass);
   }
 
   for (auto& obj : parser.objects()) {
