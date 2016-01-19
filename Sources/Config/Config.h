@@ -29,6 +29,7 @@ class Config {
   static const std::string& licenceHeader() { return config.m_licenceHeader; }
 
   static const IgnoreList& ignoreList() { return config.m_ignoreList; }
+  static const LeafClasses& leafClasses() { return config.m_leafClasses; }
   static const RenameMap& renameMap() { return config.m_renameMap; }
 
   static const std::vector<AdditionalClass>& additionalClasses() { return config.m_additionalClasses; }
@@ -41,6 +42,7 @@ class Config {
   std::string m_licenceHeader;
 
   IgnoreList m_ignoreList;
+  LeafClasses m_leafClasses;
   RenameMap m_renameMap;
 
   std::vector<AdditionalClass> m_additionalClasses;

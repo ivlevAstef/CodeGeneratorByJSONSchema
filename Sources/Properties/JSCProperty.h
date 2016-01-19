@@ -52,13 +52,17 @@ class JSCProperty {
   const std::string& description() const;
 
   const Path& path() const;
+  const Path& fullPath() const;
+
   const std::string pathName() const;
+  const std::string fullPathName() const;
 
   JSCPropertyType type() const;
   bool optional() const;
 
  private:
   Path m_path;
+  Path m_fullPath;
   JSCPropertyType m_type;
   bool m_optional;
 

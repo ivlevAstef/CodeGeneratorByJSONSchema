@@ -17,6 +17,7 @@
 #include <vector>
 
 typedef std::set<std::string> IgnoreList;              // names
+typedef std::set<std::string> LeafClasses;             // names
 typedef std::map<std::string, std::string> RenameMap;  // last name, new name
 
 typedef struct AdditionalClass {

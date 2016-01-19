@@ -61,6 +61,7 @@ int main(int argc, const char* argv[]) {
   JSCObjcJSONModelLanguage language;
 
   language.setIgnoreList(Config::ignoreList());
+  language.setLeafClasses(Config::leafClasses(), parser.objects());
   language.setRenameMap(Config::renameMap());
   language.setLicenceHeader(Config::licenceHeader());
   language.setPrefix(Config::prefix());

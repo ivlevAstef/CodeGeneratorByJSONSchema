@@ -12,8 +12,9 @@ const std::vector<std::string>& JSCEnum::identifiers() const {
 std::string JSCEnum::enumName() const {
   std::string result;
 
-  if (path().size() > 3) {
-    return path()[2] + "_" + pathName();
+  const auto lPath = path();
+  if (lPath.size() > 2) {
+    return lPath[1] + "_" + pathName();
   }
 
   return pathName();

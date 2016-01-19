@@ -11,6 +11,33 @@
 #include "JSCRef.h"
 #include "SIALogger.h"
 
+static std::string relativePath(const JSCProperty::Path& parentPath, const JSCProperty::Path& childPath, std::string separator, size_t maxDepth = 16) {
+  JSCProperty::Path finalPath = childPath;
+
+  for (const auto& subpath : parentPath) {
+    if (finalPath[0] == subpath) {
+      finalPath.erase(finalPath.begin());
+    } else {
+      break;
+    }
+  }
+
+  if (maxDepth < finalPath.size()) {
+    finalPath.erase(finalPath.begin(), finalPath.begin() + (finalPath.size() - maxDepth));
+  }
+
+  std::string result;
+  for (const auto& subpath : finalPath) {
+    result += subpath + separator;
+  }
+
+  if (!result.empty()) {
+    result.resize(result.size() - separator.size());
+  }
+
+  return result;
+}
+
 std::string JSCObjcJSONModelLanguage::className(const JSCObjectPointer& object) const {
   return m_prefix + renamed(toCamelCase(renamed(object->rootName()), true));
 }
@@ -19,8 +46,9 @@ std::string JSCObjcJSONModelLanguage::enumName(const JSCEnumPointer& enumObj) co
   return m_prefix + renamed(toCamelCase(renamed(enumObj->enumName()), true));
 }
 
-std::string JSCObjcJSONModelLanguage::propertyName(const JSCPropertyPointer& property) const {
-  return renamed(toCamelCase(renamed(property->pathName())));
+std::string JSCObjcJSONModelLanguage::propertyName(const JSCObjectPointer& parent, const JSCPropertyPointer& property) const {
+  std::string name = relativePath(parent->path(), property->path(), "_", 2);
+  return renamed(toCamelCase(renamed(name)));
 }
 
 std::vector<JSCOutput> JSCObjcJSONModelLanguage::generateOutput(const JSCEnumPointer& enumObj) const {
@@ -53,7 +81,7 @@ JSCOutput JSCObjcJSONModelLanguage::generateOutputHeader(const JSCObjectPointer&
   text += "@interface " + name + " : JSONModel\n";
   text += "\n";
   for (const auto& property : propertiesForObj(object)) {
-    text += "@property (" + propertyModificatorString(property) + ", nonatomic) " + propertyTypeString(property) + " " + propertyName(property) + ";\n";
+    text += "@property (" + propertyModificatorString(property) + ", nonatomic) " + propertyTypeString(property) + " " + propertyName(object, property) + ";\n";
   }
   text += "\n";
   text += "@end\n\n";
@@ -75,7 +103,7 @@ JSCOutput JSCObjcJSONModelLanguage::generateOutputSource(const JSCObjectPointer&
   text += "+ (JSONKeyMapper*)keyMapper {\n";
   text += m_tab + "return [[JSONKeyMapper alloc] initWithDictionary:@{\n";
   for (const auto& property : propertiesForObj(object)) {
-    text += m_tab + m_tab + "@\"" + property->pathName() + "\" : @\"" + propertyName(property) + "\",\n";
+    text += m_tab + m_tab + "@\"" + relativePath(object->path(), property->path(), ".") + "\" : @\"" + propertyName(object, property) + "\",\n";
   }
 
   text += m_tab + "}];\n";
@@ -85,7 +113,7 @@ JSCOutput JSCObjcJSONModelLanguage::generateOutputSource(const JSCObjectPointer&
   text += "+ (BOOL)propertyIsOptional:(NSString*)propertyName {\n";
   for (const auto& property : propertiesForObj(object)) {
     if (property->optional()) {
-      text += m_tab + "if ([propertyName isEqualToString: @\"" + propertyName(property) + "\"]) return YES;\n";
+      text += m_tab + "if ([propertyName isEqualToString: @\"" + propertyName(object, property) + "\"]) return YES;\n";
     }
   }
 

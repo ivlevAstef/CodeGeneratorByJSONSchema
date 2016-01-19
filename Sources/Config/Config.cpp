@@ -88,8 +88,8 @@ static std::string parseLicenceHeader(std::istringstream& inputLineStream, std::
   return result;
 }
 
-static IgnoreList parseIgnoreList(std::istringstream& lineStream) {
-  IgnoreList result;
+static std::set<std::string> parseLinearCommaList(std::istringstream& lineStream) {
+  std::set<std::string> result;
   std::string temp;
 
   while (std::getline(lineStream, temp, ',')) {
@@ -192,7 +192,9 @@ bool Config::Load(std::string filename) {
       } else if ("Licence Header" == key) {
         config.m_licenceHeader = parseLicenceHeader(lineStream, fileStream);
       } else if ("Ignore List" == key) {
-        config.m_ignoreList = parseIgnoreList(lineStream);
+        config.m_ignoreList = parseLinearCommaList(lineStream);
+      } else if ("Leaf Classses" == key) {
+        config.m_leafClasses = parseLinearCommaList(lineStream);
       } else if ("Rename Map" == key) {
         config.m_renameMap = parseRenameMap(lineStream, fileStream);
       } else if ("Additional Class" == key) {

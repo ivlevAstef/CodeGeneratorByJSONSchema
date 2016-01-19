@@ -203,7 +203,7 @@ JSCPropertyPointer JSCParser::createObjectProperty(const std::vector<JSCToken>& 
   JSCUnknown* objProperties = nullptr;
 
   for (const JSCPropertyPointer& child : children) {
-    if ("properties" == child->pathName() && JSCProperty_Unknown == child->type()) {
+    if ("properties" == child->fullPathName() && JSCProperty_Unknown == child->type()) {
       SIAAssertMsg(nullptr == objProperties, "Double find properties in object.");
       objProperties = (JSCUnknown*)child.get();
     }
@@ -234,7 +234,7 @@ JSCPropertyPointer JSCParser::createArrayProperty(const std::vector<JSCToken>& t
   JSCPropertyPointer itemType(nullptr);
 
   for (const JSCPropertyPointer& child : children) {
-    if ("item" == child->pathName() || "items" == child->pathName()) {
+    if ("item" == child->fullPathName() || "items" == child->fullPathName()) {
       SIAAssertMsg(nullptr == itemType.get(), "Double find items in array.");
       itemType = child;
     }
@@ -349,7 +349,7 @@ JSCPropertyPointer JSCParser::propertyByPath(JSCPropertyPointer property, const 
 
   const std::string root = path[index];
 
-  if (root != property->pathName()) {
+  if (root != property->fullPathName()) {
     return JSCPropertyPointer(nullptr);
   }
 
@@ -421,7 +421,7 @@ void JSCParser::setupRefProperties() {
 }
 
 void JSCParser::setupRootNames() {
-  static const size_t rootPathSize = 3;  // "" "properties" "ClassName"
+  static const size_t rootPathSize = 2;  // "" "ClassName"
 
   for (const auto& object : m_objects) {
     if (rootPathSize == object->path().size()) {

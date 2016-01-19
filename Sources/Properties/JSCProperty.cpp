@@ -61,7 +61,14 @@ void JSCProperty::setDescription(const std::string& description) {
 }
 
 void JSCProperty::setPath(const Path& path) {
-  m_path = path;
+  m_fullPath = path;
+  m_path.clear();
+  for (const auto& subpath : path) {
+    if (subpath == "properties" || subpath == "items" || subpath == "item") {
+      continue;
+    }
+    m_path.push_back(subpath);
+  }
 }
 
 void JSCProperty::setOptional(bool optional) {
@@ -80,9 +87,21 @@ const JSCProperty::Path& JSCProperty::path() const {
   return m_path;
 }
 
+const JSCProperty::Path& JSCProperty::fullPath() const {
+  return m_fullPath;
+}
+
 const std::string JSCProperty::pathName() const {
   if (m_path.size() > 0) {
     return m_path[m_path.size() - 1];
+  }
+
+  return "";
+}
+
+const std::string JSCProperty::fullPathName() const {
+  if (m_fullPath.size() > 0) {
+    return m_fullPath[m_fullPath.size() - 1];
   }
 
   return "";
