@@ -52,6 +52,13 @@ static std::string parsePrefixValue(std::istringstream& stream) {
   return trim(result);
 }
 
+static std::string parseInputFile(std::istringstream& stream) {
+  std::string result;
+  std::getline(stream, result);
+
+  return trim(result);
+}
+
 static std::string parseOutputDirectory(std::istringstream& stream) {
   std::string result;
   std::getline(stream, result);
@@ -202,6 +209,8 @@ bool Config::Load(std::string filename) {
       key = trim(key);
       if ("Tab" == key) {
         config.m_tab = getValueBetweenQuote(lineStream);
+      } else if ("Input file" == key) {
+        config.m_inputFile = parseInputFile(lineStream);
       } else if ("Prefix" == key) {
         config.m_prefix = parsePrefixValue(lineStream);
       } else if ("Output Directory" == key) {

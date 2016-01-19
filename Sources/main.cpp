@@ -31,7 +31,7 @@ int main(int argc, const char* argv[]) {
     SIAFatal("Can't load config from file:%s", configFile.c_str());
   }
 
-  JSCStream stream("test-schema.json");
+  JSCStream stream(Config::inputFile().c_str());
   JSCTokens tokens(stream);
 
   JSCParser parser(tokens);

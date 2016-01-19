@@ -23,6 +23,7 @@ class Config {
 
   static const std::string& tab() { return config.m_tab; }
   static const std::string& prefix() { return config.m_prefix; }
+  static const std::string& inputFile() { return config.m_inputFile; }
 
   static const std::string& outputDirectory() { return config.m_outputDirectory; }
 
@@ -36,6 +37,7 @@ class Config {
 
  private:
  private:
+  std::string m_inputFile;
   std::string m_tab;
   std::string m_prefix;
   std::string m_outputDirectory;
