@@ -82,10 +82,6 @@ static std::string nameByTokensBuffer(std::vector<JSCToken>& tokensBuffer) {
   std::string result = tokensBuffer.back();
   tokensBuffer.pop_back();
 
-  if (tokensBuffer.size() > 0 && "," == tokensBuffer.back()) {
-    tokensBuffer.pop_back();
-  }
-
   return result;
 }
 
@@ -321,9 +317,6 @@ std::vector<JSCToken> JSCParser::findAndParseSimpleOrArray(const std::string fou
           i++;
           if ("]" != tokens[i]) {
             result.push_back(tokens[i]);
-          }
-          if (i + 1 < tokens.size() && "," == tokens[i + 1]) {
-            i++;
           }
         } while ("]" != tokens[i] && i < tokens.size());
 

@@ -25,14 +25,15 @@ bool JSCTokens::isSpace(const char& symbol) const {
   static const char enter = '\n';
   static const char caret = '\r';
   static const char space = 32;
+  static const char comma = ',';
 
-  return tab == symbol || enter == symbol || caret == symbol || space == symbol;
+  return tab == symbol || enter == symbol || caret == symbol || space == symbol || comma == symbol;
 }
 
 bool JSCTokens::isCharacter(const char& symbol) const {
   return '{' == symbol || '}' == symbol ||
          '[' == symbol || ']' == symbol ||
-         ':' == symbol || ',' == symbol;
+         ':' == symbol;
 }
 
 bool JSCTokens::isQuote(const char& symbol) const {
