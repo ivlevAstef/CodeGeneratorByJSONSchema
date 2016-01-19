@@ -61,13 +61,16 @@ int main(int argc, const char* argv[]) {
   JSCObjcJSONModelLanguage language;
 
   language.setIgnoreList(Config::ignoreList());
-  language.setLeafClasses(Config::leafClasses(), parser.objects());
   language.setRenameMap(Config::renameMap());
   language.setLicenceHeader(Config::licenceHeader());
   language.setPrefix(Config::prefix());
   language.setTab(Config::tab());
 
-  for (auto& obj : parser.enums()) {
+  for (const auto& leafClass : Config::leafClasses()) {
+    language.addLeafClass(leafClass);
+  }
+
+  for (const auto& obj : parser.enums()) {
     language.add(obj);
   }
 
@@ -75,7 +78,7 @@ int main(int argc, const char* argv[]) {
     language.add(additionalClass);
   }
 
-  for (auto& obj : parser.objects()) {
+  for (const auto& obj : parser.objects()) {
     language.add(obj);
   }
 

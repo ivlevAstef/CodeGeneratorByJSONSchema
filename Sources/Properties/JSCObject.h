@@ -17,6 +17,8 @@ class JSCObject : public JSCProperty {
  public:
   JSCObject(const std::vector<JSCPropertyPointer>& properties);
 
+  JSCObject(const JSCObject& obj) = default;
+
   void setRootName(const std::string& name);
 
   const std::vector<JSCPropertyPointer>& properties() const;

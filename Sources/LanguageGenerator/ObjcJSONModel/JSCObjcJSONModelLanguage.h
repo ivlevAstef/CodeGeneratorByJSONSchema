@@ -27,7 +27,7 @@ class JSCObjcJSONModelLanguage : public JSCLanguageBase {
   std::string generateImport(const JSCObjectPointer& object) const;
   std::string generateImportFileName(const JSCPropertyPointer& property) const;
 
-  std::string propertyTypeString(const JSCPropertyPointer& property) const;
+  std::string propertyTypeString(const JSCPropertyPointer& property, bool useOptional = true) const;
   std::string propertyModificatorString(const JSCPropertyPointer& property) const;
 };
 

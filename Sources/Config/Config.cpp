@@ -88,8 +88,8 @@ static std::string parseLicenceHeader(std::istringstream& inputLineStream, std::
   return result;
 }
 
-static std::set<std::string> parseLinearCommaList(std::istringstream& lineStream) {
-  std::set<std::string> result;
+static IgnoreList parseIgnoreList(std::istringstream& lineStream) {
+  IgnoreList result;
   std::string temp;
 
   while (std::getline(lineStream, temp, ',')) {
@@ -133,6 +133,20 @@ static bool parseBool(std::istringstream& stream) {
   return false;
 }
 
+static LeafClass parseLeafClass(std::istringstream& lineStream) {
+  LeafClass result;
+
+  std::getline(lineStream, result.name, ':');
+  result.name = trim(result.name);
+
+  std::string temp;
+  while (std::getline(lineStream, temp, ',')) {
+    result.children.push_back(trim(temp));
+  }
+
+  return result;
+}
+
 static AdditionalClass parseAdditionalClass(std::istringstream& inputLineStream, std::ifstream& fileStream) {
   AdditionalClass result;
 
@@ -172,6 +186,9 @@ bool Config::Load(std::string filename) {
     return false;
   }
 
+  config.m_additionalClasses.clear();
+  config.m_leafClasses.clear();
+
   std::string line;
   while (std::getline(fileStream, line)) {
     if ('#' == line[0]) {  //comment
@@ -192,9 +209,9 @@ bool Config::Load(std::string filename) {
       } else if ("Licence Header" == key) {
         config.m_licenceHeader = parseLicenceHeader(lineStream, fileStream);
       } else if ("Ignore List" == key) {
-        config.m_ignoreList = parseLinearCommaList(lineStream);
-      } else if ("Leaf Classses" == key) {
-        config.m_leafClasses = parseLinearCommaList(lineStream);
+        config.m_ignoreList = parseIgnoreList(lineStream);
+      } else if ("Leaf Class" == key) {
+        config.m_leafClasses.push_back(parseLeafClass(lineStream));
       } else if ("Rename Map" == key) {
         config.m_renameMap = parseRenameMap(lineStream, fileStream);
       } else if ("Additional Class" == key) {

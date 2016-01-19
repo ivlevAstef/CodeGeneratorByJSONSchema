@@ -127,14 +127,19 @@ JSCOutput JSCObjcJSONModelLanguage::generateOutputSource(const JSCObjectPointer&
 }
 
 std::string JSCObjcJSONModelLanguage::generateImport(const JSCObjectPointer& object) const {
-  std::string result = "#import \"JSONModel.h\"\n";
+  std::set<std::string> importFiles{"JSONModel.h"};
 
   for (const auto& property : propertiesForObj(object)) {
-    std::string importFileName = generateImportFileName(property);
+    importFiles.insert(generateImportFileName(property));
+  }
+
+  std::string result;
+  for (const auto& importFileName : importFiles) {
     if (!importFileName.empty()) {
       result += "#import \"" + importFileName + "\"\n";
     }
   }
+
   return result;
 }
 
@@ -153,18 +158,18 @@ std::string JSCObjcJSONModelLanguage::generateImportFileName(const JSCPropertyPo
   return "";
 }
 
-std::string JSCObjcJSONModelLanguage::propertyTypeString(const JSCPropertyPointer& property) const {
+std::string JSCObjcJSONModelLanguage::propertyTypeString(const JSCPropertyPointer& property, bool useOptional) const {
   SIAAssert(nullptr != property.get());
-  std::string optionalText = property->optional() ? "<Optional>" : "";
+  std::string optionalText = (useOptional && property->optional()) ? "<Optional>" : "";
 
   switch (property->type()) {
   case JSCProperty_Ref:
-    return propertyTypeString(std::static_pointer_cast<JSCRef>(property)->refProperty());
+    return propertyTypeString(std::static_pointer_cast<JSCRef>(property)->refProperty(), useOptional);
   case JSCProperty_Any:
   case JSCProperty_MultyType:
     return "id" + optionalText;
   case JSCProperty_Array:
-    return "NSArray<" + propertyTypeString(std::static_pointer_cast<JSCArray>(property)->propertyType()) + ">" + optionalText + "*";
+    return "NSArray<" + propertyTypeString(std::static_pointer_cast<JSCArray>(property)->propertyType(), false) + ">" + optionalText + "*";
   case JSCProperty_Boolean:
     return "BOOL";
   case JSCProperty_Enum:

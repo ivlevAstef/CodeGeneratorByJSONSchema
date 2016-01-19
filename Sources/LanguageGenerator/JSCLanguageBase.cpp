@@ -40,14 +40,10 @@ void JSCLanguageBase::setIgnoreList(const IgnoreList& ignoreList) {
   m_ignoreList = ignoreList;
 }
 
-void JSCLanguageBase::setLeafClasses(const LeafClasses& leafClasses, const std::vector<const JSCObjectPointer>& classes) {
-  m_leafClasses = leafClasses;
-
-  m_leafIgnoreList.clear();
-  for (const auto& object : classes) {
-    if (m_leafClasses.count(object->rootName())) {
-      fillLeafIgnoreListFor(object);
-    }
+void JSCLanguageBase::addLeafClass(const LeafClass& leafClass) {
+  m_leafClasses.insert(leafClass.name);
+  for (const auto& child : leafClass.children) {
+    m_leafClasses.insert(child);
   }
 }
 
@@ -122,26 +118,26 @@ void JSCLanguageBase::removeEqualsOutput() {
   }
 }
 
-bool JSCLanguageBase::isIgnore(const std::string& name, bool isLeaf) const {
-  return m_ignoreList.count(name) > 0 || (!isLeaf && m_leafIgnoreList.count(name) > 0);
+bool JSCLanguageBase::isIgnore(const std::string& name) const {
+  return m_ignoreList.count(name) > 0;
 }
 
 bool JSCLanguageBase::isIgnoreEnum(const JSCEnumPointer& enumObj) const {
   return isIgnore(enumObj->enumName());
 }
 
-bool JSCLanguageBase::isIgnoreObj(const JSCObjectPointer& object, bool isLeaf) const {
-  return isIgnore(object->rootName(), isLeaf);
+bool JSCLanguageBase::isIgnoreObj(const JSCObjectPointer& object) const {
+  return isIgnore(object->rootName());
 }
 
-bool JSCLanguageBase::isIgnore(const JSCPropertyPointer& property, bool isLeaf) const {
+bool JSCLanguageBase::isIgnore(const JSCPropertyPointer& property) const {
   bool ignore = m_ignoreList.count(property->pathName()) > 0;
 
   if (nullptr != property.get()) {
-    ignore |= JSCProperty_Ref == property->type() && isIgnore(std::static_pointer_cast<JSCRef>(property)->refProperty(), isLeaf);
-    ignore |= JSCProperty_Array == property->type() && isIgnore(std::static_pointer_cast<JSCArray>(property)->propertyType(), isLeaf);
+    ignore |= JSCProperty_Ref == property->type() && isIgnore(std::static_pointer_cast<JSCRef>(property)->refProperty());
+    ignore |= JSCProperty_Array == property->type() && isIgnore(std::static_pointer_cast<JSCArray>(property)->propertyType());
 
-    ignore |= JSCProperty_Object == property->type() && isIgnoreObj(std::static_pointer_cast<JSCObject>(property), isLeaf);
+    ignore |= JSCProperty_Object == property->type() && isIgnoreObj(std::static_pointer_cast<JSCObject>(property));
     ignore |= JSCProperty_Enum == property->type() && isIgnoreEnum(std::static_pointer_cast<JSCEnum>(property));
   }
 
@@ -177,38 +173,58 @@ static bool containsClassInClass(const JSCObjectPointer& container, const JSCObj
   return true;
 }
 
-std::vector<JSCPropertyPointer> JSCLanguageBase::propertiesForProperty(const JSCPropertyPointer& property, bool isLeaf) const {
-  if (isLeaf) {
-    if (JSCProperty_Object == property->type()) {
-      return propertiesForObj(std::static_pointer_cast<JSCObject>(property), isLeaf);
-    } else if (JSCProperty_Ref == property->type()) {
-      return propertiesForProperty(std::static_pointer_cast<JSCRef>(property)->refProperty(), isLeaf);
-    } else if (JSCProperty_Array == property->type()) {
-      return propertiesForProperty(std::static_pointer_cast<JSCArray>(property)->propertyType(), isLeaf);
-    }
+std::vector<JSCPropertyPointer> JSCLanguageBase::propertiesForProperty(const JSCPropertyPointer& property) const {
+  if (JSCProperty_Object == property->type()) {
+    return propertiesForObj(std::static_pointer_cast<JSCObject>(property));
+  } else if (JSCProperty_Ref == property->type()) {
+    return propertiesForProperty(std::static_pointer_cast<JSCRef>(property)->refProperty());
+  } else if (JSCProperty_Array == property->type()) {
+    return propertiesForProperty(std::static_pointer_cast<JSCArray>(property)->propertyType());
   }
 
   return std::vector<JSCPropertyPointer>{property};
 }
 
-std::vector<JSCPropertyPointer> JSCLanguageBase::propertiesForObj(const JSCObjectPointer& object, bool isLeaf) const {
+bool JSCLanguageBase::checkIsLeaf(const JSCPropertyPointer& property) const {
+  if (JSCProperty_Object == property->type()) {
+    std::string name = std::static_pointer_cast<JSCObject>(property)->rootName();
+    return m_leafClasses.count(name) > 0;
+  } else if (JSCProperty_Ref == property->type()) {
+    return checkIsLeaf(std::static_pointer_cast<JSCRef>(property)->refProperty());
+  } else if (JSCProperty_Array == property->type()) {
+    return checkIsLeaf(std::static_pointer_cast<JSCArray>(property)->propertyType());
+  }
+
+  return false;
+}
+
+std::vector<JSCPropertyPointer> JSCLanguageBase::propertiesForObj(const JSCObjectPointer& object) const {
   SIAAssert(nullptr != object.get());
 
   std::vector<JSCPropertyPointer> result;
   result.reserve(object->properties().size());
 
   std::vector<JSCObjectPointer> additionalClasses = findAdditionalClasses(object);
-  isLeaf |= (m_leafClasses.count(object->rootName()) > 0);
+
+  bool isLeaf = checkIsLeaf(object);
 
   for (const auto& property : object->properties()) {
-    if (!isIgnore(property, isLeaf) && !containsPropertyInClasses(property, additionalClasses)) {
-      for (const auto& childProperty : propertiesForProperty(property, isLeaf)) {
+    if (isLeaf && checkIsLeaf(property)) {
+      for (const auto& childProperty : propertiesForProperty(property)) {
         result.push_back(childProperty);
       }
+    } else if (!isIgnore(property) && !containsPropertyInClasses(property, additionalClasses)) {
+      result.push_back(property);
     }
   }
 
-  for (const auto& additionalClass : additionalClasses) {
+  for (const auto& additionalClassData : additionalClasses) {
+    JSCObjectPointer additionalClass(new JSCObject(*additionalClassData.get()));
+
+    auto path = object->path();
+    path.push_back(additionalClassData->pathName());
+    additionalClass->setPath(path);
+
     result.push_back(additionalClass);
   }
 
@@ -272,22 +288,4 @@ std::string JSCLanguageBase::generateLicenceHeader(std::string filename) const {
   }
 
   return result + '\n';
-}
-
-void JSCLanguageBase::fillLeafIgnoreListFor(const JSCObjectPointer& object) {
-  for (const auto& property : object->properties()) {
-    JSCPropertyPointer checkProperty = property;
-
-    if (JSCProperty_Ref == property->type()) {
-      checkProperty = std::static_pointer_cast<JSCRef>(property)->refProperty();
-    } else if (JSCProperty_Array == property->type()) {
-      checkProperty = std::static_pointer_cast<JSCArray>(property)->propertyType();
-    }
-
-    if (JSCProperty_Object == checkProperty->type()) {
-      JSCObjectPointer checkObject = std::static_pointer_cast<JSCObject>(checkProperty);
-      m_leafIgnoreList.insert(checkObject->rootName());
-      fillLeafIgnoreListFor(checkObject);
-    }
-  }
 }
