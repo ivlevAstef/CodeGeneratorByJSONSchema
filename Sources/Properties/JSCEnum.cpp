@@ -11,12 +11,10 @@ const std::vector<std::string>& JSCEnum::identifiers() const {
 
 std::string JSCEnum::enumName() const {
   std::string result;
-  for (std::string subpath : path()) {
-    if (!subpath.empty()) {
-      subpath[0] = toupper(subpath[0]);
-      result += subpath;
-    }
+
+  if (path().size() > 3) {
+    return path()[2] + "_" + pathName();
   }
 
-  return result;
+  return pathName();
 }

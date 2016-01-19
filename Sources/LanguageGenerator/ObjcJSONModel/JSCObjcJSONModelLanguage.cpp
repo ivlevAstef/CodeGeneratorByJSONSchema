@@ -12,19 +12,15 @@
 #include "SIALogger.h"
 
 std::string JSCObjcJSONModelLanguage::className(const JSCObjectPointer& object) const {
-  return m_prefix + toCamelCase(renamed(object->rootName()), true);
+  return m_prefix + renamed(toCamelCase(renamed(object->rootName()), true));
 }
 
 std::string JSCObjcJSONModelLanguage::enumName(const JSCEnumPointer& enumObj) const {
-  if (enumObj->path().size() > 3) {
-    return m_prefix + toCamelCase(renamed(enumObj->path()[2]), true) + toCamelCase(renamed(enumObj->pathName()), true);
-  }
-
-  return m_prefix + toCamelCase(renamed(enumObj->pathName()), true);
+  return m_prefix + renamed(toCamelCase(renamed(enumObj->enumName()), true));
 }
 
 std::string JSCObjcJSONModelLanguage::propertyName(const JSCPropertyPointer& property) const {
-  return toCamelCase(renamed(property->pathName()));
+  return renamed(toCamelCase(renamed(property->pathName())));
 }
 
 std::vector<JSCOutput> JSCObjcJSONModelLanguage::generateOutput(const JSCEnumPointer& enumObj) const {

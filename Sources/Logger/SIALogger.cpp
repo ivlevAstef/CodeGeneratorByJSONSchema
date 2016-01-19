@@ -79,9 +79,9 @@ void Logger::logToStream(const char* logLevel, const char* file, int line, const
   }
 
   ///Added filename and file line
-  if (nullptr != file) {
-    logIndex += sprintf(logBuffer + logIndex, "{%s:%d} ", fileName(file).c_str(), line);
-  }
+  //if (nullptr != file) {
+  //  logIndex += sprintf(logBuffer + logIndex, "{%s:%d} ", fileName(file).c_str(), line);
+  //}
 
   ///Added message
   if (nullptr != message) {

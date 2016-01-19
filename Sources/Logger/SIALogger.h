@@ -103,11 +103,11 @@ static T SIADefaultModuleName() {
 #define SIADebug(MSG, ...) \
   { SIA::Logger::logToStream("Debug", SIAMsg(MSG, ##__VA_ARGS__)); }
 #define SIAInfo(MSG, ...) \
-  { SIA::Logger::logToStream("Info", SIAMsg(MSG, ##__VA_ARGS__)); }
+  { SIA::Logger::logToStream(nullptr, SIAMsg(MSG, ##__VA_ARGS__)); }
 
 #ifdef ENABLE_TRACE
 #define SIATrace(MSG, ...) \
-  { SIA::Logger::logToStream("Trace", SIAMsg(MSG, ##__VA_ARGS__)); }
+  { SIA::Logger::logToStream(nullptr, SIAMsg(MSG, ##__VA_ARGS__)); }
 #else
 #define SIATrace(MSG, ...) \
   {}

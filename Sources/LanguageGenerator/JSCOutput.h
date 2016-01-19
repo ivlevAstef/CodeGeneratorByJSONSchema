@@ -16,7 +16,9 @@ class JSCOutput {
  public:
   JSCOutput(std::string file, std::string text);
 
-  void save() const;
+  const std::string& fileName() const;
+
+  void save(const std::string& directory) const;
 
  private:
   std::string m_fileName;

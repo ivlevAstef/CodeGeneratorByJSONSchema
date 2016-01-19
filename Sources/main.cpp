@@ -15,8 +15,21 @@
 #include "JSCObjcJSONModelLanguage.h"
 
 int main(int argc, const char* argv[]) {
-  //Config::Load("config.ini");
-  SIA::Logger::Initialization();
+  static const std::string sDefaultConfigFile = "config.ini";
+
+  std::string configFile = sDefaultConfigFile;
+  if (argc < 3 || "-config" != std::string(argv[1])) {
+    SIAWarning("Path to config file not set. For set usage is -config <configfile>");
+    SIAWarning("Setup default config file:%s", sDefaultConfigFile.c_str());
+  } else {
+    configFile = argv[2];
+  }
+
+  if (Config::Load(configFile)) {
+    SIADebug("Load config from file:%s success", configFile.c_str());
+  } else {
+    SIAFatal("Can't load config from file:%s", configFile.c_str());
+  }
 
   JSCStream stream("test-schema.json");
   JSCTokens tokens(stream);
@@ -25,7 +38,7 @@ int main(int argc, const char* argv[]) {
 
   /*
   parser.debugPrint(parser.root());
-
+   */
   SIADebug("All classes:");
   for (auto& obj : parser.objects()) {
     SIADebug("  Class Name:%s", obj->rootName().c_str());
@@ -37,13 +50,13 @@ int main(int argc, const char* argv[]) {
 
   SIADebug("All enums:");
   for (auto& obj : parser.enums()) {
-    SIADebug("  Enum Name:%s", obj->enumName().c_str());
+    SIADebug("  Enum Name: %s", obj->enumName().c_str());
     SIADebug("  Enum identifiers:");
     for (auto& identifier : obj->identifiers()) {
       SIADebug("    %s", identifier.c_str());
     }
   }
-  */
+
 
   JSCObjcJSONModelLanguage language;
 
@@ -65,8 +78,12 @@ int main(int argc, const char* argv[]) {
     language.add(obj);
   }
 
+  language.removeEqualsOutput();
+
+  SIADebug("____________________________________");
+
   for (const auto& out : language.outputs()) {
-    out.save();
+    out.save(Config::outputDirectory());
   }
 
   return 0;

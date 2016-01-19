@@ -19,10 +19,12 @@ class Config {
   Config();
 
  public:
-  static void Load(std::string filename);
+  static bool Load(std::string filename);
 
   static const std::string& tab() { return config.m_tab; }
   static const std::string& prefix() { return config.m_prefix; }
+
+  static const std::string& outputDirectory() { return config.m_outputDirectory; }
 
   static const std::string& licenceHeader() { return config.m_licenceHeader; }
 
@@ -35,6 +37,7 @@ class Config {
  private:
   std::string m_tab;
   std::string m_prefix;
+  std::string m_outputDirectory;
   std::string m_licenceHeader;
 
   IgnoreList m_ignoreList;

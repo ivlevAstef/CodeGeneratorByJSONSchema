@@ -28,6 +28,8 @@ class JSCLanguageBase {
   void add(const JSCEnumPointer& enumObj);
   void add(const JSCObjectPointer& object);
 
+  void removeEqualsOutput();
+
   const std::vector<JSCOutput>& outputs() const;
 
  protected:
@@ -36,6 +38,7 @@ class JSCLanguageBase {
 
   std::string generateLicenceHeader(std::string filename) const;
 
+  bool isIgnore(const std::string& name) const;
   bool isIgnore(const JSCPropertyPointer& property) const;
   bool isIgnoreEnum(const JSCEnumPointer& enumObj) const;
   bool isIgnoreObj(const JSCObjectPointer& object) const;

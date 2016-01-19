@@ -94,12 +94,33 @@ void JSCLanguageBase::add(const AdditionalClass& additionalClass) {
   }
 }
 
+void JSCLanguageBase::removeEqualsOutput() {
+  for (size_t i = 0; i < m_outputs.size() - 1; i++) {
+    const auto& out = m_outputs[i];
+
+    const auto& removedList = std::remove_if(m_outputs.begin() + i + 1, m_outputs.end(), [&out](const JSCOutput& check) {
+      return out.fileName() == check.fileName();
+    });
+
+    size_t size = m_outputs.size();
+    m_outputs.erase(removedList, m_outputs.end());
+
+    if (size != m_outputs.size()) {
+      SIAWarning("Removed equals output: %s (%d)", out.fileName().c_str(), size - m_outputs.size());
+    }
+  }
+}
+
+bool JSCLanguageBase::isIgnore(const std::string& name) const {
+  return m_ignoreList.count(name) > 0;
+}
+
 bool JSCLanguageBase::isIgnoreEnum(const JSCEnumPointer& enumObj) const {
-  return m_ignoreList.count(enumObj->enumName()) > 0;
+  return isIgnore(enumObj->enumName());
 }
 
 bool JSCLanguageBase::isIgnoreObj(const JSCObjectPointer& object) const {
-  return m_ignoreList.count(object->rootName()) > 0;
+  return isIgnore(object->rootName());
 }
 
 bool JSCLanguageBase::isIgnore(const JSCPropertyPointer& property) const {
@@ -222,5 +243,5 @@ std::string JSCLanguageBase::generateLicenceHeader(std::string filename) const {
     result.replace(foundIndex, sDateKey.size(), currentDate());
   }
 
-  return result;
+  return result + '\n';
 }

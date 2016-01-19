@@ -24,6 +24,7 @@
 		848953B81C4CF214000B1B8F /* JSCOutput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848953B71C4CF214000B1B8F /* JSCOutput.cpp */; };
 		848953BC1C4D079B000B1B8F /* Config.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848953BA1C4D079B000B1B8F /* Config.cpp */; };
 		848953C01C4D0AA2000B1B8F /* JSCLanguageBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848953BE1C4D0AA2000B1B8F /* JSCLanguageBase.cpp */; };
+		848953C21C4DFA32000B1B8F /* config.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = 848953C11C4DFA29000B1B8F /* config.ini */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -33,6 +34,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 7;
 			files = (
+				848953C21C4DFA32000B1B8F /* config.ini in CopyFiles */,
 				848953AE1C493361000B1B8F /* test-schema.json in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -73,6 +75,7 @@
 		848953BD1C4D0A44000B1B8F /* JSCTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JSCTypes.h; sourceTree = "<group>"; };
 		848953BE1C4D0AA2000B1B8F /* JSCLanguageBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSCLanguageBase.cpp; sourceTree = "<group>"; };
 		848953BF1C4D0AA2000B1B8F /* JSCLanguageBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCLanguageBase.h; sourceTree = "<group>"; };
+		848953C11C4DFA29000B1B8F /* config.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = config.ini; sourceTree = "<group>"; };
 		84B76CAB1C46275500878510 /* CodeGeneratorByJSONSchema */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CodeGeneratorByJSONSchema; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -101,7 +104,6 @@
 				848953871C49334A000B1B8F /* LanguageGenerator */,
 				8489538B1C49334A000B1B8F /* Logger */,
 				8489538E1C49334A000B1B8F /* main.cpp */,
-				8489538F1C49334A000B1B8F /* MSTLogger */,
 				848953911C49334A000B1B8F /* Properties */,
 			);
 			name = Sources;
@@ -129,21 +131,6 @@
 			path = Logger;
 			sourceTree = "<group>";
 		};
-		8489538F1C49334A000B1B8F /* MSTLogger */ = {
-			isa = PBXGroup;
-			children = (
-				848953901C49334A000B1B8F /* LogOutput */,
-			);
-			path = MSTLogger;
-			sourceTree = "<group>";
-		};
-		848953901C49334A000B1B8F /* LogOutput */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = LogOutput;
-			sourceTree = "<group>";
-		};
 		848953911C49334A000B1B8F /* Properties */ = {
 			isa = PBXGroup;
 			children = (
@@ -169,6 +156,7 @@
 			isa = PBXGroup;
 			children = (
 				848953AD1C493358000B1B8F /* test-schema.json */,
+				848953C11C4DFA29000B1B8F /* config.ini */,
 			);
 			name = Resources;
 			path = ../Resources;
