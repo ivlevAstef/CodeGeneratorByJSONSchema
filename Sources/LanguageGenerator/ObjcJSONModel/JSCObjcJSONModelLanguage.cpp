@@ -52,18 +52,77 @@ std::string JSCObjcJSONModelLanguage::propertyName(const JSCObjectPointer& paren
 }
 
 std::vector<JSCOutput> JSCObjcJSONModelLanguage::generateOutput(const JSCEnumPointer& enumObj) const {
+  return std::vector<JSCOutput>{generateOutputHeader(enumObj), generateOutputSource(enumObj)};
+}
+
+JSCOutput JSCObjcJSONModelLanguage::generateOutputHeader(const JSCEnumPointer& enumObj) const {
   std::string name = enumName(enumObj);
+  std::string nameEnum = "E" + name;
   std::string fileName = name + ".h";
 
   std::string text = generateLicenceHeader(fileName);
 
-  text += "typedef NS_ENUM(NSUInteger, " + name + ") {\n";
+  text += "typedef enum {\n";
+  text += m_tab + name + "_Undefined,\n";
   for (auto& identifier : enumObj->identifiers()) {
     text += m_tab + name + "_" + toCamelCase(identifier, true) + ",\n";
   }
-  text += "};\n\n";
+  text += "} " + nameEnum + ";\n\n";
 
-  return std::vector<JSCOutput>{JSCOutput(fileName, text)};
+  text += "@interface " + name + "\n";
+  text += "\n";
+  text += "+ (" + nameEnum + ")toEnum:(NSString*)str;\n";
+  text += "+ (NSString*)toString:(" + nameEnum + ")value;\n";
+  text += "\n";
+  text += "+ (NSArray<NSString*>*)data;\n\n";
+  text += "@end\n\n";
+
+  return JSCOutput(fileName, text);
+}
+JSCOutput JSCObjcJSONModelLanguage::generateOutputSource(const JSCEnumPointer& enumObj) const {
+  std::string name = enumName(enumObj);
+  std::string nameEnum = "E" + name;
+  std::string headerFileName = name + ".h";
+  std::string fileName = name + ".m";
+
+  std::string text = generateLicenceHeader(fileName);
+  text += "#import \"" + headerFileName + "\"\n";
+  text += "\n";
+
+  text += "@implementation " + name + "\n\n";
+
+  //toEnum
+  text += "+ (" + nameEnum + ")toEnum:(NSString*)str {\n";
+  for (auto& identifier : enumObj->identifiers()) {
+    std::string valueName = name + "_" + toCamelCase(identifier, true);
+    text += m_tab + "if ([str isEqualToString: @\"" + identifier + "\"]) return " + valueName + ";\n";
+  }
+  text += m_tab + "return " + name + "_Undefined;\n";
+  text += "}\n\n";
+
+  //toString
+  text += "+ (NSString*)toString:(" + nameEnum + ")value {\n";
+  text += m_tab + "switch(value) {\n";
+  for (auto& identifier : enumObj->identifiers()) {
+    std::string valueName = name + "_" + toCamelCase(identifier, true);
+    text += m_tab + "case " + valueName + ":\n" + m_tab + m_tab + "return @\"" + identifier + "\";\n";
+  }
+  text += m_tab + "default:\n" + m_tab + m_tab + "return @\"\";\n";
+  text += m_tab + "}\n";
+  text += "}\n\n";
+
+  //data
+  text += "+ (NSArray<NSString*>*)data {\n";
+  text += m_tab + "return @[\n";
+  for (auto& identifier : enumObj->identifiers()) {
+    text += m_tab + m_tab + "@\"" + identifier + "\",\n";
+  }
+  text += m_tab + "];\n";
+  text += "}\n\n";
+
+  text += "@end\n\n";
+
+  return JSCOutput(fileName, text);
 }
 
 std::vector<JSCOutput> JSCObjcJSONModelLanguage::generateOutput(const JSCObjectPointer& object) const {
@@ -120,6 +179,24 @@ JSCOutput JSCObjcJSONModelLanguage::generateOutputSource(const JSCObjectPointer&
   text += "\n";
   text += m_tab + "return NO;\n";
   text += "}\n\n";
+
+  //Method for convert string to enum, and enum to string
+  for (const auto& property : propertiesForObj(object)) {
+    if (JSCProperty_Enum == property->type()) {
+      std::string name = enumName(std::static_pointer_cast<JSCEnum>(property));
+      std::string nameProperty = propertyName(object, property);
+      std::string namePropertyUpper = nameProperty;
+      namePropertyUpper[0] = toupper(namePropertyUpper[0]);
+
+      text += "- (void)set" + namePropertyUpper + "WithNSString:(NSString*)str {\n";
+      text += m_tab + "_" + nameProperty + " = [" + name + " toEnum:str];\n";
+      text += "}\n\n";
+
+      text += "- (id)JSONObjectFor" + namePropertyUpper + " {\n";
+      text += m_tab + "return [" + name + " toString: self." + nameProperty + "];\n";
+      text += "}\n\n";
+    }
+  }
 
   text += "@end\n\n";
 

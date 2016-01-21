@@ -21,6 +21,9 @@ class JSCObjcJSONModelLanguage : public JSCLanguageBase {
   std::vector<JSCOutput> generateOutput(const JSCEnumPointer& enumObj) const override;
   std::vector<JSCOutput> generateOutput(const JSCObjectPointer& object) const override;
 
+  JSCOutput generateOutputHeader(const JSCEnumPointer& enumObj) const;
+  JSCOutput generateOutputSource(const JSCEnumPointer& enumObj) const;
+
   JSCOutput generateOutputHeader(const JSCObjectPointer& object) const;
   JSCOutput generateOutputSource(const JSCObjectPointer& object) const;
 
