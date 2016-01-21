@@ -54,6 +54,8 @@ class JSCLanguageBase {
 
   std::vector<JSCObjectPointer> findAdditionalClasses(const JSCObjectPointer& object) const;
 
+  JSCPropertyPointer recursiveProperty(const JSCPropertyPointer& property) const;
+
  protected:
   std::string m_prefix;
   std::string m_tab;

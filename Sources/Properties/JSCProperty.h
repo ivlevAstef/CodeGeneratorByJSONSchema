@@ -45,14 +45,20 @@ class JSCProperty {
  public:
   JSCProperty(JSCPropertyType type);
 
+  void setCodeGenerate(bool codeGenerate);
+
   void setTitle(const std::string& title);
   void setDescription(const std::string& description);
 
   void setPath(const Path& path);
-  void setOptional(bool optional);
+
+  void setHasNull(bool hasNull);
+  void setRequired(bool required);
 
   const std::string& title() const;
   const std::string& description() const;
+
+  bool isCodeGenerate() const;
 
   const Path& path() const;
   const Path& fullPath() const;
@@ -61,13 +67,17 @@ class JSCProperty {
   const std::string fullPathName() const;
 
   JSCPropertyType type() const;
-  bool optional() const;
+
+  bool hasNull() const;
+  bool required() const;
 
  private:
   Path m_path;
   Path m_fullPath;
   JSCPropertyType m_type;
-  bool m_optional;
+  bool m_hasNull;
+  bool m_required;
+  bool m_codeGenerate;
 
   std::string m_title;
   std::string m_description;

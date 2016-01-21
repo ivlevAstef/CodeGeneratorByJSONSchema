@@ -73,7 +73,7 @@ JSCOutput JSCObjcJSONModelLanguage::generateOutputHeader(const JSCEnumPointer& e
   }
   text += "} " + name + ";\n\n";
 
-  text += "@interface " + className + "\n";
+  text += "@interface " + className + " : NSObject\n";
   text += "\n";
   text += "+ (" + name + ")toEnum:(NSString*)str;\n";
   text += "+ (NSString*)toString:(" + name + ")value;\n";
@@ -141,6 +141,9 @@ JSCOutput JSCObjcJSONModelLanguage::generateOutputHeader(const JSCObjectPointer&
   text += generateImport(object);
   text += "\n";
 
+  text += "@protocol " + name + "\n";
+  text += "@end\n\n";
+
   text += "@interface " + name + " : JSONModel\n";
   text += "\n";
   for (const auto& property : propertiesForObj(object)) {
@@ -166,7 +169,16 @@ JSCOutput JSCObjcJSONModelLanguage::generateOutputSource(const JSCObjectPointer&
   text += "+ (JSONKeyMapper*)keyMapper {\n";
   text += m_tab + "return [[JSONKeyMapper alloc] initWithDictionary:@{\n";
   for (const auto& property : propertiesForObj(object)) {
-    text += m_tab + m_tab + "@\"" + relativePath(object->path(), property->path(), ".") + "\" : @\"" + propertyName(object, property) + "\",\n";
+    std::string propertyPath = relativePath(object->path(), property->path(), ".");
+    if (property->isCodeGenerate()) {
+      auto lastPoint = propertyPath.find_last_of(".");
+      if (std::string::npos == lastPoint) {
+        propertyPath = "@self";
+      } else {
+        propertyPath = propertyPath.substr(0, lastPoint);
+      }
+    }
+    text += m_tab + m_tab + "@\"" + propertyPath + "\" : @\"" + propertyName(object, property) + "\",\n";
   }
 
   text += m_tab + "}];\n";
@@ -175,7 +187,7 @@ JSCOutput JSCObjcJSONModelLanguage::generateOutputSource(const JSCObjectPointer&
   ///Optional
   text += "+ (BOOL)propertyIsOptional:(NSString*)propertyName {\n";
   for (const auto& property : propertiesForObj(object)) {
-    if (property->optional()) {
+    if (propertyIsOptional(property)) {
       text += m_tab + "if ([propertyName isEqualToString: @\"" + propertyName(object, property) + "\"]) return YES;\n";
     }
   }
@@ -187,7 +199,7 @@ JSCOutput JSCObjcJSONModelLanguage::generateOutputSource(const JSCObjectPointer&
   //Method for convert string to enum, and enum to string
   for (const auto& property : propertiesForObj(object)) {
     if (JSCProperty_Enum == property->type()) {
-      std::string name = enumName(std::static_pointer_cast<JSCEnum>(property));
+      std::string name = enumClassName(std::static_pointer_cast<JSCEnum>(property));
       std::string nameProperty = propertyName(object, property);
       std::string namePropertyUpper = nameProperty;
       namePropertyUpper[0] = toupper(namePropertyUpper[0]);
@@ -239,22 +251,47 @@ std::string JSCObjcJSONModelLanguage::generateImportFileName(const JSCPropertyPo
   return "";
 }
 
-std::string JSCObjcJSONModelLanguage::propertyTypeString(const JSCPropertyPointer& property, bool useOptional) const {
+std::string JSCObjcJSONModelLanguage::arrayProtocol(const JSCArrayPointer& property, bool fromArray) const {
+  std::vector<std::string> protocols;
+  if (!fromArray && (!property->required() || property->hasNull())) {
+    protocols.push_back("Optional");
+  }
+
+  JSCPropertyPointer object = recursiveProperty(property->propertyType());
+  if (nullptr != object.get() && JSCProperty_Object == object->type()) {
+    protocols.push_back(className(std::static_pointer_cast<JSCObject>(object)));
+  }
+
+  if (0 == protocols.size()) {
+    return "";
+  } else if (1 == protocols.size()) {
+    return "<" + protocols[0] + ">";
+  } else if (2 == protocols.size()) {
+    return "<" + protocols[0] + "," + protocols[1] + ">";
+  }
+
+  SIAAssert(false);
+  return "";
+}
+
+std::string JSCObjcJSONModelLanguage::propertyTypeString(const JSCPropertyPointer& property, bool fromArray) const {
   SIAAssert(nullptr != property.get());
-  std::string optionalText = (useOptional && property->optional()) ? "<Optional>" : "";
+  std::string optionalText = (!fromArray && (!property->required() || property->hasNull())) ? "<Optional>" : "";
 
   switch (property->type()) {
   case JSCProperty_Ref:
-    return propertyTypeString(std::static_pointer_cast<JSCRef>(property)->refProperty(), useOptional);
+    return propertyTypeString(std::static_pointer_cast<JSCRef>(property)->refProperty(), fromArray);
   case JSCProperty_Any:
   case JSCProperty_MultyType:
     return "id" + optionalText;
-  case JSCProperty_Array:
-    return "NSArray<" + propertyTypeString(std::static_pointer_cast<JSCArray>(property)->propertyType(), false) + ">" + optionalText + "*";
+  case JSCProperty_Array: {
+    const JSCArrayPointer& array = std::static_pointer_cast<JSCArray>(property);
+    return "NSArray<" + propertyTypeString(array->propertyType(), true) + ">" + arrayProtocol(array, fromArray) + "*";
+  }
   case JSCProperty_Boolean:
     return "BOOL";
   case JSCProperty_Enum:
-    return enumName(std::static_pointer_cast<JSCEnum>(property));
+    return fromArray ? "NSString*" : enumName(std::static_pointer_cast<JSCEnum>(property));
   case JSCProperty_Object:
     return className(std::static_pointer_cast<JSCObject>(property)) + optionalText + "*";
   case JSCProperty_Integer:
@@ -271,6 +308,13 @@ std::string JSCObjcJSONModelLanguage::propertyTypeString(const JSCPropertyPointe
   }
 
   return "";
+}
+
+bool JSCObjcJSONModelLanguage::propertyIsOptional(const JSCPropertyPointer& property, bool fromArray) const {
+  std::string type = propertyTypeString(property, fromArray);
+  auto optionalPos = type.find_first_of("Optional");
+
+  return (std::string::npos != optionalPos);
 }
 
 std::string JSCObjcJSONModelLanguage::propertyModificatorString(const JSCPropertyPointer& property) const {

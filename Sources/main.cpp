@@ -44,7 +44,7 @@ int main(int argc, const char* argv[]) {
     SIADebug("  Class Name:%s", obj->rootName().c_str());
     SIADebug("  Class properties:");
     for (auto& prop : obj->properties()) {
-      SIADebug("    Name:%s Type:%s Optional:%d", prop->pathName().c_str(), JSCProperty::propertyTypeToString(prop->type()).c_str(), prop->optional());
+      SIADebug("    Name:%s Type:%s Required:%d HasNull:%d", prop->pathName().c_str(), JSCProperty::propertyTypeToString(prop->type()).c_str(), prop->required(), prop->hasNull());
     }
   }
 

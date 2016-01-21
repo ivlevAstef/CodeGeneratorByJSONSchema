@@ -85,14 +85,15 @@ void JSCLanguageBase::add(const AdditionalClass& additionalClass) {
 
     JSCPropertyPointer property(new JSCProperty(type));
     property->setPath({std::get<1>(propertyPair)});
-    property->setOptional({std::get<2>(propertyPair)});
+    property->setRequired(!std::get<2>(propertyPair));
     properties.push_back(property);
   }
 
   JSCObjectPointer newClass(new JSCObject(properties));
   newClass->setRootName(additionalClass.className);
   newClass->setPath({additionalClass.name});
-  newClass->setOptional(additionalClass.optional);
+  newClass->setCodeGenerate(true);
+  newClass->setRequired(!additionalClass.optional);
 
   m_additionalClasses.push_back(newClass);
 
@@ -270,6 +271,13 @@ std::string JSCLanguageBase::renamed(const std::string& str) const {
 
 const std::vector<JSCOutput>& JSCLanguageBase::outputs() const {
   return m_outputs;
+}
+
+JSCPropertyPointer JSCLanguageBase::recursiveProperty(const JSCPropertyPointer& property) const {
+  if (nullptr != property.get() && JSCProperty_Ref == property->type()) {
+    return recursiveProperty(std::static_pointer_cast<JSCRef>(property)->refProperty());
+  }
+  return property;
 }
 
 std::string JSCLanguageBase::generateLicenceHeader(std::string filename) const {

@@ -1633,7 +1633,13 @@
           ]
         },
         "station_types": {
-          "$ref": "#/properties/DtoProposalProfile/properties/visit_dates"
+          "type": [
+            "array",
+            "null"
+          ],
+          "items" : {
+            "$ref": "#/properties/DtoProposalProfile/properties/station/properties/station_type"
+          }
         },
         "proposal_count": {
           "type": "integer"

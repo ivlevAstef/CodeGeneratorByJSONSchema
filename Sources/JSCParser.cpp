@@ -128,9 +128,7 @@ JSCPropertyPointer JSCParser::createProperty(const std::vector<JSCToken>& tokens
   SIAAssert(nullptr != result.get());
 
   result->setPath(path);
-  if (hasNull) {
-    result->setOptional(true);
-  }
+  result->setHasNull(hasNull);
 
   result->setTitle(getPropertyByName("title", tokens));
   result->setDescription(getPropertyByName("description", tokens));
@@ -228,14 +226,17 @@ JSCPropertyPointer JSCParser::createObjectProperty(const std::vector<JSCToken>& 
 
   const std::vector<JSCPropertyPointer>& properties = objProperties->properties();
 
-  std::vector<JSCToken> required = findAndParseSimpleOrArray("required", tokens);
+  ///ignore root
+  if (path.size() >= 2) {
+    std::vector<JSCToken> requiredNames = findAndParseSimpleOrArray("required", tokens);
 
-  ///removed optional for required names
-  for (const JSCToken& requiredName : required) {
+    ///removed optional for required names
     for (const JSCPropertyPointer& property : properties) {
-      if (property->pathName() == requiredName) {
-        property->setOptional(false);
+      bool required = false;
+      for (const JSCToken& requiredName : requiredNames) {
+        required |= (property->pathName() == requiredName);
       }
+      property->setRequired(required);
     }
   }
 

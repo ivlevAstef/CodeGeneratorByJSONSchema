@@ -10,6 +10,7 @@
 #ifndef JSON_SCHEMA_CODE_LANGUAGE_OBJC_JSONMODEL_H__
 #define JSON_SCHEMA_CODE_LANGUAGE_OBJC_JSONMODEL_H__
 
+#include "JSCArray.h"
 #include "JSCLanguageBase.h"
 
 class JSCObjcJSONModelLanguage : public JSCLanguageBase {
@@ -31,7 +32,9 @@ class JSCObjcJSONModelLanguage : public JSCLanguageBase {
   std::string generateImport(const JSCObjectPointer& object) const;
   std::string generateImportFileName(const JSCPropertyPointer& property) const;
 
-  std::string propertyTypeString(const JSCPropertyPointer& property, bool useOptional = true) const;
+  std::string arrayProtocol(const JSCArrayPointer& array, bool fromArray = false) const;
+  std::string propertyTypeString(const JSCPropertyPointer& property, bool fromArray = false) const;
+  bool propertyIsOptional(const JSCPropertyPointer& property, bool fromArray = false) const;
   std::string propertyModificatorString(const JSCPropertyPointer& property) const;
 };
 

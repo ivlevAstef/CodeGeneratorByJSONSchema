@@ -64,7 +64,13 @@ JSCProperty::Path JSCProperty::toValidPath(const Path& path) {
 
 JSCProperty::JSCProperty(JSCPropertyType type) {
   m_type = type;
-  m_optional = false;
+  m_hasNull = true;
+  m_required = false;
+  m_codeGenerate = false;
+}
+
+void JSCProperty::setCodeGenerate(bool codeGenerate) {
+  m_codeGenerate = codeGenerate;
 }
 
 void JSCProperty::setTitle(const std::string& title) {
@@ -80,8 +86,12 @@ void JSCProperty::setPath(const Path& path) {
   m_path = toValidPath(path);
 }
 
-void JSCProperty::setOptional(bool optional) {
-  m_optional = optional;
+void JSCProperty::setHasNull(bool hasNull) {
+  m_hasNull = hasNull;
+}
+
+void JSCProperty::setRequired(bool required) {
+  m_required = required;
 }
 
 const std::string& JSCProperty::title() const {
@@ -116,10 +126,18 @@ const std::string JSCProperty::fullPathName() const {
   return "";
 }
 
+bool JSCProperty::isCodeGenerate() const {
+  return m_codeGenerate;
+}
+
 JSCPropertyType JSCProperty::type() const {
   return m_type;
 }
 
-bool JSCProperty::optional() const {
-  return m_optional;
+bool JSCProperty::hasNull() const {
+  return m_hasNull;
+}
+
+bool JSCProperty::required() const {
+  return m_required;
 }

@@ -23,4 +23,6 @@ class JSCArray : public JSCProperty {
   JSCPropertyPointer m_propertyType;
 };
 
+typedef std::shared_ptr<JSCArray> JSCArrayPointer;
+
 #endif /* JSON_SCHEMA_CODE_ARRAY_H__ */
