@@ -154,6 +154,8 @@ JSCPropertyPointer JSCParser::createPropertyByType(JSCPropertyType type, const s
     return createArrayProperty(tokens, path, children);
   case JSCProperty_Any:
     return createAnyProperty(tokens, path, children);
+  case JSCProperty_Date:
+    return createDateProperty(tokens, path, children);
 
   case JSCProperty_Unknown:
   case JSCProperty_Enum:
@@ -192,10 +194,20 @@ JSCPropertyPointer JSCParser::createStringProperty(const std::vector<JSCToken>& 
   std::vector<JSCToken> enumIdentfiers = findAndParseSimpleOrArray("enum", tokens);
 
   if (enumIdentfiers.empty()) {
+    if (isDate(tokens, path, children)) {
+      return createDateProperty(tokens, path, children);
+    }
     return JSCPropertyPointer(new JSCProperty(JSCProperty_String));
   }
 
   return JSCPropertyPointer(new JSCEnum(enumIdentfiers));
+}
+
+JSCPropertyPointer JSCParser::createDateProperty(const std::vector<JSCToken>& tokens, const Path& path, const std::vector<JSCPropertyPointer>& children) const {
+  if (children.size() > 0) {
+    SIAWarning("for number type find childrens.");
+  }
+  return JSCPropertyPointer(new JSCProperty(JSCProperty_Date));
 }
 
 JSCPropertyPointer JSCParser::createObjectProperty(const std::vector<JSCToken>& tokens, const Path& path, const std::vector<JSCPropertyPointer>& children) const {
@@ -264,6 +276,18 @@ JSCPropertyPointer JSCParser::analyzeUnknownProperty(const std::vector<JSCToken>
   return JSCPropertyPointer(new JSCUnknown(children));
 }
 
+bool JSCParser::isDate(const std::vector<JSCToken>& tokens, const Path& path, const std::vector<JSCPropertyPointer>& children) const {
+  Path validPath = JSCProperty::toValidPath(path);
+  if (validPath.empty()) {
+    return false;
+  }
+
+  std::string name = validPath[validPath.size() - 1];
+  std::transform(name.begin(), name.end(), name.begin(), ::tolower);
+
+  return std::string::npos != name.find("date");
+}
+
 bool JSCParser::isBeginBrace(const JSCToken& token) const {
   return token == "{";
 }
@@ -289,6 +313,8 @@ JSCPropertyType JSCParser::typeByToken(const JSCToken& token) const {
     return JSCProperty_Array;
   } else if ("any" == token) {
     return JSCProperty_Any;
+  } else if ("date" == token) {
+    return JSCProperty_Date;
   }
 
   return JSCProperty_Unknown;

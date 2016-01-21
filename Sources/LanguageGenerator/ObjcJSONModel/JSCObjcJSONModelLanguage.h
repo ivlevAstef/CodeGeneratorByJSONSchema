@@ -16,6 +16,7 @@ class JSCObjcJSONModelLanguage : public JSCLanguageBase {
  private:
   std::string className(const JSCObjectPointer& object) const;
   std::string enumName(const JSCEnumPointer& enumObj) const;
+  std::string enumClassName(const JSCEnumPointer& enumObj) const;
   std::string propertyName(const JSCObjectPointer& parent, const JSCPropertyPointer& property) const;
 
   std::vector<JSCOutput> generateOutput(const JSCEnumPointer& enumObj) const override;

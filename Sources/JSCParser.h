@@ -44,10 +44,13 @@ class JSCParser {
   JSCPropertyPointer createIntegerProperty(const std::vector<JSCToken>& tokens, const Path& path, const std::vector<JSCPropertyPointer>& children) const;
   JSCPropertyPointer createNumberProperty(const std::vector<JSCToken>& tokens, const Path& path, const std::vector<JSCPropertyPointer>& children) const;
   JSCPropertyPointer createStringProperty(const std::vector<JSCToken>& tokens, const Path& path, const std::vector<JSCPropertyPointer>& children) const;
+  JSCPropertyPointer createDateProperty(const std::vector<JSCToken>& tokens, const Path& path, const std::vector<JSCPropertyPointer>& children) const;
   JSCPropertyPointer createObjectProperty(const std::vector<JSCToken>& tokens, const Path& path, const std::vector<JSCPropertyPointer>& children) const;
   JSCPropertyPointer createArrayProperty(const std::vector<JSCToken>& tokens, const Path& path, const std::vector<JSCPropertyPointer>& children) const;
   JSCPropertyPointer createAnyProperty(const std::vector<JSCToken>& tokens, const Path& path, const std::vector<JSCPropertyPointer>& children) const;
   JSCPropertyPointer analyzeUnknownProperty(const std::vector<JSCToken>& tokens, const Path& path, const std::vector<JSCPropertyPointer>& children) const;
+
+  bool isDate(const std::vector<JSCToken>& tokens, const Path& path, const std::vector<JSCPropertyPointer>& children) const;
 
   bool isBeginBrace(const JSCToken& token) const;
   bool isEndBrace(const JSCToken& token) const;

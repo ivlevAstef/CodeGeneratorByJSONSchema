@@ -11,6 +11,8 @@ std::string JSCProperty::propertyTypeToString(JSCPropertyType type) {
     return "boolean";
   case JSCProperty_Enum:
     return "enum";
+  case JSCProperty_Date:
+    return "date";
   case JSCProperty_Integer:
     return "integer";
   case JSCProperty_MultyType:
@@ -42,9 +44,22 @@ JSCPropertyType JSCProperty::propertyStringToType(const std::string& str) {
     return JSCProperty_Number;
   } else if ("string" == str) {
     return JSCProperty_String;
+  } else if ("date" == str) {
+    return JSCProperty_Date;
   }
 
   return JSCProperty_Unknown;
+}
+
+JSCProperty::Path JSCProperty::toValidPath(const Path& path) {
+  Path result;
+  for (const auto& subpath : path) {
+    if (subpath == "properties" || subpath == "items" || subpath == "item") {
+      continue;
+    }
+    result.push_back(subpath);
+  }
+  return result;
 }
 
 JSCProperty::JSCProperty(JSCPropertyType type) {
@@ -62,13 +77,7 @@ void JSCProperty::setDescription(const std::string& description) {
 
 void JSCProperty::setPath(const Path& path) {
   m_fullPath = path;
-  m_path.clear();
-  for (const auto& subpath : path) {
-    if (subpath == "properties" || subpath == "items" || subpath == "item") {
-      continue;
-    }
-    m_path.push_back(subpath);
-  }
+  m_path = toValidPath(path);
 }
 
 void JSCProperty::setOptional(bool optional) {

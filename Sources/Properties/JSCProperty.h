@@ -23,6 +23,7 @@ enum JSCPropertyType {
   JSCProperty_Number,
   JSCProperty_String,
   JSCProperty_Enum,
+  JSCProperty_Date,
 
   JSCProperty_Object,
   JSCProperty_Array,
@@ -38,6 +39,8 @@ class JSCProperty {
 
   static std::string propertyTypeToString(JSCPropertyType type);
   static JSCPropertyType propertyStringToType(const std::string& str);
+
+  static Path toValidPath(const Path& path);
 
  public:
   JSCProperty(JSCPropertyType type);

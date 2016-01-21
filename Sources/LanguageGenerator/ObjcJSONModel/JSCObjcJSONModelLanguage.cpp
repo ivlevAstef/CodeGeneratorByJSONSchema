@@ -43,6 +43,10 @@ std::string JSCObjcJSONModelLanguage::className(const JSCObjectPointer& object) 
 }
 
 std::string JSCObjcJSONModelLanguage::enumName(const JSCEnumPointer& enumObj) const {
+  return "E" + enumClassName(enumObj);
+}
+
+std::string JSCObjcJSONModelLanguage::enumClassName(const JSCEnumPointer& enumObj) const {
   return m_prefix + renamed(toCamelCase(renamed(enumObj->enumName()), true));
 }
 
@@ -57,22 +61,22 @@ std::vector<JSCOutput> JSCObjcJSONModelLanguage::generateOutput(const JSCEnumPoi
 
 JSCOutput JSCObjcJSONModelLanguage::generateOutputHeader(const JSCEnumPointer& enumObj) const {
   std::string name = enumName(enumObj);
-  std::string nameEnum = "E" + name;
-  std::string fileName = name + ".h";
+  std::string className = enumClassName(enumObj);
+  std::string fileName = className + ".h";
 
   std::string text = generateLicenceHeader(fileName);
 
   text += "typedef enum {\n";
-  text += m_tab + name + "_Undefined,\n";
+  text += m_tab + className + "_Undefined,\n";
   for (auto& identifier : enumObj->identifiers()) {
-    text += m_tab + name + "_" + toCamelCase(identifier, true) + ",\n";
+    text += m_tab + className + "_" + toCamelCase(identifier, true) + ",\n";
   }
-  text += "} " + nameEnum + ";\n\n";
+  text += "} " + name + ";\n\n";
 
-  text += "@interface " + name + "\n";
+  text += "@interface " + className + "\n";
   text += "\n";
-  text += "+ (" + nameEnum + ")toEnum:(NSString*)str;\n";
-  text += "+ (NSString*)toString:(" + nameEnum + ")value;\n";
+  text += "+ (" + name + ")toEnum:(NSString*)str;\n";
+  text += "+ (NSString*)toString:(" + name + ")value;\n";
   text += "\n";
   text += "+ (NSArray<NSString*>*)data;\n\n";
   text += "@end\n\n";
@@ -81,30 +85,30 @@ JSCOutput JSCObjcJSONModelLanguage::generateOutputHeader(const JSCEnumPointer& e
 }
 JSCOutput JSCObjcJSONModelLanguage::generateOutputSource(const JSCEnumPointer& enumObj) const {
   std::string name = enumName(enumObj);
-  std::string nameEnum = "E" + name;
-  std::string headerFileName = name + ".h";
-  std::string fileName = name + ".m";
+  std::string className = enumClassName(enumObj);
+  std::string headerFileName = className + ".h";
+  std::string fileName = className + ".m";
 
   std::string text = generateLicenceHeader(fileName);
   text += "#import \"" + headerFileName + "\"\n";
   text += "\n";
 
-  text += "@implementation " + name + "\n\n";
+  text += "@implementation " + className + "\n\n";
 
   //toEnum
-  text += "+ (" + nameEnum + ")toEnum:(NSString*)str {\n";
+  text += "+ (" + name + ")toEnum:(NSString*)str {\n";
   for (auto& identifier : enumObj->identifiers()) {
-    std::string valueName = name + "_" + toCamelCase(identifier, true);
+    std::string valueName = className + "_" + toCamelCase(identifier, true);
     text += m_tab + "if ([str isEqualToString: @\"" + identifier + "\"]) return " + valueName + ";\n";
   }
-  text += m_tab + "return " + name + "_Undefined;\n";
+  text += m_tab + "return " + className + "_Undefined;\n";
   text += "}\n\n";
 
   //toString
-  text += "+ (NSString*)toString:(" + nameEnum + ")value {\n";
+  text += "+ (NSString*)toString:(" + name + ")value {\n";
   text += m_tab + "switch(value) {\n";
   for (auto& identifier : enumObj->identifiers()) {
-    std::string valueName = name + "_" + toCamelCase(identifier, true);
+    std::string valueName = className + "_" + toCamelCase(identifier, true);
     text += m_tab + "case " + valueName + ":\n" + m_tab + m_tab + "return @\"" + identifier + "\";\n";
   }
   text += m_tab + "default:\n" + m_tab + m_tab + "return @\"\";\n";
@@ -224,7 +228,7 @@ std::string JSCObjcJSONModelLanguage::generateImportFileName(const JSCPropertyPo
   SIAAssert(nullptr != property.get());
 
   if (JSCProperty_Enum == property->type()) {
-    return enumName(std::static_pointer_cast<JSCEnum>(property)) + ".h";
+    return enumClassName(std::static_pointer_cast<JSCEnum>(property)) + ".h";
   } else if (JSCProperty_Object == property->type()) {
     return className(std::static_pointer_cast<JSCObject>(property)) + ".h";
   } else if (JSCProperty_Array == property->type()) {
@@ -259,6 +263,8 @@ std::string JSCObjcJSONModelLanguage::propertyTypeString(const JSCPropertyPointe
     return "NSNumber" + optionalText + "*";
   case JSCProperty_String:
     return "NSString" + optionalText + "*";
+  case JSCProperty_Date:
+    return "NSDate" + optionalText + "*";
 
   default:
     SIAError("incorrect property type");
@@ -278,6 +284,7 @@ std::string JSCObjcJSONModelLanguage::propertyModificatorString(const JSCPropert
   case JSCProperty_MultyType:
   case JSCProperty_Number:
   case JSCProperty_String:
+  case JSCProperty_Date:
   case JSCProperty_Object:
     return "strong";
   case JSCProperty_Boolean:
