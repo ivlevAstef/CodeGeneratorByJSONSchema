@@ -11,50 +11,6 @@
 #include "JSCRef.h"
 #include "SIALogger.h"
 
-static std::string relativePath(const JSCProperty::Path& parentPath, const JSCProperty::Path& childPath, std::string separator, size_t maxDepth = 16) {
-  JSCProperty::Path finalPath = childPath;
-
-  for (const auto& subpath : parentPath) {
-    if (finalPath[0] == subpath) {
-      finalPath.erase(finalPath.begin());
-    } else {
-      break;
-    }
-  }
-
-  if (maxDepth < finalPath.size()) {
-    finalPath.erase(finalPath.begin(), finalPath.begin() + (finalPath.size() - maxDepth));
-  }
-
-  std::string result;
-  for (const auto& subpath : finalPath) {
-    result += subpath + separator;
-  }
-
-  if (!result.empty()) {
-    result.resize(result.size() - separator.size());
-  }
-
-  return result;
-}
-
-std::string JSCObjcJSONModelLanguage::className(const JSCObjectPointer& object) const {
-  return m_prefix + renamed(toCamelCase(renamed(object->rootName()), true));
-}
-
-std::string JSCObjcJSONModelLanguage::enumName(const JSCEnumPointer& enumObj) const {
-  return "E" + enumClassName(enumObj);
-}
-
-std::string JSCObjcJSONModelLanguage::enumClassName(const JSCEnumPointer& enumObj) const {
-  return m_prefix + renamed(toCamelCase(renamed(enumObj->enumName()), true));
-}
-
-std::string JSCObjcJSONModelLanguage::propertyName(const JSCObjectPointer& parent, const JSCPropertyPointer& property) const {
-  std::string name = relativePath(parent->path(), property->path(), "_", 2);
-  return renamed(toCamelCase(renamed(name)));
-}
-
 std::vector<JSCOutput> JSCObjcJSONModelLanguage::generateOutput(const JSCEnumPointer& enumObj) const {
   return std::vector<JSCOutput>{generateOutputHeader(enumObj), generateOutputSource(enumObj)};
 }
@@ -234,21 +190,6 @@ std::string JSCObjcJSONModelLanguage::generateImport(const JSCObjectPointer& obj
   }
 
   return result;
-}
-
-std::string JSCObjcJSONModelLanguage::generateImportFileName(const JSCPropertyPointer& property) const {
-  SIAAssert(nullptr != property.get());
-
-  if (JSCProperty_Enum == property->type()) {
-    return enumClassName(std::static_pointer_cast<JSCEnum>(property)) + ".h";
-  } else if (JSCProperty_Object == property->type()) {
-    return className(std::static_pointer_cast<JSCObject>(property)) + ".h";
-  } else if (JSCProperty_Array == property->type()) {
-    return generateImportFileName(std::static_pointer_cast<JSCArray>(property)->propertyType());
-  } else if (JSCProperty_Ref == property->type()) {
-    return generateImportFileName(std::static_pointer_cast<JSCRef>(property)->refProperty());
-  }
-  return "";
 }
 
 std::string JSCObjcJSONModelLanguage::arrayProtocol(const JSCArrayPointer& property, bool fromArray) const {

@@ -12,10 +12,10 @@
 #include "JSCTokens.h"
 #include "SIALogger.h"
 
-#include "JSCObjcJSONModelLanguage.h"
+#include "JSCLanguageFabric.h"
 
 int main(int argc, const char* argv[]) {
-  static const std::string sDefaultConfigFile = "config.ini";
+  static const std::string sDefaultConfigFile = "configRealm.ini";
 
   std::string configFile = sDefaultConfigFile;
   if (argc < 3 || "-config" != std::string(argv[1])) {
@@ -58,35 +58,38 @@ int main(int argc, const char* argv[]) {
   }
 
 
-  JSCObjcJSONModelLanguage language;
+  auto language = JSCLanguageFabric::getLanguage(Config::languageName(), Config::languageLib());
+  if (nullptr == language.get()) {
+    SIAFatal("can't find language with name:%s and lib:%s", Config::languageName().c_str(), Config::languageLib().c_str());
+  }
 
-  language.setIgnoreList(Config::ignoreList());
-  language.setRenameMap(Config::renameMap());
-  language.setLicenceHeader(Config::licenceHeader());
-  language.setPrefix(Config::prefix());
-  language.setTab(Config::tab());
+  language->setIgnoreList(Config::ignoreList());
+  language->setRenameMap(Config::renameMap());
+  language->setLicenceHeader(Config::licenceHeader());
+  language->setPrefix(Config::prefix());
+  language->setTab(Config::tab());
 
   for (const auto& leafClass : Config::leafClasses()) {
-    language.addLeafClass(leafClass);
+    language->addLeafClass(leafClass);
   }
 
   for (const auto& obj : parser.enums()) {
-    language.add(obj);
+    language->add(obj);
   }
 
   for (const auto& additionalClass : Config::additionalClasses()) {
-    language.add(additionalClass);
+    language->add(additionalClass);
   }
 
   for (const auto& obj : parser.objects()) {
-    language.add(obj);
+    language->add(obj);
   }
 
-  language.removeEqualsOutput();
+  language->removeEqualsOutput();
 
   SIADebug("____________________________________");
 
-  for (const auto& out : language.outputs()) {
+  for (const auto& out : language->outputs()) {
     out.save(Config::outputDirectory());
   }
 

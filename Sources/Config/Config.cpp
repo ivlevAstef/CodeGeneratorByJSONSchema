@@ -45,21 +45,7 @@ static std::string getValueBetweenQuote(std::istringstream& stream) {
   return result;
 }
 
-static std::string parsePrefixValue(std::istringstream& stream) {
-  std::string result;
-  std::getline(stream, result);
-
-  return trim(result);
-}
-
-static std::string parseInputFile(std::istringstream& stream) {
-  std::string result;
-  std::getline(stream, result);
-
-  return trim(result);
-}
-
-static std::string parseOutputDirectory(std::istringstream& stream) {
+static std::string parseLine(std::istringstream& stream) {
   std::string result;
   std::getline(stream, result);
 
@@ -210,11 +196,15 @@ bool Config::Load(std::string filename) {
       if ("Tab" == key) {
         config.m_tab = getValueBetweenQuote(lineStream);
       } else if ("Input file" == key) {
-        config.m_inputFile = parseInputFile(lineStream);
+        config.m_inputFile = parseLine(lineStream);
       } else if ("Prefix" == key) {
-        config.m_prefix = parsePrefixValue(lineStream);
+        config.m_prefix = parseLine(lineStream);
       } else if ("Output Directory" == key) {
-        config.m_outputDirectory = parseOutputDirectory(lineStream);
+        config.m_outputDirectory = parseLine(lineStream);
+      } else if ("Language" == key) {
+        config.m_languageName = parseLine(lineStream);
+      } else if ("Library" == key) {
+        config.m_languageLib = parseLine(lineStream);
       } else if ("Licence Header" == key) {
         config.m_licenceHeader = parseLicenceHeader(lineStream, fileStream);
       } else if ("Ignore List" == key) {

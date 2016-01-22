@@ -21,6 +21,9 @@ class Config {
  public:
   static bool Load(std::string filename);
 
+  static const std::string& languageName() { return config.m_languageName; }
+  static const std::string& languageLib() { return config.m_languageLib; }
+
   static const std::string& tab() { return config.m_tab; }
   static const std::string& prefix() { return config.m_prefix; }
   static const std::string& inputFile() { return config.m_inputFile; }
@@ -36,7 +39,9 @@ class Config {
   static const std::vector<AdditionalClass>& additionalClasses() { return config.m_additionalClasses; }
 
  private:
- private:
+  std::string m_languageName;
+  std::string m_languageLib;
+
   std::string m_inputFile;
   std::string m_tab;
   std::string m_prefix;

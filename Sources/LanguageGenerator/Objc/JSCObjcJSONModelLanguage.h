@@ -11,15 +11,10 @@
 #define JSON_SCHEMA_CODE_LANGUAGE_OBJC_JSONMODEL_H__
 
 #include "JSCArray.h"
-#include "JSCLanguageBase.h"
+#include "JSCObjcBaseLanguage.h"
 
-class JSCObjcJSONModelLanguage : public JSCLanguageBase {
+class JSCObjcJSONModelLanguage : public JSCObjcBaseLanguage {
  private:
-  std::string className(const JSCObjectPointer& object) const;
-  std::string enumName(const JSCEnumPointer& enumObj) const;
-  std::string enumClassName(const JSCEnumPointer& enumObj) const;
-  std::string propertyName(const JSCObjectPointer& parent, const JSCPropertyPointer& property) const;
-
   std::vector<JSCOutput> generateOutput(const JSCEnumPointer& enumObj) const override;
   std::vector<JSCOutput> generateOutput(const JSCObjectPointer& object) const override;
 
@@ -30,7 +25,6 @@ class JSCObjcJSONModelLanguage : public JSCLanguageBase {
   JSCOutput generateOutputSource(const JSCObjectPointer& object) const;
 
   std::string generateImport(const JSCObjectPointer& object) const;
-  std::string generateImportFileName(const JSCPropertyPointer& property) const;
 
   std::string arrayProtocol(const JSCArrayPointer& array, bool fromArray = false) const;
   std::string propertyTypeString(const JSCPropertyPointer& property, bool fromArray = false) const;
