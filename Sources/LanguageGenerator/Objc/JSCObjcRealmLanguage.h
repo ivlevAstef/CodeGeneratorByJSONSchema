@@ -22,7 +22,7 @@ class JSCObjcRealmLanguage : public JSCObjcBaseLanguage {
   std::string generateImport(const JSCObjectPointer& object) const;
 
   std::string protocolName(std::string type) const;
-  std::string propertyTypeString(const JSCPropertyPointer& property) const;
+  std::string propertyTypeString(const JSCPropertyPointer& property, bool fromArray = false) const;
 
   std::string primaryKeyName(const JSCObjectPointer& object) const;
   std::string primaryKeyType(const JSCObjectPointer& object) const;

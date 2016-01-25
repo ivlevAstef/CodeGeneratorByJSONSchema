@@ -98,7 +98,7 @@ std::string JSCObjcRealmLanguage::generateImport(const JSCObjectPointer& object)
     if (JSCProperty_Array == property->type()) {
       property = recursiveProperty(propertyIter, true);
 
-      std::string protocol = protocolName(propertyTypeString(property));
+      std::string protocol = protocolName(propertyTypeString(property, true));
       importFiles.insert(protocol + ".h");
     } else if (JSCProperty_Object == property->type()) {
       importFiles.insert(generateImportFileName(property));
@@ -126,29 +126,32 @@ std::string JSCObjcRealmLanguage::protocolName(std::string type) const {
   auto endBrace = protocol.find('>');
   if (std::string::npos != beginBrace && std::string::npos != endBrace) {
     protocol.replace(beginBrace, endBrace - beginBrace + 1, "");
-    return m_prefix + toCamelCase(protocol, true);
+  }
+
+  if (std::string::npos == protocol.find(m_prefix)) {
+    protocol = m_prefix + toCamelCase(protocol, true);
   }
 
   return protocol;
 }
 
-std::string JSCObjcRealmLanguage::propertyTypeString(const JSCPropertyPointer& property) const {
+std::string JSCObjcRealmLanguage::propertyTypeString(const JSCPropertyPointer& property, bool fromArray) const {
   SIAAssert(nullptr != property.get());
 
   switch (property->type()) {
   case JSCProperty_Ref:
-    return propertyTypeString(std::static_pointer_cast<JSCRef>(property)->refProperty());
+    return propertyTypeString(std::static_pointer_cast<JSCRef>(property)->refProperty(), fromArray);
   case JSCProperty_Any:
   case JSCProperty_MultyType:
     return "id";
   case JSCProperty_Array: {
-    std::string protocol = protocolName(propertyTypeString(std::static_pointer_cast<JSCArray>(property)->propertyType()));
+    std::string protocol = protocolName(propertyTypeString(std::static_pointer_cast<JSCArray>(property)->propertyType(), true));
     return "RLMArray<" + protocol + "*><" + protocol + ">*";
   }
   case JSCProperty_Boolean:
     return "NSNumber<RLMBool>*";
   case JSCProperty_Enum:
-    return "NSNumber<RLMInt>*";
+    return fromArray ? "NSString*" : "NSNumber<RLMInt>*";
   case JSCProperty_Object:
     return className(std::static_pointer_cast<JSCObject>(property)) + "*";
   case JSCProperty_Integer:
