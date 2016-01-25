@@ -143,7 +143,7 @@ std::string JSCObjcRealmLanguage::propertyTypeString(const JSCPropertyPointer& p
     return "id";
   case JSCProperty_Array: {
     std::string protocol = protocolName(propertyTypeString(std::static_pointer_cast<JSCArray>(property)->propertyType()));
-    return "NSArray<" + protocol + "*><" + protocol + ">*";
+    return "RLMArray<" + protocol + "*><" + protocol + ">*";
   }
   case JSCProperty_Boolean:
     return "NSNumber<RLMBool>*";
