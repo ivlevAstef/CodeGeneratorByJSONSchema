@@ -30,7 +30,7 @@ class JSCLanguageBase {
   void add(const JSCEnumPointer& enumObj);
   void add(const JSCObjectPointer& object);
 
-  void removeEqualsOutput();
+  virtual void finished();
 
   const std::vector<JSCOutput>& outputs() const;
 
@@ -54,7 +54,7 @@ class JSCLanguageBase {
 
   std::vector<JSCObjectPointer> findAdditionalClasses(const JSCObjectPointer& object) const;
 
-  JSCPropertyPointer recursiveProperty(const JSCPropertyPointer& property) const;
+  JSCPropertyPointer recursiveProperty(const JSCPropertyPointer& property, bool andArray = false) const;
 
  protected:
   std::string m_prefix;

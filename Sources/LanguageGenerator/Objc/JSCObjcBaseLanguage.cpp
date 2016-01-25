@@ -69,3 +69,26 @@ std::string JSCObjcBaseLanguage::relativePath(const JSCProperty::Path& parentPat
 
   return result;
 }
+
+void JSCObjcBaseLanguage::finished() {
+  JSCLanguageBase::finished();
+
+  std::set<std::string> allHeaders;
+
+  for (const auto& output : m_outputs) {
+    if (std::string::npos != output.fileName().find(".h")) {
+      allHeaders.insert(output.fileName());
+    }
+  }
+
+  std::string fileName = m_prefix + "DtoAllTypes.h";
+
+  std::string text = generateLicenceHeader(fileName);
+  text += "\n";
+  for (const auto& header : allHeaders) {
+    text += "#import \"" + header + "\"\n";
+  }
+  text += "\n";
+
+  m_outputs.push_back(JSCOutput(fileName, text));
+}

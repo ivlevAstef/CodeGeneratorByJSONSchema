@@ -102,7 +102,7 @@ void JSCLanguageBase::add(const AdditionalClass& additionalClass) {
   }
 }
 
-void JSCLanguageBase::removeEqualsOutput() {
+void JSCLanguageBase::finished() {
   for (size_t i = 0; i < m_outputs.size() - 1; i++) {
     const auto& out = m_outputs[i];
 
@@ -273,9 +273,11 @@ const std::vector<JSCOutput>& JSCLanguageBase::outputs() const {
   return m_outputs;
 }
 
-JSCPropertyPointer JSCLanguageBase::recursiveProperty(const JSCPropertyPointer& property) const {
+JSCPropertyPointer JSCLanguageBase::recursiveProperty(const JSCPropertyPointer& property, bool andArray) const {
   if (nullptr != property.get() && JSCProperty_Ref == property->type()) {
-    return recursiveProperty(std::static_pointer_cast<JSCRef>(property)->refProperty());
+    return recursiveProperty(std::static_pointer_cast<JSCRef>(property)->refProperty(), andArray);
+  } else if (nullptr != property.get() && andArray && JSCProperty_Array == property->type()) {
+    return recursiveProperty(std::static_pointer_cast<JSCArray>(property)->propertyType(), andArray);
   }
   return property;
 }

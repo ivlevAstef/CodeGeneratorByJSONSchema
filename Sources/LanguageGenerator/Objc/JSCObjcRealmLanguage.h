@@ -23,6 +23,9 @@ class JSCObjcRealmLanguage : public JSCObjcBaseLanguage {
 
   std::string protocolName(std::string type) const;
   std::string propertyTypeString(const JSCPropertyPointer& property) const;
+
+  std::string primaryKeyName(const JSCObjectPointer& object) const;
+  std::string primaryKeyType(const JSCObjectPointer& object) const;
 };
 
 #endif /* JSON_SCHEMA_CODE_LANGUAGE_OBJC_REALM_H__ */

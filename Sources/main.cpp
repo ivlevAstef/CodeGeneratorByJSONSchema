@@ -85,7 +85,7 @@ int main(int argc, const char* argv[]) {
     language->add(obj);
   }
 
-  language->removeEqualsOutput();
+  language->finished();
 
   SIADebug("____________________________________");
 

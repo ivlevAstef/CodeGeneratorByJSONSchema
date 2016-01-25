@@ -12,6 +12,8 @@
 #include "JSCRef.h"
 #include "SIALogger.h"
 
+static const std::string sRealmUniqueId = "realmUniqueId";
+
 std::vector<JSCOutput> JSCObjcRealmLanguage::generateOutput(const JSCEnumPointer& enumObj) const {
   return std::vector<JSCOutput>();
 }
@@ -20,11 +22,43 @@ std::vector<JSCOutput> JSCObjcRealmLanguage::generateOutput(const JSCObjectPoint
   return std::vector<JSCOutput>{generateOutputHeader(object)};
 }
 
+std::string JSCObjcRealmLanguage::primaryKeyName(const JSCObjectPointer& object) const {
+  std::vector<std::string> primaryKeyNames;
+  for (const auto& property : propertiesForObj(object)) {
+    if (property->pathName() == "id") {
+      primaryKeyNames.push_back(propertyName(object, property));
+    }
+  }
+
+  if (!primaryKeyNames.empty()) {
+    //incorrect check (primaryKeyNames[0] == "objId"), but needed for DtoCatalogJob where jobId, not primary
+    if (1 == primaryKeyNames.size() && primaryKeyNames[0] == "objId") {
+      return primaryKeyNames[0];
+    } else {
+      return sRealmUniqueId;
+    }
+  }
+
+  return "";
+}
+
+std::string JSCObjcRealmLanguage::primaryKeyType(const JSCObjectPointer& object) const {
+  for (const auto& property : propertiesForObj(object)) {
+    if (property->pathName() == "id") {
+      return propertyTypeString(property);
+    }
+  }
+
+  return "";
+}
+
 JSCOutput JSCObjcRealmLanguage::generateOutputHeader(const JSCObjectPointer& object) const {
   std::string name = className(object);
   std::string fileName = name + ".h";
 
   std::string text = generateLicenceHeader(fileName);
+  std::string primaryKey = primaryKeyName(object);
+
   text += generateImport(object);
   text += "\n";
 
@@ -33,6 +67,10 @@ JSCOutput JSCObjcRealmLanguage::generateOutputHeader(const JSCObjectPointer& obj
   for (const auto& property : propertiesForObj(object)) {
     text += "@property " + propertyTypeString(property) + " " + propertyName(object, property) + ";\n";
   }
+  if (sRealmUniqueId == primaryKey) {
+    text += "@property " + primaryKeyType(object) + " " + primaryKey + ";\n";
+  }
+
   text += "\n";
   text += "@end\n\n";
 
@@ -40,14 +78,12 @@ JSCOutput JSCObjcRealmLanguage::generateOutputHeader(const JSCObjectPointer& obj
 
   text += "@implementation " + name + "\n";
 
-  /*for (const auto& property : propertiesForObj(object)) {
-    if (property->pathName() == "id") {
-      text += "+ (NSString*)primaryKey {\n";
-      text += m_tab + "return @\"" + propertyName(object, property) + "\";\n";
-      text += "}\n\n";
-      break;
-    }
-  }*/
+  if (!primaryKey.empty()) {
+    text += "+ (NSString*)primaryKey {\n";
+    text += m_tab + "return @\"" + primaryKey + "\";\n";
+    text += "}\n";
+  }
+
   text += "@end\n\n";
 
   return JSCOutput(fileName, text);
@@ -56,13 +92,17 @@ JSCOutput JSCObjcRealmLanguage::generateOutputHeader(const JSCObjectPointer& obj
 std::string JSCObjcRealmLanguage::generateImport(const JSCObjectPointer& object) const {
   std::set<std::string> importFiles{"Realm/Realm.h"};
 
-  for (const auto& property : propertiesForObj(object)) {
-    if (JSCProperty_Array == property->type()) {
-      std::string protocol = protocolName(propertyTypeString(std::static_pointer_cast<JSCArray>(property)->propertyType()));
-      importFiles.insert(protocol + ".h");
-    }
+  for (const auto& propertyIter : propertiesForObj(object)) {
+    JSCPropertyPointer property = recursiveProperty(propertyIter);
 
-    importFiles.insert(generateImportFileName(property));
+    if (JSCProperty_Array == property->type()) {
+      property = recursiveProperty(propertyIter, true);
+
+      std::string protocol = protocolName(propertyTypeString(property));
+      importFiles.insert(protocol + ".h");
+    } else if (JSCProperty_Object == property->type()) {
+      importFiles.insert(generateImportFileName(property));
+    }
   }
 
   std::string result;
@@ -77,12 +117,15 @@ std::string JSCObjcRealmLanguage::generateImport(const JSCObjectPointer& object)
 
 std::string JSCObjcRealmLanguage::protocolName(std::string type) const {
   std::string protocol = type;
+
   protocol.erase(std::remove_if(protocol.begin(), protocol.end(), [](char symbol) {
     return '*' == symbol;
   }));
 
-  //if simple type
-  if (protocol.size() == type.size()) {
+  auto beginBrace = protocol.find('<');
+  auto endBrace = protocol.find('>');
+  if (std::string::npos != beginBrace && std::string::npos != endBrace) {
+    protocol.replace(beginBrace, endBrace - beginBrace + 1, "");
     return m_prefix + toCamelCase(protocol, true);
   }
 
@@ -103,15 +146,15 @@ std::string JSCObjcRealmLanguage::propertyTypeString(const JSCPropertyPointer& p
     return "NSArray<" + protocol + "*><" + protocol + ">*";
   }
   case JSCProperty_Boolean:
-    return "BOOL";
+    return "NSNumber<RLMBool>*";
   case JSCProperty_Enum:
-    return "NSInteger";
+    return "NSNumber<RLMInt>*";
   case JSCProperty_Object:
     return className(std::static_pointer_cast<JSCObject>(property)) + "*";
   case JSCProperty_Integer:
-    return "NSInteger";
+    return "NSNumber<RLMInt>*";
   case JSCProperty_Number:
-    return "NSNumber*";
+    return "NSNumber<RLMDouble>*";
   case JSCProperty_String:
     return "NSString*";
   case JSCProperty_Date:

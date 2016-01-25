@@ -13,6 +13,9 @@
 #include "JSCLanguageBase.h"
 
 class JSCObjcBaseLanguage : public JSCLanguageBase {
+ public:
+  void finished() override;
+
  protected:
   std::string className(const JSCObjectPointer& object) const;
   std::string enumName(const JSCEnumPointer& enumObj) const;
