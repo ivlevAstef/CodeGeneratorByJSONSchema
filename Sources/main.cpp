@@ -15,7 +15,8 @@
 #include "JSCLanguageFabric.h"
 
 int main(int argc, const char* argv[]) {
-  static const std::string sDefaultConfigFile = "configRealm.ini";
+  static const std::string sDefaultConfigFile = "configJSONModel.ini";
+  //static const std::string sDefaultConfigFile = "configRealm.ini";
 
   std::string configFile = sDefaultConfigFile;
   if (argc < 3 || "-config" != std::string(argv[1])) {

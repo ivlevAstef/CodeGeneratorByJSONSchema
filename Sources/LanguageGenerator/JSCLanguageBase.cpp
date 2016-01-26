@@ -25,6 +25,16 @@ static std::string currentDate() {
   return ss.str();
 }
 
+static std::vector<std::string> split(const std::string& str, char delim) {
+  std::vector<std::string> result;
+  std::stringstream strStream(str);
+  std::string item;
+  while (std::getline(strStream, item, delim)) {
+    result.push_back(item);
+  }
+  return result;
+}
+
 void JSCLanguageBase::setPrefix(std::string prefix) {
   m_prefix = prefix;
 }
@@ -123,16 +133,36 @@ bool JSCLanguageBase::isIgnore(const std::string& name) const {
   return m_ignoreList.count(name) > 0;
 }
 
+bool JSCLanguageBase::isIgnore(const JSCProperty::Path& path, const std::string& lastName) const {
+  for (const std::string& ignore : m_ignoreList) {
+    JSCProperty::Path ignorePath = split(ignore, '.');
+    int offset = int(path.size()) - int(ignorePath.size());
+    if (ignorePath.size() > 0 && offset >= 0 && ignorePath[ignorePath.size() - 1] == lastName) {
+      bool incorrect = false;
+      for (int i = 0; i < int(ignorePath.size()) - 1; i++) {
+        incorrect |= (path[offset + i] != ignorePath[i]);
+      }
+
+      if (incorrect) {
+        continue;
+      }
+      return true;
+    }
+  }
+
+  return isIgnore(lastName);
+}
+
 bool JSCLanguageBase::isIgnoreEnum(const JSCEnumPointer& enumObj) const {
-  return isIgnore(enumObj->enumName());
+  return isIgnore(enumObj->path(), enumObj->enumName());
 }
 
 bool JSCLanguageBase::isIgnoreObj(const JSCObjectPointer& object) const {
-  return isIgnore(object->rootName());
+  return isIgnore(object->path(), object->rootName());
 }
 
 bool JSCLanguageBase::isIgnore(const JSCPropertyPointer& property) const {
-  bool ignore = m_ignoreList.count(property->pathName()) > 0;
+  bool ignore = isIgnore(property->path(), property->pathName());
 
   if (nullptr != property.get()) {
     ignore |= JSCProperty_Ref == property->type() && isIgnore(std::static_pointer_cast<JSCRef>(property)->refProperty());
