@@ -12,6 +12,7 @@
 		84012D421C520CD40095380B /* JSCObjcRealmLanguage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 84012D401C520CD40095380B /* JSCObjcRealmLanguage.cpp */; };
 		84012D451C520DCB0095380B /* JSCLanguageFabric.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 84012D441C520DCB0095380B /* JSCLanguageFabric.cpp */; };
 		84012D471C5213AB0095380B /* configRealm.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = 84012D461C5210130095380B /* configRealm.ini */; };
+		847731CE1C5758B300A42974 /* configTtronic.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = 847731CD1C57561300A42974 /* configTtronic.ini */; };
 		848953A01C49334A000B1B8F /* JSCParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848953811C49334A000B1B8F /* JSCParser.cpp */; };
 		848953A11C49334A000B1B8F /* JSCStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848953831C49334A000B1B8F /* JSCStream.cpp */; };
 		848953A21C49334A000B1B8F /* JSCTokens.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848953851C49334A000B1B8F /* JSCTokens.cpp */; };
@@ -24,7 +25,7 @@
 		848953A91C49334A000B1B8F /* JSCProperty.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8489539A1C49334A000B1B8F /* JSCProperty.cpp */; };
 		848953AA1C49334A000B1B8F /* JSCRef.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8489539C1C49334A000B1B8F /* JSCRef.cpp */; };
 		848953AB1C49334A000B1B8F /* JSCUnknown.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8489539E1C49334A000B1B8F /* JSCUnknown.cpp */; };
-		848953AE1C493361000B1B8F /* test-schema.json in CopyFiles */ = {isa = PBXBuildFile; fileRef = 848953AD1C493358000B1B8F /* test-schema.json */; };
+		848953AE1C493361000B1B8F /* ttronic.json in CopyFiles */ = {isa = PBXBuildFile; fileRef = 848953AD1C493358000B1B8F /* ttronic.json */; };
 		848953B81C4CF214000B1B8F /* JSCOutput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848953B71C4CF214000B1B8F /* JSCOutput.cpp */; };
 		848953BC1C4D079B000B1B8F /* Config.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848953BA1C4D079B000B1B8F /* Config.cpp */; };
 		848953C01C4D0AA2000B1B8F /* JSCLanguageBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 848953BE1C4D0AA2000B1B8F /* JSCLanguageBase.cpp */; };
@@ -38,9 +39,10 @@
 			dstPath = "";
 			dstSubfolderSpec = 7;
 			files = (
+				847731CE1C5758B300A42974 /* configTtronic.ini in CopyFiles */,
 				84012D471C5213AB0095380B /* configRealm.ini in CopyFiles */,
 				848953C21C4DFA32000B1B8F /* configJSONModel.ini in CopyFiles */,
-				848953AE1C493361000B1B8F /* test-schema.json in CopyFiles */,
+				848953AE1C493361000B1B8F /* ttronic.json in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,6 +58,7 @@
 		84012D431C520D5C0095380B /* JSCLanguageFabric.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JSCLanguageFabric.h; sourceTree = "<group>"; };
 		84012D441C520DCB0095380B /* JSCLanguageFabric.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSCLanguageFabric.cpp; sourceTree = "<group>"; };
 		84012D461C5210130095380B /* configRealm.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = configRealm.ini; sourceTree = "<group>"; };
+		847731CD1C57561300A42974 /* configTtronic.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = configTtronic.ini; sourceTree = "<group>"; };
 		848953811C49334A000B1B8F /* JSCParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSCParser.cpp; sourceTree = "<group>"; };
 		848953821C49334A000B1B8F /* JSCParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCParser.h; sourceTree = "<group>"; };
 		848953831C49334A000B1B8F /* JSCStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSCStream.cpp; sourceTree = "<group>"; };
@@ -80,7 +83,7 @@
 		8489539D1C49334A000B1B8F /* JSCRef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCRef.h; sourceTree = "<group>"; };
 		8489539E1C49334A000B1B8F /* JSCUnknown.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSCUnknown.cpp; sourceTree = "<group>"; };
 		8489539F1C49334A000B1B8F /* JSCUnknown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCUnknown.h; sourceTree = "<group>"; };
-		848953AD1C493358000B1B8F /* test-schema.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "test-schema.json"; sourceTree = "<group>"; };
+		848953AD1C493358000B1B8F /* ttronic.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ttronic.json; sourceTree = "<group>"; };
 		848953B71C4CF214000B1B8F /* JSCOutput.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSCOutput.cpp; sourceTree = "<group>"; };
 		848953BA1C4D079B000B1B8F /* Config.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Config.cpp; path = Config/Config.cpp; sourceTree = "<group>"; };
 		848953BB1C4D079B000B1B8F /* Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Config.h; path = Config/Config.h; sourceTree = "<group>"; };
@@ -182,7 +185,8 @@
 		848953AC1C493358000B1B8F /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				848953AD1C493358000B1B8F /* test-schema.json */,
+				848953AD1C493358000B1B8F /* ttronic.json */,
+				847731CD1C57561300A42974 /* configTtronic.ini */,
 				848953C11C4DFA29000B1B8F /* configJSONModel.ini */,
 				84012D461C5210130095380B /* configRealm.ini */,
 			);

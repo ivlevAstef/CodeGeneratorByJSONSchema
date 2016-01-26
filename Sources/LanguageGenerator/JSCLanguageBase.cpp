@@ -35,6 +35,22 @@ static std::vector<std::string> split(const std::string& str, char delim) {
   return result;
 }
 
+bool JSCLanguageBase::isSubpath(const JSCProperty::Path& path, const std::string& lastName, const std::string& checkPathStr) const {
+  JSCProperty::Path checkPath = split(checkPathStr, '.');
+  int offset = int(path.size()) - int(checkPath.size());
+
+  if (checkPath.empty() || offset < 0 || checkPath[checkPath.size() - 1] != lastName) {
+    return false;
+  }
+
+  for (int i = 0; i < int(checkPath.size()) - 1; i++) {
+    if (path[offset + i] != checkPath[i]) {
+      return false;
+    }
+  }
+  return true;
+}
+
 void JSCLanguageBase::setPrefix(std::string prefix) {
   m_prefix = prefix;
 }
@@ -135,17 +151,7 @@ bool JSCLanguageBase::isIgnore(const std::string& name) const {
 
 bool JSCLanguageBase::isIgnore(const JSCProperty::Path& path, const std::string& lastName) const {
   for (const std::string& ignore : m_ignoreList) {
-    JSCProperty::Path ignorePath = split(ignore, '.');
-    int offset = int(path.size()) - int(ignorePath.size());
-    if (ignorePath.size() > 0 && offset >= 0 && ignorePath[ignorePath.size() - 1] == lastName) {
-      bool incorrect = false;
-      for (int i = 0; i < int(ignorePath.size()) - 1; i++) {
-        incorrect |= (path[offset + i] != ignorePath[i]);
-      }
-
-      if (incorrect) {
-        continue;
-      }
+    if (isSubpath(path, lastName, ignore)) {
       return true;
     }
   }
@@ -297,6 +303,24 @@ std::string JSCLanguageBase::toCamelCase(std::string str, bool firstUpper) const
 
 std::string JSCLanguageBase::renamed(const std::string& str) const {
   return (m_renameMap.count(str) > 0) ? m_renameMap.at(str) : str;
+}
+
+std::string JSCLanguageBase::renamed(const JSCProperty::Path& path, const std::string& lastName) const {
+  size_t maxPathLength = 0;
+  std::string result;
+
+  for (const auto& rename : m_renameMap) {
+    if (isSubpath(path, lastName, rename.first) && rename.first.length() > maxPathLength) {
+      maxPathLength = rename.first.length();
+      result = rename.second;
+    }
+  }
+
+  if (maxPathLength > 0) {
+    return result;
+  }
+
+  return renamed(lastName);
 }
 
 const std::vector<JSCOutput>& JSCLanguageBase::outputs() const {

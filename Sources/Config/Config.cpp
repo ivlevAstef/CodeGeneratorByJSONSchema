@@ -172,15 +172,28 @@ static AdditionalClass parseAdditionalClass(std::istringstream& inputLineStream,
 }
 
 bool Config::Load(std::string filename) {
+  config.m_tab = "";
+  config.m_inputFile = "";
+  config.m_prefix = "";
+  config.m_outputDirectory = "";
+  config.m_languageName = "";
+  config.m_languageLib = "";
+  config.m_licenceHeader = "";
+  config.m_ignoreList.clear();
+  config.m_leafClasses.clear();
+  config.m_renameMap.clear();
+  config.m_additionalClasses.clear();
+
+  return privateLoad(filename);
+}
+
+bool Config::privateLoad(std::string filename) {
   std::ifstream fileStream(filename);
 
   if (!fileStream.is_open()) {
     SIAWarning("Can't find config file: %s", filename.c_str());
     return false;
   }
-
-  config.m_additionalClasses.clear();
-  config.m_leafClasses.clear();
 
   std::string line;
   while (std::getline(fileStream, line)) {
@@ -193,7 +206,12 @@ bool Config::Load(std::string filename) {
     std::string key;
     if (!std::getline(lineStream, key, '=').eof()) {
       key = trim(key);
-      if ("Tab" == key) {
+      if ("Parent" == key) {
+        std::string parent = parseLine(lineStream);
+        if (!privateLoad(parent)) {
+          SIAError("Can't load parent:%s", parent.c_str());
+        }
+      } else if ("Tab" == key) {
         config.m_tab = getValueBetweenQuote(lineStream);
       } else if ("Input file" == key) {
         config.m_inputFile = parseLine(lineStream);
@@ -208,11 +226,13 @@ bool Config::Load(std::string filename) {
       } else if ("Licence Header" == key) {
         config.m_licenceHeader = parseLicenceHeader(lineStream, fileStream);
       } else if ("Ignore List" == key) {
-        config.m_ignoreList = parseIgnoreList(lineStream);
+        const auto result = parseIgnoreList(lineStream);
+        config.m_ignoreList.insert(result.begin(), result.end());
       } else if ("Leaf Class" == key) {
         config.m_leafClasses.push_back(parseLeafClass(lineStream));
       } else if ("Rename Map" == key) {
-        config.m_renameMap = parseRenameMap(lineStream, fileStream);
+        const auto result = parseRenameMap(lineStream, fileStream);
+        config.m_renameMap.insert(result.begin(), result.end());
       } else if ("Additional Class" == key) {
         config.m_additionalClasses.push_back(parseAdditionalClass(lineStream, fileStream));
       }

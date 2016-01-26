@@ -39,6 +39,9 @@ class Config {
   static const std::vector<AdditionalClass>& additionalClasses() { return config.m_additionalClasses; }
 
  private:
+  static bool privateLoad(std::string filename);
+
+ private:
   std::string m_languageName;
   std::string m_languageLib;
 

@@ -40,6 +40,8 @@ class JSCLanguageBase {
 
   std::string generateLicenceHeader(std::string filename) const;
 
+  bool isSubpath(const JSCProperty::Path& path, const std::string& lastName, const std::string& checkPathStr) const;
+
   bool isIgnore(const std::string& name) const;
   bool isIgnore(const JSCProperty::Path& path, const std::string& lastName) const;
   bool isIgnore(const JSCPropertyPointer& property) const;
@@ -48,6 +50,7 @@ class JSCLanguageBase {
 
   std::string toCamelCase(std::string str, bool firstUpper = false) const;
   std::string renamed(const std::string& str) const;
+  std::string renamed(const JSCProperty::Path& path, const std::string& lastName) const;
 
   std::vector<JSCPropertyPointer> propertiesForProperty(const JSCPropertyPointer& property) const;
   std::vector<JSCPropertyPointer> propertiesForObj(const JSCObjectPointer& object) const;

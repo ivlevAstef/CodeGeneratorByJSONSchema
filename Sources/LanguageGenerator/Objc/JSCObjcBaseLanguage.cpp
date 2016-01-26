@@ -12,7 +12,7 @@
 #include "SIALogger.h"
 
 std::string JSCObjcBaseLanguage::className(const JSCObjectPointer& object) const {
-  return m_prefix + renamed(toCamelCase(renamed(object->rootName()), true));
+  return m_prefix + renamed(toCamelCase(renamed(object->path(), object->rootName()), true));
 }
 
 std::string JSCObjcBaseLanguage::enumName(const JSCEnumPointer& enumObj) const {
@@ -20,12 +20,12 @@ std::string JSCObjcBaseLanguage::enumName(const JSCEnumPointer& enumObj) const {
 }
 
 std::string JSCObjcBaseLanguage::enumClassName(const JSCEnumPointer& enumObj) const {
-  return m_prefix + renamed(toCamelCase(renamed(enumObj->enumName()), true));
+  return m_prefix + renamed(toCamelCase(renamed(enumObj->path(), enumObj->enumName()), true));
 }
 
 std::string JSCObjcBaseLanguage::propertyName(const JSCObjectPointer& parent, const JSCPropertyPointer& property) const {
   std::string name = relativePath(parent->path(), property->path(), "_", 2);
-  return renamed(toCamelCase(renamed(name)));
+  return renamed(toCamelCase(renamed(property->path(), name)));
 }
 
 std::string JSCObjcBaseLanguage::generateImportFileName(const JSCPropertyPointer& property) const {

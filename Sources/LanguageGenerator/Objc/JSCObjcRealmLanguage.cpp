@@ -31,8 +31,7 @@ std::string JSCObjcRealmLanguage::primaryKeyName(const JSCObjectPointer& object)
   }
 
   if (!primaryKeyNames.empty()) {
-    //incorrect check (primaryKeyNames[0] == "objId"), but needed for DtoCatalogJob where jobId, not primary
-    if (1 == primaryKeyNames.size() && primaryKeyNames[0] == "objId") {
+    if (1 == primaryKeyNames.size()) {
       return primaryKeyNames[0];
     } else {
       return sRealmUniqueId;
